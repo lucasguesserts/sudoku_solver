@@ -1,0 +1,23 @@
+project(UtilsLib)
+
+#INCLUDE DIRECTORIES
+include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include)
+include_directories(${BOOST_PATH})
+
+#LINK THE DIRECTORIES
+
+#SEARCH FOR .CPP AND .H FILES
+file(GLOB ${PROJECT_NAME}_headers ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/*.h)
+file(GLOB ${PROJECT_NAME}_sources ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/source/*.cpp)
+
+#ADD LIBRARY
+#add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_sources} ${${PROJECT_NAME}_headers})
+
+#LINK LIBRARIES
+
+#DEFINE OUTPUT LOCATION
+#install(
+#	TARGETS ${PROJECT_NAME}
+#	LIBRARY DESTINATION libs
+#	ARCHIVE DESTINATION archives
+#)

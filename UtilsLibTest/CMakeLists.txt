@@ -1,0 +1,24 @@
+project(UtilsLibTest)
+
+#INCLUDE DIRECTORIES
+include_directories(${BOOST_PATH})
+include_directories(${CMAKE_SOURCE_DIR}/UtilsLib/include)
+include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include)
+
+#LINK DIRECTORIES
+
+#SEARCH FOR .CPP FILES
+file(GLOB ${PROJECT_NAME}_sources ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/source/*.cpp)
+
+#ADD EXECUTABLE
+add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_sources})
+
+#LINK LIBRARIES
+#target_link_libraries(${PROJECT_NAME} UtilsLib)
+
+#DEFINE OUTPUT LOCATION
+install(
+	TARGETS ${PROJECT_NAME}
+	RUNTIME DESTINATION	apps
+	ARCHIVE DESTINATION archives
+)
