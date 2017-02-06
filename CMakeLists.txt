@@ -12,7 +12,9 @@ if(UNIX)
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 endif()
 
+# BOOST
 set(BOOST_PATH CACHE PATH "Path to Boost folder")
+include_directories(${BOOST_PATH})
 
 #ABOUT THE PROJECT
 project(sudoku_solver)

@@ -2,7 +2,6 @@ project(UtilsLib)
 
 #INCLUDE DIRECTORIES
 include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include)
-include_directories(${BOOST_PATH})
 
 #LINK THE DIRECTORIES
 
