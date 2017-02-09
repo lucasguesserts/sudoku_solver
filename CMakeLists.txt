@@ -31,3 +31,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/apps)
 #ADD SUBDIRECTORIES
 add_subdirectory(UtilsLib)
 add_subdirectory(UtilsLibTest)
+add_subdirectory(ElementLib)
+add_subdirectory(ElementLibTest)

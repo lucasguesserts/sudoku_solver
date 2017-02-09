@@ -1,9 +1,5 @@
 #define BOOST_TEST_MODULE TestModule
 
-// std
-#include <iostream>
-#include <string>
-
 // boost
 #include <Test.h>
 
