@@ -6,11 +6,29 @@
 // Boost
 #include <Test.h>
 
-TestCase( CellTest )
+TestCase( CellSetAndGet )
 {
 	int value = 6;
 	Cell c;
 
-	c.set(value);
-	checkEqual(c.get() , value);
+	c.setValue(value);
+	checkEqual(c.getValue() , value);
+}
+
+TestCase( CellConstructor )
+{
+	int x = 3;
+	int y = 4;
+	Cell c ( x , y );
+	
+	checkEqual(c.getx() , x);
+	checkEqual(c.gety() , y);
+	
+	x = 8;
+	y = 1;
+	c.setx(x);
+	c.sety(y);
+	
+	checkEqual(c.getx() , x);
+	checkEqual(c.gety() , y);
 }

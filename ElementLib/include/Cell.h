@@ -1,8 +1,21 @@
 class Cell
 {
-	public:
-		void	set( int );
-		int		get( void );
+public:
+	
+		Cell(void);
+		Cell(const int , const int);
+		
+		void	setValue( const int );
+		int		getValue( void ) const;
+		
+		void	setx( const int );
+		int		getx(void) const;
+		
+		void	sety( const int );
+		int		gety(void) const;
+		
 	private:
-		int value;
+		int		value;
+		int		x;
+		int		y;
 };
