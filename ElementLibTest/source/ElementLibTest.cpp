@@ -1,5 +1,10 @@
 #define BOOST_TEST_MODULE TestModule
 
+//// std
+//#include <iostream>
+//using std::cout;
+//using std::endl;
+
 // ElementLib
 #include <Cell.h>
 
@@ -10,6 +15,8 @@ TestCase( CellSetAndGet )
 {
 	int value = 6;
 	Cell c;
+
+	checkEqual(c.getValue(), 0);
 
 	c.setValue(value);
 	checkEqual(c.getValue() , value);
@@ -23,6 +30,7 @@ TestCase( CellConstructor )
 	
 	checkEqual(c.getx() , x);
 	checkEqual(c.gety() , y);
+	checkEqual(c.getValue() , 0);
 	
 	x = 8;
 	y = 1;
@@ -31,4 +39,19 @@ TestCase( CellConstructor )
 	
 	checkEqual(c.getx() , x);
 	checkEqual(c.gety() , y);
+}
+
+TestCase( PossibleValues )
+{
+	IntSet::iterator begin = allValuesSet.begin();
+	IntSet::iterator end = allValuesSet.end();
+	int i = 0;
+	IntSet::iterator it = begin;
+	while(it != end)
+	{
+		checkEqual(*it, allValues[i]);
+		++it;
+		++i;
+	}
+	checkEqual(i, numberOfAllValues);
 }
