@@ -40,18 +40,3 @@ TestCase( CellConstructor )
 	checkEqual(c.getx() , x);
 	checkEqual(c.gety() , y);
 }
-
-TestCase( PossibleValues )
-{
-	IntSet::iterator begin = allValuesSet.begin();
-	IntSet::iterator end = allValuesSet.end();
-	int i = 0;
-	IntSet::iterator it = begin;
-	while(it != end)
-	{
-		checkEqual(*it, allValues[i]);
-		++it;
-		++i;
-	}
-	checkEqual(i, numberOfAllValues);
-}

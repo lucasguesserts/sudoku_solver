@@ -1,12 +1,12 @@
 #include <Cell.h>
 
 Cell::Cell( void )
-	: x(-1) , y(-1) , value(0), possibleValues(allValuesSet)
+	: x(-1) , y(-1) , value(0), possibleValues(allPossibleValues)
 {
 }
 
 Cell::Cell(const int  x, const int y)
-	: value(0), possibleValues(allValuesSet)
+	: value(0), possibleValues(allPossibleValues)
 {
 	this->setx(x);
 	this->sety(y);
@@ -42,7 +42,7 @@ int Cell::gety( void ) const
 	return this->y;
 }
 
-IntSet Cell::getPossibleValues(void) const
+PossibleValues Cell::getPossibleValues(void) const
 {
 	return this->possibleValues;
 }

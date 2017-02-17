@@ -1,12 +1,7 @@
-#include <set>
+#ifndef CELL_H
+#define CELL_H
 
-using std::set;
-
-typedef set<int> IntSet;
-
-const int allValues[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-const int numberOfAllValues = 9;
-const IntSet allValuesSet(allValues, allValues + 9);
+#include <PossibleValues.h>
 
 class Cell
 {
@@ -15,20 +10,22 @@ public:
 		Cell(void);
 		Cell(const int , const int);
 		
-		void	setValue( const int );
-		int		getValue( void ) const;
+		void			setValue( const int );
+		int				getValue( void ) const;
 		
-		void	setx( const int );
-		int		getx(void) const;
+		void			setx( const int );
+		int				getx(void) const;
 		
-		void	sety( const int );
-		int		gety(void) const;
+		void			sety( const int );
+		int				gety(void) const;
 
-		IntSet	getPossibleValues(void) const;
+		PossibleValues	getPossibleValues(void) const;
 		
 	private:
-		int		value;
-		int		x;
-		int		y;
-		IntSet	possibleValues;
+		int				value;
+		int				x;
+		int				y;
+		PossibleValues	possibleValues;
 };
+
+#endif
