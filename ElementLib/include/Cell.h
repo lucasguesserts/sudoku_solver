@@ -20,6 +20,7 @@ public:
 		int				gety(void) const;
 
 		PossibleValues	getPossibleValues(void) const;
+		void			erasePossibleValue(const unsigned) const;
 		
 	private:
 		int				value;

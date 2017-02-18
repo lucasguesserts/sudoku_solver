@@ -3,8 +3,13 @@
 
 #include <set>
 
-#define FIRST_VALUE 1u
-#define N_VALUES 9u
+// Choose game possible values
+#ifndef FIRST_VALUE
+	#define FIRST_VALUE 1u
+#endif
+#ifndef N_VALUES
+	#define N_VALUES 9u
+#endif
 
 using std::set;
 
@@ -35,5 +40,7 @@ const PossibleValues allPossibleValues (possibleValuesList.list , possibleValues
 const unsigned firstPossibleValue		=	*(allPossibleValues.begin());
 const unsigned lastPossibleValue		=	*(allPossibleValues.end());
 const unsigned numberOfPossibleValues	=	N_VALUES;
+
+bool operator== (PossibleValues , PossibleValues);
 
 #endif

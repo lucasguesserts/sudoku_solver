@@ -15,6 +15,8 @@ Cell::Cell(const int  x, const int y)
 void Cell::setValue( const int value )
 {
 	this->value = value;
+	// Clear possible values set
+	this->possibleValues.clear();
 }
 
 int Cell::getValue( void ) const
@@ -45,4 +47,10 @@ int Cell::gety( void ) const
 PossibleValues Cell::getPossibleValues(void) const
 {
 	return this->possibleValues;
+}
+
+
+void Cell::erasePossibleValue(const unsigned val) const
+{
+	this->getPossibleValues().erase( val );
 }

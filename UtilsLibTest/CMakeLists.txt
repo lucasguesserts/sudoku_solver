@@ -13,7 +13,7 @@ file(GLOB ${PROJECT_NAME}_sources ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/source/*.c
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_sources})
 
 #LINK LIBRARIES
-#target_link_libraries(${PROJECT_NAME} UtilsLib)
+target_link_libraries(${PROJECT_NAME} UtilsLib)
 
 #DEFINE OUTPUT LOCATION
 install(

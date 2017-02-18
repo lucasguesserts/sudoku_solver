@@ -8,7 +8,7 @@
 // ElementLib
 #include <Cell.h>
 
-// Boost
+// Utils
 #include <Test.h>
 
 TestCase( CellSetAndGet )
@@ -20,6 +20,7 @@ TestCase( CellSetAndGet )
 
 	c.setValue(value);
 	checkEqual(c.getValue() , value);
+	checkEqual( c.getPossibleValues().size() , allPossibleValues.size());
 }
 
 TestCase( CellConstructor )
@@ -31,6 +32,7 @@ TestCase( CellConstructor )
 	checkEqual(c.getx() , x);
 	checkEqual(c.gety() , y);
 	checkEqual(c.getValue() , 0);
+//	check( c.getPossibleValues() == allPossibleValues );
 	
 	x = 8;
 	y = 1;

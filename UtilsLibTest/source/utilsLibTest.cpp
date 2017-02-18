@@ -28,6 +28,22 @@ TestCase( InsertTest )
 	checkEqual( pvInsert.size() , (end-start+1) );
 }
 
+TestCase( PossibleValuesCopyConstructor )
+{
+	PossibleValues pv(allPossibleValues);
+
+	check( pv == allPossibleValues );
+}
+
+TestCase( PossibleValuesIsEqualOperator )
+{
+	unsigned insertValues[] = {1 , 5 , 34};
+	PossibleValues pv0(insertValues , insertValues+3);
+	PossibleValues pv1(insertValues , insertValues+3);
+
+	check( pv0 == pv1 );
+}
+
 TestCase( FirstAndLastValues )
 {
 	unsigned firstValue	= FIRST_VALUE;
@@ -45,17 +61,7 @@ TestCase( AllPossibleValues )
 		pv.insert(i);
 	}
 
-	checkEqual( allPossibleValues.size() , pv.size() );
-
-	PossibleValues::iterator itAll = allPossibleValues.begin();
-	PossibleValues::iterator itPv = pv.begin();
-	while( itAll != allPossibleValues.end() )
-	{
-		checkEqual( *itAll , *itPv );
-
-		++itAll ;
-		++itPv ;
-	}
+	check( allPossibleValues == pv );
 }
 
 TestCase( VoidSet )
