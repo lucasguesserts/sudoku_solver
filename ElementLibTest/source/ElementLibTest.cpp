@@ -8,6 +8,7 @@ using std::endl;
 // ElementLib
 #include <Cell.h>
 #include <SudokuGame.h>
+#include <Group.h>
 
 // Utils
 #include <Test.h>
@@ -139,4 +140,21 @@ TestCase( SudokuGameConstructorWithInt )
 
 // getCell already tested...
 
+// Group
 
+TestCase( GroupAddCellAndGetCell )
+{
+	SudokuGame sg(9);
+	Group g;
+
+	int x = 3;
+	int y = 2;
+	Cell testCell = sg.getCell(x , y);
+	Cell gotCell;
+
+	g.addCell(testCell);
+	gotCell = g.getCell(0);
+
+	checkEqual( testCell == gotCell , true );
+
+}
