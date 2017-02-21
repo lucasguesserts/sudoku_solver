@@ -9,3 +9,8 @@ Cell Group::getCell(const int i)
 {
 	return *( this->cells[i] );
 }
+
+int Group::getNumberOfCell(void)
+{
+	return this->cells.size();
+}

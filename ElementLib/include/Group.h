@@ -4,20 +4,20 @@
 #include <vector>
 
 #include <Cell.h>
-#include <SudokuGame.h>
 
 using std::vector;
 
-typedef vector< Cell *> CellVectorPtr;
+typedef vector< Cell *> CellPtrVector;
 
 class Group
 {
 	public:
 		void	addCell(Cell & cell);
 		Cell	getCell(const int i);
+		int		getNumberOfCell(void);
 
 	private:
-		CellVectorPtr cells;
+		CellPtrVector cells;
 };
 
 #endif

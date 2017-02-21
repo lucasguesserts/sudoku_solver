@@ -114,7 +114,7 @@ TestCase( CellIsEqualAndIsDifferentperators )
 
 // SudokuGame
 
-TestCase( SudokuGameVoidConstructor )
+TestCase( SudokuGameDefaultConstructor )
 {
 	SudokuGame sg;
 	int		x = 3;
@@ -123,7 +123,6 @@ TestCase( SudokuGameVoidConstructor )
 	Cell	csg = sg.getCell(x , y);
 
 	checkEqual( csg == testCell , true );
-	
 }
 
 TestCase( SudokuGameConstructorWithInt )
@@ -138,7 +137,20 @@ TestCase( SudokuGameConstructorWithInt )
 
 }
 
-// getCell already tested...
+// SudokuGame::getCell already tested...
+
+TestCase( SudokuGameLine )
+{
+	int size = 9;
+	int l = 2;
+	SudokuGame sg(size);
+	Line line = sg.getLine(l);
+
+	for(int c=0 ; c<size ; ++c)
+	{
+		checkEqual( sg.getCell(l,c) == line.getCell(c) , true );
+	}
+}
 
 // Group
 
