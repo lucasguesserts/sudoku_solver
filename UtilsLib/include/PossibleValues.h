@@ -22,7 +22,7 @@ struct PossibleValuesListStruct
 	PossibleValuesListStruct(unsigned first , unsigned n)
 	{
 		this->list = new unsigned[n];
-		for(unsigned i=0 ; i<(n) ; ++i){
+		for(unsigned i=0 ; i<n ; ++i){
 			list[i] = i + first;
 		}
 	}
@@ -42,5 +42,6 @@ const unsigned lastPossibleValue		=	*(allPossibleValues.end());
 const unsigned numberOfPossibleValues	=	N_VALUES;
 
 bool operator== (PossibleValues , PossibleValues);
+bool operator!= (PossibleValues , PossibleValues);
 
 #endif

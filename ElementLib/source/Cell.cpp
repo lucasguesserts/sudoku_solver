@@ -49,8 +49,28 @@ PossibleValues Cell::getPossibleValues(void) const
 	return this->possibleValues;
 }
 
-
-void Cell::erasePossibleValue(const unsigned val) const
+void Cell::erasePossibleValue(const unsigned val)
 {
-	this->getPossibleValues().erase( val );
+	this->possibleValues.erase( val );
+}
+
+bool Cell::havePossibleValue(unsigned val) const
+{
+	return static_cast<bool>( this->possibleValues.count(val) );
+}
+
+bool operator==(Cell left , Cell right)
+{
+	if( left.getValue() != right.getValue() ) return false;
+	if( left.getx() != right.getx() ) return false;
+	if( left.gety() != right.gety() ) return false;
+	if( left.gety() != right.gety() ) return false;
+	if( left.getPossibleValues() != right.getPossibleValues() ) return false;
+
+	return true;
+}
+
+bool operator!=(Cell left , Cell right)
+{
+	return !(left==right);
 }

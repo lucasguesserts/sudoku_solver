@@ -1,5 +1,10 @@
 #define BOOST_TEST_MODULE TestModule
 
+// std
+#include <iostream>
+using std::cout;
+using std::endl;
+
 // Utils
 #include <Test.h>
 #include <PossibleValues.h>
@@ -44,6 +49,17 @@ TestCase( PossibleValuesIsEqualOperator )
 	check( pv0 == pv1 );
 }
 
+TestCase( PossibleValuesIsDifferentOperator )
+{
+	unsigned insertValues[] = {1 , 5 , 34};
+	PossibleValues pv0(insertValues , insertValues+3);
+	PossibleValues pv1(insertValues , insertValues+3);
+	PossibleValues pv2(insertValues , insertValues+2);
+
+	checkEqual( pv0 != pv1 , false );
+	checkEqual( pv0 != pv2 , true );
+}
+
 TestCase( FirstAndLastValues )
 {
 	unsigned firstValue	= FIRST_VALUE;
@@ -55,6 +71,10 @@ TestCase( FirstAndLastValues )
 
 TestCase( AllPossibleValues )
 {
+
+	checkEqual(firstPossibleValue , 1);
+	checkEqual(lastPossibleValue , 9);
+
 	PossibleValues pv;
 	for(unsigned i=firstPossibleValue ; i<(lastPossibleValue+1) ; ++i)
 	{

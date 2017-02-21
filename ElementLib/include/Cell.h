@@ -20,7 +20,8 @@ public:
 		int				gety(void) const;
 
 		PossibleValues	getPossibleValues(void) const;
-		void			erasePossibleValue(const unsigned) const;
+		void			erasePossibleValue(const unsigned);
+		bool			havePossibleValue(unsigned) const;
 		
 	private:
 		int				value;
@@ -28,5 +29,8 @@ public:
 		int				y;
 		PossibleValues	possibleValues;
 };
+
+bool operator==(Cell left , Cell right);
+bool operator!=(Cell left , Cell right);
 
 #endif

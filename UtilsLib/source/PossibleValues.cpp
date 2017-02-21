@@ -16,3 +16,9 @@ bool operator== (PossibleValues left , PossibleValues right)
 
 	return true;
 }
+
+bool operator!= (PossibleValues left , PossibleValues right)
+{
+
+	return !(left==right);
+}
