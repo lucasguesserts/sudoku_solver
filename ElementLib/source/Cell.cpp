@@ -61,11 +61,10 @@ bool Cell::havePossibleValue(unsigned val) const
 
 bool operator==(Cell left , Cell right)
 {
-	if( left.getValue() != right.getValue() ) return false;
 	if( left.getx() != right.getx() ) return false;
 	if( left.gety() != right.gety() ) return false;
-	if( left.gety() != right.gety() ) return false;
-	if( left.getPossibleValues() != right.getPossibleValues() ) return false;
+//	if( left.getValue() != right.getValue() ) return false;
+//	if( left.getPossibleValues() != right.getPossibleValues() ) return false;
 
 	return true;
 }

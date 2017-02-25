@@ -91,25 +91,18 @@ TestCase( ErasePossibleValue )
 
 TestCase( CellIsEqualAndIsDifferentperators )
 {
-	Cell c[5];
+	Cell c[3];
 
 	checkEqual( c[0] == c[1] , true );
 	checkEqual( c[0] == c[2] , true );
-	checkEqual( c[0] == c[3] , true );
-	checkEqual( c[0] == c[4] , true );
 
-	int val = 2;
 	int x = 1;
 	int y = 5;
-	c[1].erasePossibleValue(val);
-	c[2].setValue(val);
-	c[3].setx(x);
-	c[4].sety(y);
+	c[1].setx(x);
+	c[2].sety(y);
 
 	checkEqual( c[0] != c[1] , true );
 	checkEqual( c[0] != c[2] , true );
-	checkEqual( c[0] != c[3] , true );
-	checkEqual( c[0] != c[4] , true );
 }
 
 // SudokuGame

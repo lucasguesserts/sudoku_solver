@@ -30,6 +30,9 @@ public:
 		PossibleValues	possibleValues;
 };
 
+// Two Cells are equal when they are located
+// in the same place, that is, when 'x' and
+// 'y' are equal.
 bool operator==(Cell left , Cell right);
 bool operator!=(Cell left , Cell right);
 
