@@ -1,5 +1,7 @@
 #include <Cell.h>
 
+// Constructors
+
 Cell::Cell( void )
 	: x(-1) , y(-1) , value(0), possibleValues(allPossibleValues)
 {
@@ -11,6 +13,8 @@ Cell::Cell(const int  x, const int y)
 	this->setx(x);
 	this->sety(y);
 }
+
+// set and get properties functionalities
 
 void Cell::setValue( const int value )
 {
@@ -44,6 +48,8 @@ int Cell::gety( void ) const
 	return this->y;
 }
 
+// PossibleValues functionalities
+
 PossibleValues Cell::getPossibleValues(void) const
 {
 	return this->possibleValues;
@@ -57,6 +63,18 @@ void Cell::erasePossibleValue(const unsigned val)
 bool Cell::havePossibleValue(unsigned val) const
 {
 	return static_cast<bool>( this->possibleValues.count(val) );
+}
+
+// Group functionalities
+
+void Cell::addToGroup(Group & g)
+{
+	this->group.push_back( &g );
+}
+
+Group Cell::getGroup(const int i)
+{
+	return *(this->group[i]);
 }
 
 bool operator==(Cell left , Cell right)
