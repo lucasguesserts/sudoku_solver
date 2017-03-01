@@ -1,12 +1,15 @@
 #define BOOST_TEST_MODULE TestModule
 
 // std
-#include <iostream>
-using std::cout;
-using std::endl;
+//#include <iostream>
+//using std::cout;
+//using std::endl;
+#include <vector>
+using std::vector;
 
 // Utils
 #include <Test.h>
+#include <Foreach.h>
 #include <PossibleValues.h>
 
 TestCase( CheckEqualAndCheckClose )
@@ -16,6 +19,22 @@ TestCase( CheckEqualAndCheckClose )
 
 	checkClose( i , j , 1.0e-12 );
 	checkEqual( i , j );
+}
+
+TestCase( ForeachTest ){
+	vector<double> values;
+	int nValues = 5;
+	double rawValues[] = { 2.71, 3.14, 0.0, -3.14, -2.71 };
+
+	for( int i = 0; i < nValues; ++i ){
+		values.push_back( rawValues[ i ] );
+	}
+
+	int counter = 0;
+	foreach( double v, values ){
+		checkClose( rawValues[ counter ], v, 1.0e-12 );
+		++counter; 
+	}
 }
 
 TestCase( InsertTest )
