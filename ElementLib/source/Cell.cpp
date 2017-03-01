@@ -18,9 +18,23 @@ Cell::Cell(const int  x, const int y)
 
 void Cell::setValue( const int value )
 {
+	// Set value
 	this->value = value;
+
 	// Clear possible values set
 	this->possibleValues.clear();
+
+	// Remove the 'value' from
+	// PossibleValue of each Cell
+	// that belongs to this Cell
+	// Groups
+	foreach( Group * g , this->group )
+	{
+		foreach( Cell * c , g->getCells() )
+		{
+			c->erasePossibleValue( value );
+		}
+	}
 }
 
 int Cell::getValue( void ) const

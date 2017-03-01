@@ -27,7 +27,7 @@ TestCase( CellVoidConstructor )
 	checkEqual( c.getx() , defaultX );
 	checkEqual( c.gety() , defaultY );
 	checkEqual( c.getValue() , defaultValue );
-	check( c.getPossibleValues() == allPossibleValues );
+	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 }
 
 TestCase( CellXYConstructor )
@@ -39,7 +39,7 @@ TestCase( CellXYConstructor )
 	checkEqual(c.getx() , x);
 	checkEqual(c.gety() , y);
 	checkEqual(c.getValue() , 0);
-	check( c.getPossibleValues() == allPossibleValues );
+	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 	
 	x = 8;
 	y = 1;
@@ -50,7 +50,7 @@ TestCase( CellXYConstructor )
 	checkEqual(c.gety() , y);
 }
 
-TestCase( CellSetAndGet )
+TestCase( CellSetAndGetValue )
 {
 	int value = 6;
 	Cell c;
@@ -79,7 +79,7 @@ TestCase( GetPossibleValues )
 {
 	Cell c;
 
-	checkEqual( c.getPossibleValues() , allPossibleValues );
+	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 }
 
 TestCase( HavePossibleValue )
@@ -108,7 +108,7 @@ TestCase( AddToGroupAndGetGroup )
 	c.addToGroup( g );
 
 	// check
-	ckeckEqual( c.getGroup(0) , g );
+	checkEqual( c.getGroup(0) == g , true );
 }
 
 TestCase( CellIsEqualAndIsDifferentperators )
@@ -185,7 +185,7 @@ TestCase( GroupGetCells )
 	testVector.push_back( &c1 );
 
 	// Test
-	checkEqual( g.getCells() , testVector );
+	checkEqual( g.getCells() == testVector , true );
 }
 
 TestCase( GroupIsEqualAndIsDifferentOperators )
@@ -205,7 +205,7 @@ TestCase( GroupIsEqualAndIsDifferentOperators )
 	g2.addCell(c1);
 
 	// Check
-	checkEqual( g0 , g1 );
+	checkEqual( g0 == g1 , true );
 	checkEqual( g0 != g2 , true );
 }
 
@@ -227,7 +227,7 @@ TestCase( CellAndGroupAdd )
 	Group gWrong;
 
 	int x = 3;
-	int y = 4
+	int y = 4;
 	Cell cWrong;
 	Cell c(3,4);
 
@@ -275,13 +275,57 @@ TestCase( SudokuGameConstructorWithInt )
 
 TestCase( SudokuGameLine )
 {
+	// Create a SudokuGame
 	int size = 9;
-	int l = 2;
 	SudokuGame sg(size);
+	// Get a SudouGame Line
+	int l = 2;
 	Line line = sg.getLine(l);
 
+	// For each Cell in line, verify if
+	// the line Cell is the same as got
+	// by the Line::getCell
 	for(int c=0 ; c<size ; ++c)
 	{
 		checkEqual( sg.getCell(l,c) == line.getCell(c) , true );
+	}
+
+	// Verify for each Cell in line if
+	// it belongs to the line
+	for(int c=0 ; c<size ; ++c)
+	{
+		Cell cell = sg.getCell(l,c);
+		checkEqual( cell.getGroup(0) == line , true );
+	}
+}
+
+TestCase( SudokuGameSetCellValue )
+{
+	// Create a SudouGame. It has Cells and Lines
+	SudokuGame sg(9);
+
+	// Get a line
+	int l = 3;
+	Line line = sg.getLine( l );
+
+	// Set a 'line' Cell value
+	int c = 2;
+	int value = 1;
+	Cell cell = line.getCell( c );
+	cell.setValue( value );
+
+	// Verify for each 'line' Cell if the
+	// value 'value' was removed from
+	// PossibleValues list
+		// Initialize the correct possibleValues list
+		int nValues = 8;
+		int first = 2;
+		PossibleValuesListStruct pvList(first , nValues);
+		PossibleValues pv(pvList.list , pvList.list+nValues);
+	foreach( Cell * lc , line.getCells() )
+	{
+		if( lc == &cell ) continue; // pass the cell that
+									// the value was set.
+		checkEqual( lc->getPossibleValues() == pv , true );
 	}
 }

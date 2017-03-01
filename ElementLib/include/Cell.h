@@ -1,9 +1,12 @@
 #ifndef CELL_H
 #define CELL_H
 
+// std
 #include <vector>
 using std::vector;
 
+// Utils
+#include <Foreach.h>
 #include <PossibleValues.h>
 
 class Group;
