@@ -8,11 +8,13 @@
 #include <Group.h>
 #include <Line.h>
 #include <Column.h>
+#include <Rectangle.h>
 
 using std::vector;
-typedef vector< vector<Cell> >	CellMatrix;
-typedef vector<Line>			LineVector;
-typedef vector<Column>			ColumnVector;
+typedef vector< vector<Cell> >			CellMatrix;
+typedef vector<Line>					LineVector;
+typedef vector<Column>					ColumnVector;
+typedef vector< vector <Rectangle> >	RectangleMatrix;
 
 class SudokuGame{
 	public:
@@ -28,10 +30,12 @@ class SudokuGame{
 		CellMatrix		cell;
 		LineVector		line;
 		ColumnVector	column;
+		RectangleMatrix	rectangle;
 
 		void allocCells(int s);
 		void allocLines(int s);
 		void allocColumns(int s);
+		void allocRectangles(void);
 		void buildCheck(int s);
 };
 

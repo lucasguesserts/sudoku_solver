@@ -5,6 +5,8 @@ SudokuGame::SudokuGame(int s)
 	allocCells(s);
 	allocLines(s);
 	allocColumns(s);
+	allocRectangles();
+
 	buildCheck(s);
 }
 
@@ -67,8 +69,41 @@ void SudokuGame::allocColumns(int s)
 	}
 }
 
+void SudokuGame::allocRectangles(void)
+{
+	// l: rectangle number of lines
+	// c: rectangle number of columns
+	// s: game size
+	int defaultSize = 3;
+
+	// resize lines and columns
+	this->rectangle.resize(defaultSize);
+	for(int c=0 ; c<defaultSize ; ++c)
+	{
+		this->rectangle[c].resize(defaultSize);
+	}
+
+	// add Cells to each Rectangle
+	for(int l=0 ; l<defaultSize ; ++l)
+	{
+		for(int c=0 ; c<defaultSize ; ++c)
+		{
+			for(int cl=0 ; cl<defaultSize ; ++cl) // cl: Cell Line
+			{
+				for(int cc=0 ; cc<defaultSize ; ++cc) // cc: Cell Column
+				{
+					this->rectangle[l][c].addCell( this->cell[cl + defaultSize * l][cc + defaultSize * c] );
+				}
+			}
+		}
+	}
+}
+
 void SudokuGame::buildCheck(int s)
 {
+	// default size for a Rectangle
+	int defaultSize = 3;
+
 	// Check CellMatrix line number
 	if ( this->cell.size() != s ) throw "CellMatrix line numbers wrong";
 
@@ -94,5 +129,14 @@ void SudokuGame::buildCheck(int s)
 	for( int c=0 ; c<s ; ++c)
 	{
 		if ( this->column[c].getNumberOfCell() != s ) throw "Number of cells in column vector wrong";
+	}
+
+	// Check RectangleMatrix line number
+	if ( this->rectangle.size() != defaultSize ) throw "Number of lines in RectangleMatrix wrong";
+
+	// Check each RectangleMatrix column number
+	for(int l=0 ; l<defaultSize ; ++l)
+	{
+		if ( this->rectangle[l].size() != defaultSize ) throw "Number of columns in RectangleMatrix wrong";
 	}
 }
