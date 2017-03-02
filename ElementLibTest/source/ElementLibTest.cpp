@@ -248,10 +248,10 @@ TestCase( CellAndGroupAdd )
 TestCase( SudokuGameDefaultConstructor )
 {
 	SudokuGame sg;
-	int		x = 3;
-	int		y = 0;
+	int		x = 3; // x : column
+	int		y = 0; // y : line
 	Cell	testCell(x , y);
-	Cell	csg = sg.getCell(x , y);
+	Cell	csg = sg.getCell(y , x);
 
 	checkEqual( csg == testCell , true );
 }
@@ -331,4 +331,28 @@ TestCase( SudokuGameSetCellValue )
 									// the value was set.
 		checkEqual( lc->getPossibleValues() == pv , true );
 	}
+}
+
+TestCase( SudouGameRectangle )
+{
+	// Create a SudokuGame
+	SudokuGame sg;
+
+	// Get a Rectangle
+	int l = 1;
+	int c = 2;
+	Rectangle rec = sg.getRectangle(l,c);
+
+	// Get all rectangleCells and verify
+	// if the line and column number are correct
+	int defaultSize = 3;
+	for(int cl=0 ; cl<defaultSize ; ++cl)
+	{
+		for(int cc=0 ; cc<defaultSize ; ++cc)
+		{
+			checkEqual( rec.getCell(cc + cl*defaultSize).getx() , cc + c*defaultSize );
+			checkEqual( rec.getCell(cc + cl*defaultSize).gety() , cl + l*defaultSize );
+		}
+	}
+
 }

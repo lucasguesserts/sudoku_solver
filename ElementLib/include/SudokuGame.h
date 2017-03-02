@@ -21,9 +21,10 @@ class SudokuGame{
 
 		explicit SudokuGame(int s = N_VALUES);
 
-		Cell	getCell(int x , int y);
-		Line	getLine(int l);
-		Column	getColumn(int l);
+		Cell		getCell(int l , int c);
+		Line		getLine(int l);
+		Column		getColumn(int l);
+		Rectangle	getRectangle(int l , int c);
 
 	private:
 

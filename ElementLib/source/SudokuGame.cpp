@@ -10,9 +10,9 @@ SudokuGame::SudokuGame(int s)
 	buildCheck(s);
 }
 
-Cell SudokuGame::getCell(int x , int y)
+Cell SudokuGame::getCell(int l , int c)
 {
-	return this->cell[x][y];
+	return this->cell[l][c];
 }
 
 Line SudokuGame::getLine(int l)
@@ -25,6 +25,11 @@ Column SudokuGame::getColumn(int c)
 	return this->column[c];
 }
 
+Rectangle SudokuGame::getRectangle(int l , int c)
+{
+	return this->rectangle[l][c];
+}
+
 void SudokuGame::allocCells(int s)
 {
 	// s : game size
@@ -33,7 +38,9 @@ void SudokuGame::allocCells(int s)
 	{
 		for(int c=0 ; c<s ; ++c)
 		{
-			Cell newCell(l,c);
+			// x : column
+			// y : line
+			Cell newCell(c,l);
 			this->cell[l].push_back( newCell );
 		}
 	}
