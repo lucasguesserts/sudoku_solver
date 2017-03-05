@@ -283,6 +283,51 @@ TestCase( SudokuGameGetCellNumberOfPossibleValues )
 	checkEqual( sg.getCellNumberOfPossibleValues(l,c) , defaultSize );
 }
 
+TestCase( SudouGameSeCellValue )
+{
+	SudokuGame sg;
+	int l = 3; int rectangleLine = 1;
+	int c = 4; int rectangleColumn = 1;
+	int value = 2;
+
+	// Set Cell value
+	sg.setCellValue(l , c , value);
+
+	// Check Cell value
+	checkEqual( sg.getCell(l,c).getValue() , value );
+
+	// for each Cell in line 'l', verifies
+	// if 'value' is a possible value
+	foreach( Cell * cell , sg.getLine(l).getCells() )
+	{
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+	}
+
+	// for each Cell in column 'c', verifies
+	// if 'value' is a possible value
+	foreach( Cell * cell , sg.getColumn(c).getCells() )
+	{
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+	}
+
+	// for each Cell in rectancle, verifies
+	// if 'value' is a possible value
+	foreach( Cell * cell , sg.getRectangle(rectangleLine , rectangleColumn).getCells() )
+	{
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+	}
+
+}
+
+TestCase( SudokuGameGetCellUniquePossibleValue )
+{
+	// 1. Create a SudokuGame
+	// 2. Make a cell has a unique possible value
+	// 3. Test
+	SudokuGame sg;
+	
+}
+
 // Uncomment this test when Rectangle accepts
 // something different from 'defaultSize = 3'
 

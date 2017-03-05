@@ -15,9 +15,24 @@ Cell SudokuGame::getCell(int l , int c)
 	return this->cell[l][c];
 }
 
+void SudokuGame::setCellValue(int l , int c , int value)
+{
+	this->cell[l][c].setValue(value);
+}
+
 int SudokuGame::getCellNumberOfPossibleValues(int l , int c) const
 {
 	return this->cell[l][c].getNumberOfPossibleValues();
+}
+
+unsigned SudokuGame::getCellUniquePossibleValue(int l , int c) const
+{
+	if( this->getCellNumberOfPossibleValues(l,c) == 1)
+	{
+		// return the first and unique possible value
+		return cell[l][c].getPossibleValue(0);
+	}
+	else throw "Cell with more than one possible value";
 }
 
 Line SudokuGame::getLine(int l)

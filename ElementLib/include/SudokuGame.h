@@ -23,7 +23,11 @@ class SudokuGame{
 
 		// Cell functionalities
 		Cell		getCell(int l , int c);
+		void		setCellValue(int l , int c , int value);
 		int			getCellNumberOfPossibleValues(int l , int c) const;
+		unsigned	getCellUniquePossibleValue(int l , int c) const;
+
+		// Group functionalities
 		Line		getLine(int l);
 		Column		getColumn(int l);
 		Rectangle	getRectangle(int l , int c);
