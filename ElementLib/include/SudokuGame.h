@@ -21,10 +21,15 @@ class SudokuGame{
 
 		explicit SudokuGame(int s = N_VALUES);
 
+		// Cell functionalities
 		Cell		getCell(int l , int c);
+		int			getCellNumberOfPossibleValues(int l , int c) const;
 		Line		getLine(int l);
 		Column		getColumn(int l);
 		Rectangle	getRectangle(int l , int c);
+
+		// solvers
+		//void		solverForOnePossibleValue(void);
 
 	private:
 

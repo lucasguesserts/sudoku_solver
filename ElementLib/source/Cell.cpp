@@ -69,6 +69,19 @@ PossibleValues Cell::getPossibleValues(void) const
 	return this->possibleValues;
 }
 
+unsigned Cell::getPossibleValue(int pos) const
+{
+	// Return the possible value in position 'pos'
+	// in set. It will be useful to get the
+	// unique possible value (when the set
+	// has only one element.
+	int size = this->possibleValues.size();
+	PossibleValues::iterator it = this->possibleValues.begin();
+
+	if (pos < size)	return *it;
+	else throw "Trying to get a possible value out of range!";
+}
+
 void Cell::erasePossibleValue(const unsigned val)
 {
 	this->possibleValues.erase( val );
@@ -77,6 +90,11 @@ void Cell::erasePossibleValue(const unsigned val)
 bool Cell::havePossibleValue(unsigned val) const
 {
 	return static_cast<bool>( this->possibleValues.count(val) );
+}
+
+int Cell::getNumberOfPossibleValues(void) const
+{
+	return this->possibleValues.size();
 }
 
 // Group functionalities

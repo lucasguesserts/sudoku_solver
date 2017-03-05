@@ -82,6 +82,13 @@ TestCase( GetPossibleValues )
 	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 }
 
+TestCase( GetPossibleValue )
+{
+	Cell c;
+
+	checkEqual( c.getPossibleValue(0) , *(allPossibleValues.begin()) );
+}
+
 TestCase( HavePossibleValue )
 {
 	Cell c;
@@ -96,6 +103,14 @@ TestCase( ErasePossibleValue )
 	c.erasePossibleValue(valErase);
 	checkEqual( c.havePossibleValue(valErase) , false);
 	checkEqual( c.havePossibleValue(val) , true);
+}
+
+TestCase( CellNumberOfPossibleValues )
+{
+	Cell c;
+	int defaultSize = allPossibleValues.size();
+
+	checkEqual( c.getNumberOfPossibleValues() , defaultSize );
 }
 
 TestCase( AddToGroupAndGetGroup )
@@ -254,6 +269,18 @@ TestCase( SudokuGameDefaultConstructor )
 	Cell	csg = sg.getCell(y , x);
 
 	checkEqual( csg == testCell , true );
+}
+
+TestCase( SudokuGameGetCellNumberOfPossibleValues )
+{
+	// Create a SudokuGame ang test the
+	// number of possible values of a
+	// Cell
+	SudokuGame sg;
+	int l=2 , c=3;
+	int defaultSize = allPossibleValues.size();
+
+	checkEqual( sg.getCellNumberOfPossibleValues(l,c) , defaultSize );
 }
 
 // Uncomment this test when Rectangle accepts

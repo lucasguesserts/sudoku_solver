@@ -15,6 +15,11 @@ Cell SudokuGame::getCell(int l , int c)
 	return this->cell[l][c];
 }
 
+int SudokuGame::getCellNumberOfPossibleValues(int l , int c) const
+{
+	return this->cell[l][c].getNumberOfPossibleValues();
+}
+
 Line SudokuGame::getLine(int l)
 {
 	return this->line[l];
@@ -105,6 +110,26 @@ void SudokuGame::allocRectangles(void)
 		}
 	}
 }
+
+//// ############### solvers ###############
+//void SudokuGame::solverForOnePossibleValue(void)
+//{
+//	bool changed;
+//	do
+//	{
+//		for( int l=0 ; l<N_VALUES ; ++l )
+//		{
+//			for( int c=0 ; c<N_VALUES ; ++c )
+//			{
+//				PossibleValues pv = this->getCell(l,c).getPossibleValues();
+//				if( pv.size() == 1 )
+//				{
+
+//				}
+//			}
+//		}
+//	}while( changed==true );
+//}
 
 void SudokuGame::buildCheck(int s)
 {

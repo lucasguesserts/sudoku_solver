@@ -31,8 +31,10 @@ public:
 
 		// PossibleValues functionalities
 		PossibleValues	getPossibleValues(void) const;
+		unsigned		getPossibleValue(int) const;
 		void			erasePossibleValue(const unsigned);
 		bool			havePossibleValue(unsigned) const;
+		int				getNumberOfPossibleValues(void) const;
 
 		// Group functionalities
 		void			addToGroup(Group & g);
