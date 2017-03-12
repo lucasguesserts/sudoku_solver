@@ -283,7 +283,7 @@ TestCase( SudokuGameGetCellNumberOfPossibleValues )
 	checkEqual( sg.getCellNumberOfPossibleValues(l,c) , defaultSize );
 }
 
-TestCase( SudouGameSeCellValue )
+TestCase( SudouGameSetCellValue )
 {
 	SudokuGame sg;
 	int l = 3; int rectangleLine = 1;
@@ -300,32 +300,41 @@ TestCase( SudouGameSeCellValue )
 	// if 'value' is a possible value
 	foreach( Cell * cell , sg.getLine(l).getCells() )
 	{
-		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value)) , false);
 	}
 
 	// for each Cell in column 'c', verifies
 	// if 'value' is a possible value
 	foreach( Cell * cell , sg.getColumn(c).getCells() )
 	{
-		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value)) , false);
 	}
 
 	// for each Cell in rectancle, verifies
 	// if 'value' is a possible value
 	foreach( Cell * cell , sg.getRectangle(rectangleLine , rectangleColumn).getCells() )
 	{
-		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value) , false);
+		checkEqual( cell->havePossibleValue(static_cast<unsigned>(value)) , false);
 	}
-
 }
 
 TestCase( SudokuGameGetCellUniquePossibleValue )
 {
 	// 1. Create a SudokuGame
-	// 2. Make a cell has a unique possible value
-	// 3. Test
+	// Caution, this test may fail
+	// if the sudoku game size
+	// is 9 (N_VALUES=9)
 	SudokuGame sg;
-	
+
+	// 2. Make a cell has a unique possible value
+	int l = 2;
+	for(int c=0 ; c<(N_VALUES-1) ; ++c)
+	{
+		sg.setCellValue(l , c , c+1);
+	}
+
+	// 3. Test
+	checkEqual( sg.getCellUniquePossibleValue(l,8) , N_VALUES );
 }
 
 // Uncomment this test when Rectangle accepts
