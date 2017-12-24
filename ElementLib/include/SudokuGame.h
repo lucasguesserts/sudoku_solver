@@ -10,6 +10,8 @@
 #include <Column.h>
 #include <Rectangle.h>
 
+#include <hdf5.h>
+
 using std::vector;
 typedef vector< vector<Cell> >			CellMatrix;
 typedef vector<Line>					LineVector;
@@ -34,6 +36,9 @@ class SudokuGame{
 
 		// solvers
 		//void		solverForOnePossibleValue(void);
+		
+		// IO
+		void		write(const char * const fileName);
 
 	private:
 

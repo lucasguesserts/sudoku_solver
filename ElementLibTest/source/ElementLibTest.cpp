@@ -414,7 +414,7 @@ TestCase( SudokuGameSetCellValue )
 	}
 }
 
-TestCase( SudouGameRectangle )
+TestCase( SudokuGameRectangle )
 {
 	// Create a SudokuGame
 	SudokuGame sg;
@@ -436,4 +436,11 @@ TestCase( SudouGameRectangle )
 		}
 	}
 
+}
+
+TestCase( WriteSudokuGame )
+{
+	SudokuGame sg;
+
+	sg.write("empty_sudoku_game.sudokugame");
 }

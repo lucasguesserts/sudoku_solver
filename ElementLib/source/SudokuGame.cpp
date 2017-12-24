@@ -187,3 +187,35 @@ void SudokuGame::buildCheck(int s)
 		if ( this->rectangle[l].size() != defaultSize ) throw "Number of columns in RectangleMatrix wrong";
 	}
 }
+
+void SudokuGame::write(const char * const fileName)
+{
+	herr_t err;
+	hid_t file;
+	hid_t dataset, dataspace, datatype;
+	hsize_t rank = 2;
+	hsize_t dataspace_size[2];
+	int data[N_VALUES][N_VALUES];
+	int row, column;
+
+	for (row=0 ; row<N_VALUES ; ++row)
+	{
+		for(column=0 ; column<N_VALUES ; ++column)
+		{
+			data[row][column] = this->getCell(row,column).getValue();
+		}
+	}
+
+
+    file = H5Fcreate(fileName, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+	dataspace_size[0] = N_VALUES;
+	dataspace_size[1] = N_VALUES;
+    dataspace = H5Screate_simple(rank, dataspace_size, NULL);
+    dataset = H5Dcreate2(file, "sudoku game", H5T_NATIVE_INT, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+    H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
+
+    H5Dclose(dataset);
+    H5Sclose(dataspace);
+    H5Fclose(file);
+	return;
+}
