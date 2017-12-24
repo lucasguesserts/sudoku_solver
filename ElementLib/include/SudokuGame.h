@@ -39,6 +39,7 @@ class SudokuGame{
 		
 		// IO
 		void		write(const char * const fileName);
+		void		read(const char * const fileName);
 
 	private:
 

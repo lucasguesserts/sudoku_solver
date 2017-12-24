@@ -219,3 +219,30 @@ void SudokuGame::write(const char * const fileName)
     H5Fclose(file);
 	return;
 }
+
+void SudokuGame::read(const char * const fileName)
+{
+	herr_t err;
+	hid_t file;
+	hid_t dataset, dataspace, datatype;
+	hsize_t rank = 2;
+	hsize_t dataspace_size[2];
+	int data[N_VALUES][N_VALUES];
+	int row, column;
+
+    file = H5Fopen(fileName, H5F_ACC_RDONLY, H5P_DEFAULT);
+    dataset = H5Dopen2(file, "sudoku game", H5P_DEFAULT);
+	err = H5Dread( dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, data );
+
+	for (row=0 ; row<N_VALUES ; ++row)
+	{
+		for(column=0 ; column<N_VALUES ; ++column)
+		{
+			this->setCellValue(row,column,data[row][column]);
+		}
+	}
+
+    H5Dclose(dataset);
+    H5Fclose(file);
+	return;
+}

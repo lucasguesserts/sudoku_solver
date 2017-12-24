@@ -438,9 +438,15 @@ TestCase( SudokuGameRectangle )
 
 }
 
+// Refactoring needed!!!!!!!!!!!!!!!!!!!!!!!
 TestCase( WriteSudokuGame )
 {
-	SudokuGame sg;
+	SudokuGame sg1, sg2;
 
-	sg.write("empty_sudoku_game.sudokugame");
+	sg1.setCellValue(2,3,5);
+
+	sg1.write("empty_sudoku_game.sudokugame");
+	sg2.read("empty_sudoku_game.sudokugame");
+
+	checkEqual( sg2.getCell(2,3).getValue() , 5 );
 }
