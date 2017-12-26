@@ -7,7 +7,7 @@ Cell::Cell( void )
 {
 }
 
-Cell::Cell(const int  x, const int y)
+Cell::Cell(const unsigned  x, const int y)
 	: value(0), possibleValues(allPossibleValues)
 {
 	this->setx(x);
@@ -16,7 +16,7 @@ Cell::Cell(const int  x, const int y)
 
 // set and get properties functionalities
 
-void Cell::setValue( const int value )
+void Cell::setValue( const unsigned value )
 {
 	if(value == 0) return;
 	else
@@ -46,22 +46,22 @@ unsigned Cell::getValue( void ) const
 	return this->value;
 }
 
-void Cell::setx( const int x )
+void Cell::setx( const unsigned x )
 {
 	this->x = x;
 }
 
-int Cell::getx( void ) const
+unsigned Cell::getx( void ) const
 {
 	return this->x;
 }
 
-void Cell::sety( const int y )
+void Cell::sety( const unsigned y )
 {
 	this->y = y;
 }
 
-int Cell::gety( void ) const
+unsigned Cell::gety( void ) const
 {
 	return this->y;
 }
@@ -79,7 +79,7 @@ unsigned Cell::getPossibleValue(unsigned pos) const
 	// in set. It will be useful to get the
 	// unique possible value (when the set
 	// has only one element.
-	int size = this->possibleValues.size();
+	unsigned size = this->possibleValues.size();
 	PossibleValues::iterator it = this->possibleValues.begin();
 
 	if (pos < size)	return *it;
@@ -108,7 +108,7 @@ void Cell::addToGroup(Group & g)
 	this->group.push_back( &g );
 }
 
-Group Cell::getGroup(const int i)
+Group Cell::getGroup(const unsigned i)
 {
 	return *(this->group[i]);
 }

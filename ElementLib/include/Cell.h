@@ -17,17 +17,17 @@ class Cell
 public:
 		// Constructors
 		Cell(void);
-		Cell(const int , const int);
+		Cell(const unsigned , const int);
 		
 		// set and get properties functionalities
-		void			setValue( const int );
+		void			setValue( const unsigned );
 		unsigned		getValue( void ) const;
 		
-		void			setx( const int );
-		int				getx(void) const;
+		void			setx( const unsigned );
+		unsigned		getx(void) const;
 		
-		void			sety( const int );
-		int				gety(void) const;
+		void			sety( const unsigned );
+		unsigned		gety(void) const;
 
 		// PossibleValues functionalities
 		PossibleValues	getPossibleValues(void) const;
@@ -38,7 +38,7 @@ public:
 
 		// Group functionalities
 		void			addToGroup(Group & g);
-		Group			getGroup(const int i);
+		Group			getGroup(const unsigned i);
 		
 	private:
 		// properties

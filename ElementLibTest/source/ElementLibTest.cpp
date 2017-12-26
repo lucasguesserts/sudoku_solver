@@ -32,8 +32,8 @@ TestCase( CellVoidConstructor )
 
 TestCase( CellXYConstructor )
 {
-	int x = 3;
-	int y = 4;
+	unsigned x = 3;
+	unsigned y = 4;
 	Cell c ( x , y );
 	
 	checkEqual(c.getx() , x);
@@ -52,7 +52,7 @@ TestCase( CellXYConstructor )
 
 TestCase( CellSetAndGetValue )
 {
-	int value = 6;
+	unsigned value = 6;
 	Cell c;
 
 	c.setValue(value);
@@ -108,7 +108,7 @@ TestCase( ErasePossibleValue )
 TestCase( CellNumberOfPossibleValues )
 {
 	Cell c;
-	int defaultSize = allPossibleValues.size();
+	unsigned defaultSize = allPossibleValues.size();
 
 	checkEqual( c.getNumberOfPossibleValues() , defaultSize );
 }
@@ -133,8 +133,8 @@ TestCase( CellIsEqualAndIsDifferentperators )
 	checkEqual( c[0] == c[1] , true );
 	checkEqual( c[0] == c[2] , true );
 
-	int x = 1;
-	int y = 5;
+	unsigned x = 1;
+	unsigned y = 5;
 	c[1].setx(x);
 	c[2].sety(y);
 
@@ -148,8 +148,8 @@ TestCase( GroupAddCellAndGetCell )
 {
 	Group g;
 
-	int x = 3;
-	int y = 2;
+	unsigned x = 3;
+	unsigned y = 2;
 	Cell testCell(x , y);
 	Cell gotCell;
 
@@ -180,11 +180,11 @@ TestCase( GroupGetNumberOfCells )
 TestCase( GroupGetCells )
 {
 	// Creating test Cells
-	int x0 = 1;
-	int x1 = 5;
+	unsigned x0 = 1;
+	unsigned x1 = 5;
 
-	int y0 = 8;
-	int y1 = 4;
+	unsigned y0 = 8;
+	unsigned y1 = 4;
 
 	Cell c0(x0 , y0);
 	Cell c1(x1 , y1);
@@ -241,8 +241,8 @@ TestCase( CellAndGroupAdd )
 	Group g;
 	Group gWrong;
 
-	int x = 3;
-	int y = 4;
+	unsigned x = 3;
+	unsigned y = 4;
 	Cell cWrong;
 	Cell c(3,4);
 
@@ -263,8 +263,8 @@ TestCase( CellAndGroupAdd )
 TestCase( SudokuGameDefaultConstructor )
 {
 	SudokuGame sg;
-	int		x = 3; // x : column
-	int		y = 0; // y : line
+	unsigned		x = 3; // x : column
+	unsigned		y = 0; // y : line
 	Cell	testCell(x , y);
 	Cell	csg = sg.getCell(y , x);
 
@@ -277,8 +277,8 @@ TestCase( SudokuGameGetCellNumberOfPossibleValues )
 	// number of possible values of a
 	// Cell
 	SudokuGame sg;
-	int l=2 , c=3;
-	int defaultSize = allPossibleValues.size();
+	unsigned l=2 , c=3;
+	unsigned defaultSize = allPossibleValues.size();
 
 	checkEqual( sg.getCellNumberOfPossibleValues(l,c) , defaultSize );
 }
@@ -286,9 +286,9 @@ TestCase( SudokuGameGetCellNumberOfPossibleValues )
 TestCase( SudouGameSetCellValue )
 {
 	SudokuGame sg;
-	int l = 3; int rectangleLine = 1;
-	int c = 4; int rectangleColumn = 1;
-	int value = 2;
+	unsigned l = 3; int rectangleLine = 1;
+	unsigned c = 4; int rectangleColumn = 1;
+	unsigned value = 2;
 
 	// Set Cell value
 	sg.setCellValue(l , c , value);
@@ -327,8 +327,8 @@ TestCase( SudokuGameGetCellUniquePossibleValue )
 	SudokuGame sg;
 
 	// 2. Make a cell has a unique possible value
-	int l = 2;
-	for(int c=0 ; c<(N_VALUES-1) ; ++c)
+	unsigned l = 2;
+	for(unsigned c=0 ; c<(N_VALUES-1) ; ++c)
 	{
 		sg.setCellValue(l , c , c+1);
 	}
@@ -346,8 +346,8 @@ TestCase( SudokuGameGetCellUniquePossibleValue )
 //	SudokuGame sg(4);
 
 //	// Test Cell
-//	int		x = 2;
-//	int		y = 1;
+//	unsigned		x = 2;
+//	unsigned		y = 1;
 //	Cell	testCell(x,y);
 
 //	// check
@@ -360,23 +360,23 @@ TestCase( SudokuGameGetCellUniquePossibleValue )
 TestCase( SudokuGameLine )
 {
 	// Create a SudokuGame
-	int size = 9;
+	unsigned size = 9;
 	SudokuGame sg(size);
 	// Get a SudouGame Line
-	int l = 2;
+	unsigned l = 2;
 	Line line = sg.getLine(l);
 
 	// For each Cell in line, verify if
 	// the line Cell is the same as got
 	// by the Line::getCell
-	for(int c=0 ; c<size ; ++c)
+	for(unsigned c=0 ; c<size ; ++c)
 	{
 		checkEqual( sg.getCell(l,c) == line.getCell(c) , true );
 	}
 
 	// Verify for each Cell in line if
 	// it belongs to the line
-	for(int c=0 ; c<size ; ++c)
+	for(unsigned c=0 ; c<size ; ++c)
 	{
 		Cell cell = sg.getCell(l,c);
 		checkEqual( cell.getGroup(0) == line , true );
@@ -389,12 +389,12 @@ TestCase( SudokuGameSetCellValue )
 	SudokuGame sg(9);
 
 	// Get a line
-	int l = 3;
+	unsigned l = 3;
 	Line line = sg.getLine( l );
 
 	// Set a 'line' Cell value
-	int c = 2;
-	int value = 1;
+	unsigned c = 2;
+	unsigned value = 1;
 	Cell cell = line.getCell( c );
 	cell.setValue( value );
 
@@ -402,8 +402,8 @@ TestCase( SudokuGameSetCellValue )
 	// value 'value' was removed from
 	// PossibleValues list
 		// Initialize the correct possibleValues list
-		int nValues = 8;
-		int first = 2;
+		unsigned nValues = 8;
+		unsigned first = 2;
 		PossibleValuesListStruct pvList(first , nValues);
 		PossibleValues pv(pvList.list , pvList.list+nValues);
 	foreach( Cell * lc , line.getCells() )
@@ -420,16 +420,16 @@ TestCase( SudokuGameRectangle )
 	SudokuGame sg;
 
 	// Get a Rectangle
-	int l = 1;
-	int c = 2;
+	unsigned l = 1;
+	unsigned c = 2;
 	Rectangle rec = sg.getRectangle(l,c);
 
 	// Get all rectangleCells and verify
 	// if the line and column number are correct
-	int defaultSize = 3;
-	for(int cl=0 ; cl<defaultSize ; ++cl)
+	unsigned defaultSize = 3;
+	for(unsigned cl=0 ; cl<defaultSize ; ++cl)
 	{
-		for(int cc=0 ; cc<defaultSize ; ++cc)
+		for(unsigned cc=0 ; cc<defaultSize ; ++cc)
 		{
 			checkEqual( rec.getCell(cc + cl*defaultSize).getx() , cc + c*defaultSize );
 			checkEqual( rec.getCell(cc + cl*defaultSize).gety() , cl + l*defaultSize );
@@ -453,7 +453,7 @@ TestCase( WriteSudokuGame )
 
 TestCase( CreateGameFromArray )
 {
-	int game[9][9] = {
+	unsigned game[9][9] = {
 		{0,0,4,0,6,0,0,5,8},
 		{3,0,0,8,9,0,0,1,7},
 		{1,0,8,0,0,0,0,0,2},

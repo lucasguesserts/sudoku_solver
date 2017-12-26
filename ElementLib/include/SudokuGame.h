@@ -21,25 +21,25 @@ typedef vector< vector <Rectangle> >	RectangleMatrix;
 class SudokuGame{
 	public:
 
-		explicit SudokuGame(int s = N_VALUES);
+		explicit SudokuGame(unsigned s = N_VALUES);
 
 		// Cell functionalities
-		Cell		getCell(int l , int c);
-		void		setCellValue(int l , int c , unsigned value);
-		unsigned	getCellValue(int l , int c);
-		unsigned	getCellNumberOfPossibleValues(int l , int c) const;
-		unsigned	getCellUniquePossibleValue(int l , int c) const;
+		Cell		getCell(unsigned l , int c);
+		void		setCellValue(unsigned l , int c , unsigned value);
+		unsigned	getCellValue(unsigned l , int c);
+		unsigned	getCellNumberOfPossibleValues(unsigned l , int c) const;
+		unsigned	getCellUniquePossibleValue(unsigned l , int c) const;
 
 		// Group functionalities
-		Line		getLine(int l);
-		Column		getColumn(int l);
-		Rectangle	getRectangle(int l , int c);
+		Line		getLine(unsigned l);
+		Column		getColumn(unsigned l);
+		Rectangle	getRectangle(unsigned l , int c);
 
 		// solvers
 		//void		solverForOnePossibleValue(void);
 		
 		// IO
-		void		setUsingArray(int dataArray[9][9]);
+		void		setUsingArray(unsigned dataArray[9][9]);
 		void		write(const char * const fileName);
 		void		read(const char * const fileName);
 
@@ -50,11 +50,11 @@ class SudokuGame{
 		ColumnVector	column;
 		RectangleMatrix	rectangle;
 
-		void allocCells(int s);
-		void allocLines(int s);
-		void allocColumns(int s);
+		void allocCells(unsigned s);
+		void allocLines(unsigned s);
+		void allocColumns(unsigned s);
 		void allocRectangles(void);
-		void buildCheck(int s);
+		void buildCheck(unsigned s);
 };
 
 #endif

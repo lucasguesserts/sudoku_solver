@@ -9,7 +9,7 @@ void Group::addCell(Cell & cell)
 	cell.addToGroup( *this );
 }
 
-Cell Group::getCell(const int i)
+Cell Group::getCell(const unsigned i)
 {
 	return *( this->cells[i] );
 }
