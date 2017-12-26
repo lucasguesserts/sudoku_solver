@@ -38,6 +38,7 @@ class SudokuGame{
 		//void		solverForOnePossibleValue(void);
 		
 		// IO
+		void		setUsingArray(int dataArray[9][9]);
 		void		write(const char * const fileName);
 		void		read(const char * const fileName);
 

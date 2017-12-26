@@ -188,6 +188,18 @@ void SudokuGame::buildCheck(int s)
 	}
 }
 
+void SudokuGame::setUsingArray(int dataArray[9][9])
+{
+	for (int i=0 ; i<N_VALUES ; ++i)
+	{
+		for (int j=0 ; j<N_VALUES ; ++j)
+		{
+			setCellValue(i,j,dataArray[i][j]);
+		}
+	}
+	return;
+}
+
 void SudokuGame::write(const char * const fileName)
 {
 	herr_t err;
