@@ -15,12 +15,17 @@ Cell SudokuGame::getCell(int l , int c)
 	return this->cell[l][c];
 }
 
-void SudokuGame::setCellValue(int l , int c , int value)
+void SudokuGame::setCellValue(int l , int c , unsigned value)
 {
 	this->cell[l][c].setValue(value);
 }
 
-int SudokuGame::getCellNumberOfPossibleValues(int l , int c) const
+unsigned SudokuGame::getCellValue(int l , int c)
+{
+	return this->cell[l][c].getValue();
+}
+
+unsigned SudokuGame::getCellNumberOfPossibleValues(int l , int c) const
 {
 	return this->cell[l][c].getNumberOfPossibleValues();
 }

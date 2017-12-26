@@ -21,7 +21,7 @@ public:
 		
 		// set and get properties functionalities
 		void			setValue( const int );
-		int				getValue( void ) const;
+		unsigned		getValue( void ) const;
 		
 		void			setx( const int );
 		int				getx(void) const;
@@ -31,21 +31,20 @@ public:
 
 		// PossibleValues functionalities
 		PossibleValues	getPossibleValues(void) const;
-		unsigned		getPossibleValue(int) const;
+		unsigned		getPossibleValue(unsigned) const;
 		void			erasePossibleValue(const unsigned);
 		bool			havePossibleValue(unsigned) const;
-		int				getNumberOfPossibleValues(void) const;
+		unsigned		getNumberOfPossibleValues(void) const;
 
 		// Group functionalities
 		void			addToGroup(Group & g);
 		Group			getGroup(const int i);
-//		GroupPtrVector	getGroupPtrVector(void);
 		
 	private:
 		// properties
-		int				value;
-		int				x;
-		int				y;
+		unsigned		value;
+		unsigned		x;
+		unsigned		y;
 		// PossibleValues
 		PossibleValues	possibleValues;
 		// Groups

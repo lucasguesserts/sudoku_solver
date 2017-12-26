@@ -31,9 +31,9 @@ void Cell::setValue( const int value )
 		// PossibleValue of each Cell
 		// that belongs to this Cell
 		// Groups
-		for( Group * g : this->group )
+		foreach( Group * g , this->group )
 		{
-			for( Cell * c : g->getCells() )
+			foreach( Cell * c , g->getCells() )
 			{
 				c->erasePossibleValue( value );
 			}
@@ -41,7 +41,7 @@ void Cell::setValue( const int value )
 	}
 }
 
-int Cell::getValue( void ) const
+unsigned Cell::getValue( void ) const
 {
 	return this->value;
 }
@@ -73,7 +73,7 @@ PossibleValues Cell::getPossibleValues(void) const
 	return this->possibleValues;
 }
 
-unsigned Cell::getPossibleValue(int pos) const
+unsigned Cell::getPossibleValue(unsigned pos) const
 {
 	// Return the possible value in position 'pos'
 	// in set. It will be useful to get the
@@ -96,7 +96,7 @@ bool Cell::havePossibleValue(unsigned val) const
 	return static_cast<bool>( this->possibleValues.count(val) );
 }
 
-int Cell::getNumberOfPossibleValues(void) const
+unsigned Cell::getNumberOfPossibleValues(void) const
 {
 	return this->possibleValues.size();
 }

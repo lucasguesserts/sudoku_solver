@@ -25,8 +25,9 @@ class SudokuGame{
 
 		// Cell functionalities
 		Cell		getCell(int l , int c);
-		void		setCellValue(int l , int c , int value);
-		int			getCellNumberOfPossibleValues(int l , int c) const;
+		void		setCellValue(int l , int c , unsigned value);
+		unsigned	getCellValue(int l , int c);
+		unsigned	getCellNumberOfPossibleValues(int l , int c) const;
 		unsigned	getCellUniquePossibleValue(int l , int c) const;
 
 		// Group functionalities
