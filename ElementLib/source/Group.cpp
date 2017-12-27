@@ -14,6 +14,11 @@ Cell Group::getCell(const unsigned i)
 	return *( this->cells[i] );
 }
 
+unsigned Group::getCellValue(const unsigned i)
+{
+	return this->cells[i]->getValue();
+}
+
 unsigned Group::getNumberOfCell(void)
 {
 	return this->cells.size();

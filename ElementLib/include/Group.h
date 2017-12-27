@@ -14,6 +14,7 @@ class Group
 	public:
 		void			addCell(Cell & cell);
 		Cell			getCell(const unsigned i);
+		unsigned		getCellValue(const unsigned i);
 		unsigned		getNumberOfCell(void);
 		CellPtrVector	getCells(void);
 

@@ -3,7 +3,7 @@
 SudokuGame::SudokuGame(unsigned s)
 {
 	allocCells(s);
-	allocLines(s);
+	allocRows(s);
 	allocColumns(s);
 	allocRectangles();
 
@@ -40,9 +40,9 @@ unsigned SudokuGame::getCellUniquePossibleValue(unsigned l , unsigned c) const
 	else throw "Cell with more than one possible value";
 }
 
-Line SudokuGame::getLine(unsigned l)
+Row SudokuGame::getRow(unsigned l)
 {
-	return this->line[l];
+	return this->row[l];
 }
 
 Column SudokuGame::getColumn(unsigned c)
@@ -65,13 +65,13 @@ void SudokuGame::allocCells(unsigned s)
 	}
 }
 
-void SudokuGame::allocLines(unsigned s)
+void SudokuGame::allocRows(unsigned s)
 {
-	this->line.resize( s );
+	this->row.resize( s );
 	for(unsigned r=0 ; r<s ; ++r)
 	{
 		for(unsigned c=0 ; c<s ; ++c){
-			this->line[r].addCell( this->cell[r][c] );
+			this->row[r].addCell( this->cell[r][c] );
 		}
 	}
 }
@@ -142,8 +142,8 @@ void SudokuGame::buildCheck(unsigned s)
 	// default size for a Rectangle
 	unsigned defaultSize = 3;
 
-	// Check CellMatrix line number
-	if ( this->cell.size() != s ) throw "CellMatrix line numbers wrong";
+	// Check CellMatrix row number
+	if ( this->cell.size() != s ) throw "CellMatrix row numbers wrong";
 
 	// Check CellMatrix column number
 	for( unsigned l=0 ; l<s ; ++l)
@@ -151,13 +151,13 @@ void SudokuGame::buildCheck(unsigned s)
 		if ( this->cell[l].size() != s ) throw "CellMatrix column number wrong";
 	}
 
-	// Check LineVector size
-	if ( this->line.size() != s ) throw "LineVector size wrong";
+	// Check RowVector size
+	if ( this->row.size() != s ) throw "RowVector size wrong";
 
-	// Check each LineVector size
+	// Check each RowVector size
 	for( unsigned l=0 ; l<s ; ++l)
 	{
-		if ( this->line[l].getNumberOfCell() != s ) throw "Number of cells in line vector wrong";
+		if ( this->row[l].getNumberOfCell() != s ) throw "Number of cells in row vector wrong";
 	}
 
 	// Check ColumnVector size
@@ -169,8 +169,8 @@ void SudokuGame::buildCheck(unsigned s)
 		if ( this->column[c].getNumberOfCell() != s ) throw "Number of cells in column vector wrong";
 	}
 
-	// Check RectangleMatrix line number
-	if ( this->rectangle.size() != defaultSize ) throw "Number of lines in RectangleMatrix wrong";
+	// Check RectangleMatrix row number
+	if ( this->rectangle.size() != defaultSize ) throw "Number of rows in RectangleMatrix wrong";
 
 	// Check each RectangleMatrix column number
 	for(unsigned l=0 ; l<defaultSize ; ++l)

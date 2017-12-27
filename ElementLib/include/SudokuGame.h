@@ -6,7 +6,7 @@
 
 #include <Cell.h>
 #include <Group.h>
-#include <Line.h>
+#include <Row.h>
 #include <Column.h>
 #include <Rectangle.h>
 
@@ -14,26 +14,25 @@
 
 using std::vector;
 typedef vector< vector<Cell> >			CellMatrix;
-typedef vector<Line>					LineVector;
+typedef vector<Row>					RowVector;
 typedef vector<Column>					ColumnVector;
 typedef vector< vector <Rectangle> >	RectangleMatrix;
 
 class SudokuGame{
 	public:
-
 		explicit SudokuGame(unsigned s = N_VALUES);
 
 		// Cell functionalities
 		Cell		getCell(unsigned r , unsigned c);
 		void		setCellValue(unsigned r , unsigned c , unsigned value);
 		unsigned	getCellValue(unsigned r , unsigned c) const;
-		unsigned	getCellNumberOfPossibleValues(unsigned l , unsigned c) const;
-		unsigned	getCellUniquePossibleValue(unsigned l , unsigned c) const;
+		unsigned	getCellNumberOfPossibleValues(unsigned r , unsigned c) const;
+		unsigned	getCellUniquePossibleValue(unsigned r , unsigned c) const;
 
 		// Group functionalities
-		Line		getLine(unsigned l);
-		Column		getColumn(unsigned l);
-		Rectangle	getRectangle(unsigned l , unsigned c);
+		Row			getRow(unsigned r);
+		Column		getColumn(unsigned c);
+		Rectangle	getRectangle(unsigned r , unsigned c);
 
 		// solvers
 		//void		solverForOnePossibleValue(void);
@@ -44,14 +43,13 @@ class SudokuGame{
 		void		read(const char * const fileName);
 
 	private:
-
 		CellMatrix		cell;
-		LineVector		line;
+		RowVector		row;
 		ColumnVector	column;
 		RectangleMatrix	rectangle;
 
 		void allocCells(unsigned s);
-		void allocLines(unsigned s);
+		void allocRows(unsigned s);
 		void allocColumns(unsigned s);
 		void allocRectangles(void);
 		void buildCheck(unsigned s);

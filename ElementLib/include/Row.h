@@ -1,10 +1,10 @@
-#ifndef LINE_H
-#define LINE_H
+#ifndef ROW_H
+#define ROW_H
 
 #include <Cell.h>
 #include <Group.h>
 
-class Line: public Group
+class Row: public Group
 {
 	public:
 
