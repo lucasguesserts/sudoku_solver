@@ -3,34 +3,17 @@
 // Constructors
 
 Cell::Cell( void )
-	: x(-1) , y(-1) , value(0), possibleValues(allPossibleValues)
-{
-}
-
-Cell::Cell(const unsigned  x, const int y)
 	: value(0), possibleValues(allPossibleValues)
 {
-	this->setx(x);
-	this->sety(y);
 }
-
-// set and get properties functionalities
 
 void Cell::setValue( const unsigned value )
 {
 	if(value == 0) return;
 	else
 	{
-		// Set value
 		this->value = value;
-
-		// Clear possible values set
 		this->possibleValues.clear();
-
-		// Remove the 'value' from
-		// PossibleValue of each Cell
-		// that belongs to this Cell
-		// Groups
 		foreach( Group * g , this->group )
 		{
 			foreach( Cell * c , g->getCells() )
@@ -45,28 +28,6 @@ unsigned Cell::getValue( void ) const
 {
 	return this->value;
 }
-
-void Cell::setx( const unsigned x )
-{
-	this->x = x;
-}
-
-unsigned Cell::getx( void ) const
-{
-	return this->x;
-}
-
-void Cell::sety( const unsigned y )
-{
-	this->y = y;
-}
-
-unsigned Cell::gety( void ) const
-{
-	return this->y;
-}
-
-// PossibleValues functionalities
 
 PossibleValues Cell::getPossibleValues(void) const
 {
@@ -111,19 +72,4 @@ void Cell::addToGroup(Group & g)
 Group Cell::getGroup(const unsigned i)
 {
 	return *(this->group[i]);
-}
-
-bool operator==(Cell left , Cell right)
-{
-	if( left.getx() != right.getx() ) return false;
-	if( left.gety() != right.gety() ) return false;
-//	if( left.getValue() != right.getValue() ) return false;
-//	if( left.getPossibleValues() != right.getPossibleValues() ) return false;
-
-	return true;
-}
-
-bool operator!=(Cell left , Cell right)
-{
-	return !(left==right);
 }

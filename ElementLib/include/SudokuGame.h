@@ -24,9 +24,9 @@ class SudokuGame{
 		explicit SudokuGame(unsigned s = N_VALUES);
 
 		// Cell functionalities
-		Cell		getCell(unsigned l , unsigned c);
-		void		setCellValue(unsigned l , unsigned c , unsigned value);
-		unsigned	getCellValue(unsigned l , unsigned c) const;
+		Cell		getCell(unsigned r , unsigned c);
+		void		setCellValue(unsigned r , unsigned c , unsigned value);
+		unsigned	getCellValue(unsigned r , unsigned c) const;
 		unsigned	getCellNumberOfPossibleValues(unsigned l , unsigned c) const;
 		unsigned	getCellUniquePossibleValue(unsigned l , unsigned c) const;
 

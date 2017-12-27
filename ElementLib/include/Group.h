@@ -21,7 +21,4 @@ class Group
 		CellPtrVector cells;
 };
 
-bool operator==(Group left , Group right);
-bool operator!=(Group left , Group right);
-
 #endif

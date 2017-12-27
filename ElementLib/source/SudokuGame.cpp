@@ -10,19 +10,19 @@ SudokuGame::SudokuGame(unsigned s)
 	buildCheck(s);
 }
 
-Cell SudokuGame::getCell(unsigned l , unsigned c)
+Cell SudokuGame::getCell(unsigned r , unsigned c)
 {
-	return this->cell[l][c];
+	return this->cell[r][c];
 }
 
-void SudokuGame::setCellValue(unsigned l , unsigned c , unsigned value)
+void SudokuGame::setCellValue(unsigned r , unsigned c , unsigned value)
 {
-	this->cell[l][c].setValue(value);
+	this->cell[r][c].setValue(value);
 }
 
-unsigned SudokuGame::getCellValue(unsigned l , unsigned c) const
+unsigned SudokuGame::getCellValue(unsigned r , unsigned c) const
 {
-	return this->cell[l][c].getValue();
+	return this->cell[r][c].getValue();
 }
 
 unsigned SudokuGame::getCellNumberOfPossibleValues(unsigned l , unsigned c) const
@@ -59,56 +59,42 @@ void SudokuGame::allocCells(unsigned s)
 {
 	// s : game size
 	cell.resize( s );
-	for(unsigned l=0 ; l<s ; ++l)
+	for(unsigned r=0 ; r<s ; ++r)
 	{
-		for(unsigned c=0 ; c<s ; ++c)
-		{
-			// x : column
-			// y : line
-			Cell newCell(c,l);
-			this->cell[l].push_back( newCell );
-		}
+		cell[r].resize( s );
 	}
 }
 
 void SudokuGame::allocLines(unsigned s)
 {
-	// Resize the 'line' vector to have size 's'.
-	// For each line 'l', add all line 'l' cells.
-	// To add all line 'l' cells, it is necessary to
-	// add the cell of each column 'c'.
 	this->line.resize( s );
-	for(unsigned l=0 ; l<s ; ++l)
+	for(unsigned r=0 ; r<s ; ++r)
 	{
 		for(unsigned c=0 ; c<s ; ++c){
-			this->line[l].addCell( this->cell[l][c] );
+			this->line[r].addCell( this->cell[r][c] );
 		}
 	}
 }
 
 void SudokuGame::allocColumns(unsigned s)
 {
-	// Resize the 'column' vector to have size 's'.
-	// For each column 'c', add all column 'c' cells.
-	// To add all column 'c' cells, it is necessary to
-	// add the cell of each line 'l'.
 	this->column.resize( s );
 	for(unsigned c=0 ; c<s ; ++c)
 	{
-		for(unsigned l=0 ; l<s ; ++l){
-			this->column[c].addCell( this->cell[l][c] );
+		for(unsigned r=0 ; r<s ; ++r){
+			this->column[c].addCell( this->cell[r][c] );
 		}
 	}
 }
 
 void SudokuGame::allocRectangles(void)
 {
-	// l: rectangle number of lines
+	// r: rectangle number of rows
 	// c: rectangle number of columns
 	// s: game size
 	unsigned defaultSize = 3;
 
-	// resize lines and columns
+	// resize rows and columns
 	this->rectangle.resize(defaultSize);
 	for(unsigned c=0 ; c<defaultSize ; ++c)
 	{
@@ -116,15 +102,15 @@ void SudokuGame::allocRectangles(void)
 	}
 
 	// add Cells to each Rectangle
-	for(unsigned l=0 ; l<defaultSize ; ++l)
+	for(unsigned r=0 ; r<defaultSize ; ++r)
 	{
 		for(unsigned c=0 ; c<defaultSize ; ++c)
 		{
-			for(unsigned cl=0 ; cl<defaultSize ; ++cl) // cl: Cell Line
+			for(unsigned cr=0 ; cr<defaultSize ; ++cr) // cr: Cell row
 			{
 				for(unsigned cc=0 ; cc<defaultSize ; ++cc) // cc: Cell Column
 				{
-					this->rectangle[l][c].addCell( this->cell[cl + defaultSize * l][cc + defaultSize * c] );
+					this->rectangle[r][c].addCell( this->cell[cr + defaultSize * r][cc + defaultSize * c] );
 				}
 			}
 		}

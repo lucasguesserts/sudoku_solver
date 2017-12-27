@@ -23,15 +23,3 @@ CellPtrVector Group::getCells(void)
 {
 	return this->cells;
 }
-
-bool operator==(Group left , Group right)
-{
-	if( left.getCells() != right.getCells() ) return false;
-	
-	return true;
-}
-
-bool operator!=(Group left , Group right)
-{
-	return !(left==right);
-}
