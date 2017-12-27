@@ -62,19 +62,6 @@ TestCase( CellSetAndGetValue )
 	checkEqual(c.getPossibleValues().size() , 0);
 }
 
-//TestCase( possibleValues )
-//{
-//	Cell c;
-//	PossibleValues pv = c.getPossibleValues();
-//	PossibleValues::iterator it;
-//	PossibleValues::iterator begin = pv.begin();
-//	PossibleValues::iterator end = pv.end();
-//	for(it = begin ; it!=end ; ++it)
-//	{
-//		cout << *it << endl;
-//	}
-//}
-
 TestCase( GetPossibleValues )
 {
 	Cell c;
@@ -286,8 +273,8 @@ TestCase( SudokuGameGetCellNumberOfPossibleValues )
 TestCase( SudouGameSetCellValue )
 {
 	SudokuGame sg;
-	unsigned l = 3; int rectangleLine = 1;
-	unsigned c = 4; int rectangleColumn = 1;
+	unsigned l = 3; unsigned rectangleLine = 1;
+	unsigned c = 4; unsigned rectangleColumn = 1;
 	unsigned value = 2;
 
 	// Set Cell value
@@ -337,26 +324,6 @@ TestCase( SudokuGameGetCellUniquePossibleValue )
 	checkEqual( sg.getCellUniquePossibleValue(l,8) , N_VALUES );
 }
 
-// Uncomment this test when Rectangle accepts
-// something different from 'defaultSize = 3'
-
-//TestCase( SudokuGameConstructorWithInt )
-//{
-//	// SudokuGame
-//	SudokuGame sg(4);
-
-//	// Test Cell
-//	unsigned		x = 2;
-//	unsigned		y = 1;
-//	Cell	testCell(x,y);
-
-//	// check
-//	Cell csg = sg.getCell(x,y);
-//	checkEqual( csg == testCell , true );
-//}
-
-// SudokuGame::getCell already tested...
-
 TestCase( SudokuGameLine )
 {
 	// Create a SudokuGame
@@ -401,11 +368,11 @@ TestCase( SudokuGameSetCellValue )
 	// Verify for each 'line' Cell if the
 	// value 'value' was removed from
 	// PossibleValues list
-		// Initialize the correct possibleValues list
-		unsigned nValues = 8;
-		unsigned first = 2;
-		PossibleValuesListStruct pvList(first , nValues);
-		PossibleValues pv(pvList.list , pvList.list+nValues);
+	// Initialize the correct possibleValues list
+	unsigned nValues = 8;
+	unsigned first = 2;
+	PossibleValuesListStruct pvList(first , nValues);
+	PossibleValues pv(pvList.list , pvList.list+nValues);
 	foreach( Cell * lc , line.getCells() )
 	{
 		if( lc == &cell ) continue; // pass the cell that

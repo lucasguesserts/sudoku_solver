@@ -10,27 +10,27 @@ SudokuGame::SudokuGame(unsigned s)
 	buildCheck(s);
 }
 
-Cell SudokuGame::getCell(unsigned l , int c)
+Cell SudokuGame::getCell(unsigned l , unsigned c)
 {
 	return this->cell[l][c];
 }
 
-void SudokuGame::setCellValue(unsigned l , int c , unsigned value)
+void SudokuGame::setCellValue(unsigned l , unsigned c , unsigned value)
 {
 	this->cell[l][c].setValue(value);
 }
 
-unsigned SudokuGame::getCellValue(unsigned l , int c)
+unsigned SudokuGame::getCellValue(unsigned l , unsigned c) const
 {
 	return this->cell[l][c].getValue();
 }
 
-unsigned SudokuGame::getCellNumberOfPossibleValues(unsigned l , int c) const
+unsigned SudokuGame::getCellNumberOfPossibleValues(unsigned l , unsigned c) const
 {
 	return this->cell[l][c].getNumberOfPossibleValues();
 }
 
-unsigned SudokuGame::getCellUniquePossibleValue(unsigned l , int c) const
+unsigned SudokuGame::getCellUniquePossibleValue(unsigned l , unsigned c) const
 {
 	if( this->getCellNumberOfPossibleValues(l,c) == 1)
 	{
@@ -50,7 +50,7 @@ Column SudokuGame::getColumn(unsigned c)
 	return this->column[c];
 }
 
-Rectangle SudokuGame::getRectangle(unsigned l , int c)
+Rectangle SudokuGame::getRectangle(unsigned l , unsigned c)
 {
 	return this->rectangle[l][c];
 }
@@ -219,7 +219,7 @@ void SudokuGame::write(const char * const fileName)
 	{
 		for(column=0 ; column<N_VALUES ; ++column)
 		{
-			data[row][column] = this->getCell(row,column).getValue();
+			data[row][column] = this->getCellValue(row,column);
 		}
 	}
 

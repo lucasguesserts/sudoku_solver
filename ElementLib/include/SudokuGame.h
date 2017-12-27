@@ -24,16 +24,16 @@ class SudokuGame{
 		explicit SudokuGame(unsigned s = N_VALUES);
 
 		// Cell functionalities
-		Cell		getCell(unsigned l , int c);
-		void		setCellValue(unsigned l , int c , unsigned value);
-		unsigned	getCellValue(unsigned l , int c);
-		unsigned	getCellNumberOfPossibleValues(unsigned l , int c) const;
-		unsigned	getCellUniquePossibleValue(unsigned l , int c) const;
+		Cell		getCell(unsigned l , unsigned c);
+		void		setCellValue(unsigned l , unsigned c , unsigned value);
+		unsigned	getCellValue(unsigned l , unsigned c) const;
+		unsigned	getCellNumberOfPossibleValues(unsigned l , unsigned c) const;
+		unsigned	getCellUniquePossibleValue(unsigned l , unsigned c) const;
 
 		// Group functionalities
 		Line		getLine(unsigned l);
 		Column		getColumn(unsigned l);
-		Rectangle	getRectangle(unsigned l , int c);
+		Rectangle	getRectangle(unsigned l , unsigned c);
 
 		// solvers
 		//void		solverForOnePossibleValue(void);
