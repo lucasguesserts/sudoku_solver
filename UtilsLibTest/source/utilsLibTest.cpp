@@ -11,6 +11,7 @@ using std::vector;
 #include <Test.h>
 #include <Foreach.h>
 #include <PossibleValues.h>
+#include <Position.h>
 
 TestCase( CheckEqualAndCheckClose )
 {
@@ -141,4 +142,29 @@ TestCase( EraseSet )
 
 	pv.clear();
 	checkEqual( pv.size() , 0 );
+}
+
+TestCase( PositionDefaultConstructor )
+{
+	Position pos;
+
+	checkEqual( pos.row , 0 );
+	checkEqual( pos.column , 0 );
+}
+
+TestCase( PositionConstructor )
+{
+	Position pos(3,4);
+
+	checkEqual( pos.row , 3 );
+	checkEqual( pos.column , 4 );
+}
+
+TestCase( PositionSet )
+{
+	Position pos;
+	pos.set(3,4);
+
+	checkEqual( pos.row , 3 );
+	checkEqual( pos.column , 4 );
 }
