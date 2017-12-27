@@ -8,6 +8,7 @@ using std::vector;
 // Utils
 #include <Foreach.h>
 #include <PossibleValues.h>
+#include <Position.h>
 
 class Group;
 typedef vector<Group *> GroupPtrVector;
@@ -16,18 +17,16 @@ class Cell
 {
 public:
 		// Constructors
-		Cell(void);
-		Cell(const unsigned , const int);
+		Cell(const unsigned row = 0, const unsigned column = 0);
 		
 		// set and get properties functionalities
 		void			setValue( const unsigned );
 		unsigned		getValue( void ) const;
 		
-		void			setx( const unsigned );
-		unsigned		getx(void) const;
-		
-		void			sety( const unsigned );
-		unsigned		gety(void) const;
+		void			setPosition(const unsigned row, const unsigned column);
+		Position		getPosition(void) const;
+		unsigned		getRow(void) const;
+		unsigned		getColumn(void) const;
 
 		// PossibleValues functionalities
 		PossibleValues	getPossibleValues(void) const;
@@ -39,15 +38,12 @@ public:
 		// Group functionalities
 		void			addToGroup(Group & g);
 		Group			getGroup(const unsigned i);
+
 		
 	private:
-		// properties
 		unsigned		value;
-		unsigned		x;
-		unsigned		y;
-		// PossibleValues
+		Position		position;
 		PossibleValues	possibleValues;
-		// Groups
 		GroupPtrVector	group;
 };
 

@@ -11,6 +11,8 @@ struct Position: public std::pair<unsigned,unsigned>
 
 		unsigned & row = this->first;
 		unsigned & column = this->second;
+
+		Position & operator=(const Position &);
 };
 
 #endif

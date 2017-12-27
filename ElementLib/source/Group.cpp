@@ -9,12 +9,12 @@ void Group::addCell(Cell & cell)
 	cell.addToGroup( *this );
 }
 
-Cell Group::getCell(const unsigned i)
+Cell Group::getCell(const unsigned i) const
 {
 	return *( this->cells[i] );
 }
 
-unsigned Group::getNumberOfCell(void)
+unsigned Group::getNumberOfCell(void) const
 {
 	return this->cells.size();
 }

@@ -21,33 +21,40 @@ TestCase( CellVoidConstructor )
 {
 	Cell c;
 	unsigned defaultValue = 0;
-	unsigned defaultX = -1;
-	unsigned defaultY = -1;
+	unsigned defaultRow = 0;
+	unsigned defaultColumn = 0;
 
-	checkEqual( c.getx() , defaultX );
-	checkEqual( c.gety() , defaultY );
+	checkEqual( c.getRow() , defaultRow );
+	checkEqual( c.getColumn() , defaultColumn );
 	checkEqual( c.getValue() , defaultValue );
 	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 }
 
-TestCase( CellXYConstructor )
+TestCase( CellCopy )
 {
-	unsigned x = 3;
-	unsigned y = 4;
-	Cell c ( x , y );
+	Cell c1(3,4);
+	Cell c2(c1);
+	Cell c3 = c1;
+	check(c1 == c2);
+	check(c1 == c3);
+}
+
+
+TestCase( CellRowColumnConstructor )
+{
+	Position pos(3,4);
+	Cell c ( pos.row, pos.column );
 	
-	checkEqual(c.getx() , x);
-	checkEqual(c.gety() , y);
+	checkEqual(c.getRow() , pos.row);
+	checkEqual(c.getColumn() , pos.column);
 	checkEqual(c.getValue() , 0);
 	checkEqual( c.getPossibleValues() == allPossibleValues , true );
 	
-	x = 8;
-	y = 1;
-	c.setx(x);
-	c.sety(y);
+	pos.set(8,1);
+	c.setPosition(pos.row , pos.column);
 	
-	checkEqual(c.getx() , x);
-	checkEqual(c.gety() , y);
+	checkEqual(c.getRow() , pos.row);
+	checkEqual(c.getColumn() , pos.column);
 }
 
 TestCase( CellSetAndGetValue )
@@ -113,17 +120,17 @@ TestCase( AddToGroupAndGetGroup )
 	checkEqual( c.getGroup(0) == g , true );
 }
 
-TestCase( CellIsEqualAndIsDifferentperators )
+TestCase( CellIsEqualAndIsDifferentOperators )
 {
 	Cell c[3];
 
 	checkEqual( c[0] == c[1] , true );
 	checkEqual( c[0] == c[2] , true );
 
-	unsigned x = 1;
-	unsigned y = 5;
-	c[1].setx(x);
-	c[2].sety(y);
+	Position pos0(1,0);
+	Position pos1(0,5);
+	c[1].setPosition(pos0.row , pos0.column);
+	c[2].setPosition(pos1.row , pos1.column);
 
 	checkEqual( c[0] != c[1] , true );
 	checkEqual( c[0] != c[2] , true );
@@ -228,8 +235,6 @@ TestCase( CellAndGroupAdd )
 	Group g;
 	Group gWrong;
 
-	unsigned x = 3;
-	unsigned y = 4;
 	Cell cWrong;
 	Cell c(3,4);
 
@@ -250,12 +255,24 @@ TestCase( CellAndGroupAdd )
 TestCase( SudokuGameDefaultConstructor )
 {
 	SudokuGame sg;
-	unsigned		x = 3; // x : column
-	unsigned		y = 0; // y : line
-	Cell	testCell(x , y);
-	Cell	csg = sg.getCell(y , x);
-
+	unsigned row = 3;
+	unsigned column = 2;
+	Cell testCell(row , column);
+	Cell csg = sg.getCell(row , column);
 	checkEqual( csg == testCell , true );
+}
+
+TestCase( SudokuGamePosition )
+{
+	SudokuGame sg(N_VALUES);
+	for(unsigned row=0 ; row<N_VALUES ; ++row)
+	{
+		for (unsigned column=0 ; column<N_VALUES ; ++column)
+		{
+			checkEqual( sg.getCell(row,column).getRow() , row );
+			checkEqual( sg.getCell(row,column).getColumn() , column );
+		}
+	}
 }
 
 TestCase( SudokuGameGetCellNumberOfPossibleValues )
@@ -398,8 +415,8 @@ TestCase( SudokuGameRectangle )
 	{
 		for(unsigned cc=0 ; cc<defaultSize ; ++cc)
 		{
-			checkEqual( rec.getCell(cc + cl*defaultSize).getx() , cc + c*defaultSize );
-			checkEqual( rec.getCell(cc + cl*defaultSize).gety() , cl + l*defaultSize );
+			checkEqual( rec.getCell(cc + cl*defaultSize).getColumn() , cc + c*defaultSize );
+			checkEqual( rec.getCell(cc + cl*defaultSize).getRow() , cl + l*defaultSize );
 		}
 	}
 

@@ -168,3 +168,11 @@ TestCase( PositionSet )
 	checkEqual( pos.row , 3 );
 	checkEqual( pos.column , 4 );
 }
+
+TestCase( PositionCopy )
+{
+	Position pos1(1,2);
+	Position pos2 = pos1;
+	checkEqual( pos1.row , pos2.row );
+	checkEqual( pos1.column , pos2.column );
+}

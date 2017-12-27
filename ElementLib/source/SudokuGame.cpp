@@ -61,12 +61,10 @@ void SudokuGame::allocCells(unsigned s)
 	cell.resize( s );
 	for(unsigned l=0 ; l<s ; ++l)
 	{
+		this->cell[l].resize(s);
 		for(unsigned c=0 ; c<s ; ++c)
 		{
-			// x : column
-			// y : line
-			Cell newCell(c,l);
-			this->cell[l].push_back( newCell );
+			this->cell[l][c].setPosition(l,c);
 		}
 	}
 }

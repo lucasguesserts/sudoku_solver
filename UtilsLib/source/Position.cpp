@@ -10,3 +10,9 @@ void Position::set(const unsigned row, const unsigned column)
 	this->row = row;
 	this->column = column;
 }
+
+Position & Position::operator=(const Position & lhs)
+{
+	this->set(lhs.row , lhs.column);
+	return *this;
+}

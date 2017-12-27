@@ -2,16 +2,9 @@
 
 // Constructors
 
-Cell::Cell( void )
-	: x(-1) , y(-1) , value(0), possibleValues(allPossibleValues)
+Cell::Cell(const unsigned  row, const unsigned column)
+	: position(row,column), value(0), possibleValues(allPossibleValues)
 {
-}
-
-Cell::Cell(const unsigned  x, const int y)
-	: value(0), possibleValues(allPossibleValues)
-{
-	this->setx(x);
-	this->sety(y);
 }
 
 // set and get properties functionalities
@@ -46,24 +39,26 @@ unsigned Cell::getValue( void ) const
 	return this->value;
 }
 
-void Cell::setx( const unsigned x )
+// Position
+
+void Cell::setPosition(const unsigned row, const unsigned column)
 {
-	this->x = x;
+	this->position.set(row,column);
 }
 
-unsigned Cell::getx( void ) const
+Position Cell::getPosition(void) const
 {
-	return this->x;
+	return this->position;
 }
 
-void Cell::sety( const unsigned y )
+unsigned Cell::getRow(void) const
 {
-	this->y = y;
+	return this->position.row;
 }
 
-unsigned Cell::gety( void ) const
+unsigned Cell::getColumn(void) const
 {
-	return this->y;
+	return this->position.column;
 }
 
 // PossibleValues functionalities
@@ -115,8 +110,7 @@ Group Cell::getGroup(const unsigned i)
 
 bool operator==(Cell left , Cell right)
 {
-	if( left.getx() != right.getx() ) return false;
-	if( left.gety() != right.gety() ) return false;
+	if( left.getPosition() != right.getPosition() ) return false;
 //	if( left.getValue() != right.getValue() ) return false;
 //	if( left.getPossibleValues() != right.getPossibleValues() ) return false;
 

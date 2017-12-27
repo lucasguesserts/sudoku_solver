@@ -13,8 +13,8 @@ class Group
 {
 	public:
 		void			addCell(Cell & cell);
-		Cell			getCell(const unsigned i);
-		unsigned		getNumberOfCell(void);
+		Cell			getCell(const unsigned i) const;
+		unsigned		getNumberOfCell(void) const;
 		CellPtrVector	getCells(void);
 
 	private:
