@@ -40,6 +40,11 @@ unsigned SudokuGame::getCellUniquePossibleValue(unsigned l , unsigned c) const
 	else throw "Cell with more than one possible value";
 }
 
+GroupPtrVector SudokuGame::getCellGroups(unsigned r , unsigned c) const
+{
+	return cell[r][c].getGroups();
+}
+
 Row SudokuGame::getRow(unsigned l)
 {
 	return this->row[l];
@@ -118,24 +123,45 @@ void SudokuGame::allocRectangles(void)
 }
 
 //// ############### solvers ###############
-//void SudokuGame::solverForOnePossibleValue(void)
-//{
-//	bool changed;
-//	do
-//	{
-//		for( unsigned l=0 ; l<N_VALUES ; ++l )
-//		{
-//			for( unsigned c=0 ; c<N_VALUES ; ++c )
-//			{
-//				PossibleValues pv = this->getCell(l,c).getPossibleValues();
-//				if( pv.size() == 1 )
-//				{
+bool SudokuGame::isValid(void)
+{
+	bool vality = true;
+	unsigned row, column;
+	for( unsigned row=0 ; row<N_VALUES ; ++row )
+	{
+		for( unsigned column=0 ; column<N_VALUES ; ++column )
+		{
+			foreach(Group * g , this->getCellGroups(row,column) )
+			{
+				vality = g->isValid() && vality;
+			}
+		}
+	}
+	return vality;
+}
 
-//				}
-//			}
-//		}
-//	}while( changed==true );
-//}
+void SudokuGame::solverForOnePossibleValue(void)
+{
+	bool aCellWasSet;
+	unsigned row, column;
+	unsigned uniquePossibleValue;
+	do
+	{
+		aCellWasSet = false;
+		for( unsigned row=0 ; row<N_VALUES ; ++row )
+		{
+			for( unsigned column=0 ; column<N_VALUES ; ++column )
+			{
+				if( this->getCellNumberOfPossibleValues(row,column) == 1 )
+				{
+					uniquePossibleValue = this->getCellUniquePossibleValue(row,column);
+					this->setCellValue(row,column,uniquePossibleValue);
+					aCellWasSet = true;
+				}
+			}
+		}
+	}while( aCellWasSet==true );
+}
 
 void SudokuGame::buildCheck(unsigned s)
 {

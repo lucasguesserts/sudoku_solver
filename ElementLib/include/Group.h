@@ -17,6 +17,7 @@ class Group
 		unsigned		getCellValue(const unsigned i);
 		unsigned		getNumberOfCell(void);
 		CellPtrVector	getCells(void);
+		bool			isValid(void) const;
 
 	private:
 		CellPtrVector cells;

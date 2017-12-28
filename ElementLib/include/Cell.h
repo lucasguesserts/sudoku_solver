@@ -31,7 +31,8 @@ public:
 
 		// Group functionalities
 		void			addToGroup(Group & g);
-		Group			getGroup(const unsigned i);
+		Group			getGroup(const unsigned i) const;
+		GroupPtrVector	getGroups(void) const;
 		
 	private:
 		unsigned		value;

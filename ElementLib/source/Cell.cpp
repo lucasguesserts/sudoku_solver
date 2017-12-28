@@ -69,7 +69,12 @@ void Cell::addToGroup(Group & g)
 	this->group.push_back( &g );
 }
 
-Group Cell::getGroup(const unsigned i)
+Group Cell::getGroup(const unsigned i) const
 {
 	return *(this->group[i]);
+}
+
+GroupPtrVector Cell::getGroups(void) const
+{
+	return this->group;
 }

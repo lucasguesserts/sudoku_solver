@@ -109,6 +109,7 @@ TestCase( GroupGetCellValue )
 	c.setValue(value);
 	checkEqual( g.getCellValue(0) , value );
 }
+
 // ############### SudokuGame ###############
 
 TestCase( SudokuGameGetCellNumberOfPossibleValues )
@@ -173,12 +174,9 @@ TestCase( SudokuGameSetCellValue )
 TestCase( WriteSudokuGame )
 {
 	SudokuGame sg1, sg2;
-
 	sg1.setCellValue(2,3,5);
-
 	sg1.write("empty_sudoku_game.sudokugame");
 	sg2.read("empty_sudoku_game.sudokugame");
-
 	checkEqual( sg2.getCell(2,3).getValue() , 5 );
 }
 
@@ -197,13 +195,20 @@ TestCase( CreateGameFromArray )
 		};
 	SudokuGame sg;
 	sg.setUsingArray(game);
-
+	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
 	checkEqual( sg.getCell(8,4).getValue() , 7 );
-
 	checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
 	checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
+}
 
-	sg.write("easy.sudokugame");
+TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
+{
+	SudokuGame sg;
+	sg.read("easy.sudokugame");
+	check( sg.isValid() );
+	sg.solverForOnePossibleValue();
+	sg.write("easy_solved.sudokugame");
+	check( sg.isValid() );
 }

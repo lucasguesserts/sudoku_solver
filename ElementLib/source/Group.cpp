@@ -28,3 +28,16 @@ CellPtrVector Group::getCells(void)
 {
 	return this->cells;
 }
+
+bool Group::isValid(void) const
+{
+	bool vality = true;
+	unsigned number, count;
+	for(number=1 ; number<=N_VALUES ; ++number)
+	{
+		count = 0;
+		foreach( Cell * cell , cells ) if(cell->getValue() == number) count++;
+		if(count>1) vality = false;
+	}
+	return vality;
+}

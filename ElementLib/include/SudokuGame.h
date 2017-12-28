@@ -1,6 +1,8 @@
 #ifndef SUDOKU_GAME_H
 #define SUDOKU_GAME_H
 
+#include <Foreach.h>
+
 #include <vector>
 #include <exception>
 
@@ -14,7 +16,7 @@
 
 using std::vector;
 typedef vector< vector<Cell> >			CellMatrix;
-typedef vector<Row>					RowVector;
+typedef vector<Row>						RowVector;
 typedef vector<Column>					ColumnVector;
 typedef vector< vector <Rectangle> >	RectangleMatrix;
 
@@ -30,12 +32,14 @@ class SudokuGame{
 		unsigned	getCellUniquePossibleValue(unsigned r , unsigned c) const;
 
 		// Group functionalities
+		GroupPtrVector	getCellGroups(unsigned r , unsigned c) const;
 		Row			getRow(unsigned r);
 		Column		getColumn(unsigned c);
 		Rectangle	getRectangle(unsigned r , unsigned c);
 
 		// solvers
-		//void		solverForOnePossibleValue(void);
+		bool		isValid(void);
+		void		solverForOnePossibleValue(void);
 		
 		// IO
 		void		setUsingArray(unsigned dataArray[9][9]);
