@@ -59,4 +59,6 @@ class SudokuGame{
 		void buildCheck(unsigned s);
 };
 
+bool operator==(SudokuGame lhs , SudokuGame rhs);
+
 #endif

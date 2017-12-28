@@ -275,3 +275,12 @@ void SudokuGame::read(const char * const fileName)
     H5Fclose(file);
 	return;
 }
+
+bool operator==(SudokuGame lhs , SudokuGame rhs)
+{
+	unsigned r, c;
+	for(r=0 ; r<N_VALUES ; ++r)
+		for(c=0 ; c<N_VALUES ; ++c)
+			if(lhs.getCellValue(r,c) != rhs.getCellValue(r,c)) return false;
+	return true;
+}
