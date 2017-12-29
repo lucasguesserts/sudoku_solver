@@ -43,6 +43,8 @@ class SudokuGame{
 		
 		// IO
 		void		setUsingArray(unsigned dataArray[]);
+		void		setUsingVector(vector<unsigned> data);
+		void		setUsingMatrix(vector< vector<unsigned> > data);
 		void		write(const char * const fileName);
 		void		read(const char * const fileName);
 

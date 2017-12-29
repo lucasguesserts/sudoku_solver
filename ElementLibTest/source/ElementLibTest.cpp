@@ -203,6 +203,52 @@ TestCase( CreateGameFromArray )
 	checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
 }
 
+TestCase( CreateGameFromVector )
+{
+	vector<unsigned> game = {
+		0,0,4,0,6,0,0,5,8,
+		3,0,0,8,9,0,0,1,7,
+		1,0,8,0,0,0,0,0,2,
+		0,2,5,0,1,8,0,0,6,
+		0,0,0,6,0,0,9,0,0,
+		7,6,0,0,4,0,0,2,1,
+		6,0,0,0,3,4,0,0,9,
+		0,0,7,0,8,9,1,0,3,
+		9,0,2,0,7,0,0,0,0
+		};
+	SudokuGame sg;
+	sg.setUsingVector(game);
+	sg.write("easy.sudokugame");
+	checkEqual( sg.getCell(1,0).getValue() , 3 );
+	checkEqual( sg.getCell(2,2).getValue() , 8 );
+	checkEqual( sg.getCell(8,4).getValue() , 7 );
+	checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
+	checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
+}
+
+TestCase( CreateGameFromMatrix )
+{
+	vector< vector<unsigned> > game = {
+		{0,0,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+		};
+	SudokuGame sg;
+	sg.setUsingMatrix(game);
+	sg.write("easy.sudokugame");
+	checkEqual( sg.getCell(1,0).getValue() , 3 );
+	checkEqual( sg.getCell(2,2).getValue() , 8 );
+	checkEqual( sg.getCell(8,4).getValue() , 7 );
+	checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
+	checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
+}
+
 TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 {
 	unsigned problem[] = {

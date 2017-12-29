@@ -218,6 +218,31 @@ void SudokuGame::setUsingArray(unsigned dataArray[])
 	return;
 }
 
+void SudokuGame::setUsingVector(vector<unsigned> data)
+{
+	for (unsigned r=0 ; r<N_VALUES ; ++r)
+	{
+		for (unsigned c=0 ; c<N_VALUES ; ++c)
+		{
+			unsigned entry = N_VALUES*r + c;
+			setCellValue(r,c,data[entry]);
+		}
+	}
+	return;
+}
+
+void SudokuGame::setUsingMatrix(vector< vector<unsigned> > data)
+{
+	for (unsigned r=0 ; r<N_VALUES ; ++r)
+	{
+		for (unsigned c=0 ; c<N_VALUES ; ++c)
+		{
+			setCellValue(r,c,data[r][c]);
+		}
+	}
+	return;
+}
+
 void SudokuGame::write(const char * const fileName)
 {
 	herr_t err;
