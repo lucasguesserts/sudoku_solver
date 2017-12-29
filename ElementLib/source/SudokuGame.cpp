@@ -205,13 +205,14 @@ void SudokuGame::buildCheck(unsigned s)
 	}
 }
 
-void SudokuGame::setUsingArray(unsigned dataArray[9][9])
+void SudokuGame::setUsingArray(unsigned dataArray[])
 {
-	for (unsigned i=0 ; i<N_VALUES ; ++i)
+	for (unsigned r=0 ; r<N_VALUES ; ++r)
 	{
-		for (unsigned j=0 ; j<N_VALUES ; ++j)
+		for (unsigned c=0 ; c<N_VALUES ; ++c)
 		{
-			setCellValue(i,j,dataArray[i][j]);
+			unsigned entry = N_VALUES*r + c;
+			setCellValue(r,c,dataArray[entry]);
 		}
 	}
 	return;

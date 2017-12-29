@@ -42,7 +42,7 @@ class SudokuGame{
 		void		solverForOnePossibleValue(void);
 		
 		// IO
-		void		setUsingArray(unsigned dataArray[9][9]);
+		void		setUsingArray(unsigned dataArray[]);
 		void		write(const char * const fileName);
 		void		read(const char * const fileName);
 
