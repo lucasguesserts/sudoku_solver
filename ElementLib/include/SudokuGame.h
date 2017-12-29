@@ -42,9 +42,9 @@ class SudokuGame{
 		void		solverForOnePossibleValue(void);
 		
 		// IO
-		void		setUsingArray(unsigned dataArray[]);
-		void		setUsingVector(vector<unsigned> data);
-		void		setUsingMatrix(vector< vector<unsigned> > data);
+		void		set(const unsigned * const dataArray);
+		void		set(const vector<unsigned> data);
+		void		set(const vector< vector<unsigned> > data);
 		void		write(const char * const fileName);
 		void		read(const char * const fileName);
 

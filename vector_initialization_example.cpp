@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	vector< vector<double> > x = {
+	const vector< vector<double> > x = {
 		{1, 2, 3},
 		{4, 5},
 		{6, 7, 8}
@@ -19,6 +19,7 @@ int main()
 		}
 	}
 	cout << endl;
+	//x[0][0] = 3; //compilation error!
 
 	return 0;
 }

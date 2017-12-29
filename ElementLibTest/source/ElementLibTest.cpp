@@ -194,7 +194,7 @@ TestCase( CreateGameFromArray )
 		9,0,2,0,7,0,0,0,0
 		};
 	SudokuGame sg;
-	sg.setUsingArray(game);
+	sg.set(game);
 	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
@@ -217,7 +217,7 @@ TestCase( CreateGameFromVector )
 		9,0,2,0,7,0,0,0,0
 		};
 	SudokuGame sg;
-	sg.setUsingVector(game);
+	sg.set(game);
 	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
@@ -240,7 +240,7 @@ TestCase( CreateGameFromMatrix )
 		{9,0,2,0,7,0,0,0,0}
 		};
 	SudokuGame sg;
-	sg.setUsingMatrix(game);
+	sg.set(game);
 	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
@@ -263,7 +263,7 @@ TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 		7,0,3,0,1,8,0,0,0
 		};
 	SudokuGame sgProblem;
-	sgProblem.setUsingArray(problem);
+	sgProblem.set(problem);
 	sgProblem.write("easy_unsolved.sudokugame");
 	check( sgProblem.isValid() );
 	sgProblem.solverForOnePossibleValue();
@@ -282,7 +282,7 @@ TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 		7,6,3,4,1,8,2,5,9
 		};
 	SudokuGame sgSolution;
-	sgSolution.setUsingArray(solution);
+	sgSolution.set(solution);
 	check( sgSolution.isValid() );
 	sgSolution.write("solution.sudokugame");
 

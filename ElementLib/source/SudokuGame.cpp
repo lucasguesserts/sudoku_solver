@@ -205,7 +205,7 @@ void SudokuGame::buildCheck(unsigned s)
 	}
 }
 
-void SudokuGame::setUsingArray(unsigned dataArray[])
+void SudokuGame::set(const unsigned * const dataArray)
 {
 	for (unsigned r=0 ; r<N_VALUES ; ++r)
 	{
@@ -218,8 +218,10 @@ void SudokuGame::setUsingArray(unsigned dataArray[])
 	return;
 }
 
-void SudokuGame::setUsingVector(vector<unsigned> data)
+void SudokuGame::set(const vector<unsigned> data)
 {
+	if (data.size() != N_VALUES*N_VALUES)
+		throw "Invalid vector size - set sudoku game values.";
 	for (unsigned r=0 ; r<N_VALUES ; ++r)
 	{
 		for (unsigned c=0 ; c<N_VALUES ; ++c)
@@ -231,8 +233,14 @@ void SudokuGame::setUsingVector(vector<unsigned> data)
 	return;
 }
 
-void SudokuGame::setUsingMatrix(vector< vector<unsigned> > data)
+void SudokuGame::set(const vector< vector<unsigned> > data)
 {
+	if (data.size() != N_VALUES)
+		throw "Invalid matrix row size - set sudoku game values.";
+	for(unsigned r=0 ; r<N_VALUES ; ++r)
+		if (data[r].size() != N_VALUES)
+			throw "Invalid matrix column size - set sudoku game values.";
+
 	for (unsigned r=0 ; r<N_VALUES ; ++r)
 	{
 		for (unsigned c=0 ; c<N_VALUES ; ++c)
