@@ -4,6 +4,8 @@
 //#include <iostream>
 //using std::cout;
 //using std::endl;
+#include <vector>
+using std::vector;
 
 // ElementLib
 #include <Cell.h>
@@ -251,7 +253,7 @@ TestCase( CreateGameFromMatrix )
 
 TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 {
-	unsigned problem[] = {
+	vector<unsigned> problem = {
 		0,0,0,2,6,0,7,0,1,
 		6,8,0,0,7,0,0,9,0,
 		1,9,0,0,0,4,5,0,0,
@@ -270,7 +272,7 @@ TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 	sgProblem.write("easy_solved.sudokugame");
 	check( sgProblem.isValid() );
 
-	unsigned solution[] = {
+	vector<unsigned> solution = {
 		4,3,5,2,6,9,7,8,1,
 		6,8,2,5,7,1,4,9,3,
 		1,9,7,8,3,4,5,6,2,
