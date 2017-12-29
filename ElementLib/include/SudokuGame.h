@@ -22,7 +22,8 @@ typedef vector< vector <Rectangle> >	RectangleMatrix;
 
 class SudokuGame{
 	public:
-		explicit SudokuGame(unsigned s = N_VALUES);
+		explicit SudokuGame();
+		~SudokuGame(void);
 
 		// Cell functionalities
 		Cell		getCell(unsigned r , unsigned c);
@@ -45,14 +46,25 @@ class SudokuGame{
 		void		set(const unsigned * const dataArray);
 		void		set(const vector<unsigned> data);
 		void		set(const vector< vector<unsigned> > data);
-		void		write(const char * const fileName);
-		void		read(const char * const fileName);
+		void		createFile(const char * fileName);
+		void		openFile(const char * fileName);
+		void		closeFile(void);
+		void		writeProblem();
+		void 		readProblem();
+		void 		writeSolution();
+		void 		readSolution();
 
 	private:
 		CellMatrix		cell;
 		RowVector		row;
 		ColumnVector	column;
 		RectangleMatrix	rectangle;
+
+		hid_t			file;
+		bool			isFileOpen;
+
+		void write(const char * datasetName);
+		void read(const char * datasetName);
 
 		void allocCells(unsigned s);
 		void allocRows(unsigned s);

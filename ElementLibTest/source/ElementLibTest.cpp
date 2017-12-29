@@ -173,13 +173,37 @@ TestCase( SudokuGameSetCellValue )
 }
 
 // Refactoring needed!!!!!!!!!!!!!!!!!!!!!!!
-TestCase( WriteSudokuGame )
+TestCase( ReadWriteSudokuGameProblem )
 {
+	const unsigned row = 2;
+	const unsigned column = 3;
+	const unsigned value = 5;
+	const char fileName[] = "read_write_test_problem.sudokugame";
 	SudokuGame sg1, sg2;
-	sg1.setCellValue(2,3,5);
-	sg1.write("empty_sudoku_game.sudokugame");
-	sg2.read("empty_sudoku_game.sudokugame");
-	checkEqual( sg2.getCell(2,3).getValue() , 5 );
+	sg1.createFile(fileName);
+	sg1.setCellValue(row,column,value);
+	sg1.writeProblem();
+	//sg1.closeFile();
+	sg2.openFile(fileName);
+	sg2.readProblem();
+	//sg2.closeFile();
+	checkEqual( sg2.getCell(row,column).getValue() , value );
+}
+
+TestCase( ReadWriteSudokuGameSolution )
+{
+	const unsigned row = 4;
+	const unsigned column = 6;
+	const unsigned value = 2;
+	const char fileName[] = "read_write_test_solution.sudokugame";
+	SudokuGame sg1, sg2;
+	sg1.createFile(fileName);
+	sg1.setCellValue(row,column,value);
+	sg1.writeSolution();
+	sg1.closeFile();
+	sg2.openFile(fileName);
+	sg2.readSolution();
+	checkEqual( sg2.getCell(row,column).getValue() , value );
 }
 
 TestCase( CreateGameFromArray )
@@ -197,7 +221,6 @@ TestCase( CreateGameFromArray )
 		};
 	SudokuGame sg;
 	sg.set(game);
-	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
 	checkEqual( sg.getCell(8,4).getValue() , 7 );
@@ -220,7 +243,6 @@ TestCase( CreateGameFromVector )
 		};
 	SudokuGame sg;
 	sg.set(game);
-	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
 	checkEqual( sg.getCell(8,4).getValue() , 7 );
@@ -243,7 +265,6 @@ TestCase( CreateGameFromMatrix )
 		};
 	SudokuGame sg;
 	sg.set(game);
-	sg.write("easy.sudokugame");
 	checkEqual( sg.getCell(1,0).getValue() , 3 );
 	checkEqual( sg.getCell(2,2).getValue() , 8 );
 	checkEqual( sg.getCell(8,4).getValue() , 7 );
@@ -265,12 +286,14 @@ TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 		7,0,3,0,1,8,0,0,0
 		};
 	SudokuGame sgProblem;
+	sgProblem.createFile("easy.sudokugame");
 	sgProblem.set(problem);
-	sgProblem.write("easy_unsolved.sudokugame");
+	sgProblem.writeProblem();
 	check( sgProblem.isValid() );
 	sgProblem.solverForOnePossibleValue();
-	sgProblem.write("easy_solved.sudokugame");
+	sgProblem.writeSolution();
 	check( sgProblem.isValid() );
+	sgProblem.closeFile();
 
 	vector<unsigned> solution = {
 		4,3,5,2,6,9,7,8,1,
@@ -284,9 +307,10 @@ TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 		7,6,3,4,1,8,2,5,9
 		};
 	SudokuGame sgSolution;
+	sgSolution.createFile("easy_internet_solution.sudokugame");
 	sgSolution.set(solution);
 	check( sgSolution.isValid() );
-	sgSolution.write("solution.sudokugame");
+	sgSolution.writeSolution();
 
 	check( sgProblem == sgSolution );
 }

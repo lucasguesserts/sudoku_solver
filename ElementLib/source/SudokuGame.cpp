@@ -1,13 +1,20 @@
 #include <SudokuGame.h>
 
-SudokuGame::SudokuGame(unsigned s)
+SudokuGame::SudokuGame()
 {
-	allocCells(s);
-	allocRows(s);
-	allocColumns(s);
+	allocCells(N_VALUES);
+	allocRows(N_VALUES);
+	allocColumns(N_VALUES);
 	allocRectangles();
 
-	buildCheck(s);
+	buildCheck(N_VALUES);
+
+	this->isFileOpen = false;
+}
+
+SudokuGame::~SudokuGame(void)
+{
+	this->closeFile();
 }
 
 Cell SudokuGame::getCell(unsigned r , unsigned c)
@@ -249,9 +256,51 @@ void SudokuGame::set(const vector< vector<unsigned> > data)
 	return;
 }
 
-void SudokuGame::write(const char * const fileName)
+void SudokuGame::createFile(const char * fileName)
 {
-	hid_t file;
+    this->file = H5Fcreate2(fileName, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+	if(this->file<0) throw "Error creating file.";
+	this->isFileOpen = true;
+	return;
+}
+
+void SudokuGame::openFile(const char * fileName)
+{
+	this->file = H5Fopen(fileName, H5F_ACC_RDWR, H5P_DEFAULT);
+	if(this->file<0) throw "Error opening file.";
+	this->isFileOpen = true;
+}
+
+void SudokuGame::closeFile(void)
+{
+	if(this->isFileOpen)
+ 	   H5Fclose(this->file);
+	this->isFileOpen = false;
+	return;
+}
+
+void SudokuGame::writeProblem()
+{
+	this->write("Problem");
+}
+
+void SudokuGame::readProblem()
+{
+	this->read("Problem");
+}
+
+void SudokuGame::writeSolution()
+{
+	this->write("Solution");
+}
+
+void SudokuGame::readSolution()
+{
+	this->read("Solution");
+}
+
+void SudokuGame::write(const char * datasetName)
+{
 	hid_t dataset, dataspace;
 	const hid_t datatype = H5T_NATIVE_UINT;
 	const hsize_t rank = 2;
@@ -263,11 +312,10 @@ void SudokuGame::write(const char * const fileName)
 		for(column=0 ; column<N_VALUES ; ++column)
 			data[row][column] = this->getCellValue(row,column);
 
-    file = H5Fcreate(fileName, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT); if(file<0) throw "Error opening file to write.";
 	dataspace_size[0] = N_VALUES;
 	dataspace_size[1] = N_VALUES;
 	dataspace = H5Screate_simple(rank, dataspace_size, NULL); if(dataspace<0) throw "Error opening dataspace to save file.";
-	dataset = H5Dcreate2(file, "sudoku game", datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to save file.";
+	dataset = H5Dcreate2(this->file, datasetName, datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to save file.";
 	H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
 
 	H5Dclose(dataset);
@@ -276,16 +324,14 @@ void SudokuGame::write(const char * const fileName)
 	return;
 }
 
-void SudokuGame::read(const char * const fileName)
+void SudokuGame::read(const char * datasetName)
 {
-	hid_t file;
 	hid_t dataset;
 	const hid_t datatype = H5T_NATIVE_UINT;
 	unsigned data[N_VALUES][N_VALUES];
 	unsigned row, column;
 
-    file = H5Fopen(fileName, H5F_ACC_RDONLY, H5P_DEFAULT); if(file<0) throw "Error opening file to read.";
-	dataset = H5Dopen2(file, "sudoku game", H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to read file.";
+	dataset = H5Dopen2(this->file, datasetName, H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to read file.";
 	H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, data );
 
 	for (row=0 ; row<N_VALUES ; ++row)
@@ -293,7 +339,6 @@ void SudokuGame::read(const char * const fileName)
 			this->setCellValue(row,column,data[row][column]);
 
     H5Dclose(dataset);
-    H5Fclose(file);
 	return;
 }
 
