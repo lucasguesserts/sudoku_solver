@@ -126,7 +126,6 @@ void SudokuGame::allocRectangles(void)
 bool SudokuGame::isValid(void)
 {
 	bool vality = true;
-	unsigned row, column;
 	for( unsigned row=0 ; row<N_VALUES ; ++row )
 	{
 		for( unsigned column=0 ; column<N_VALUES ; ++column )
@@ -143,7 +142,6 @@ bool SudokuGame::isValid(void)
 void SudokuGame::solverForOnePossibleValue(void)
 {
 	bool aCellWasSet;
-	unsigned row, column;
 	unsigned uniquePossibleValue;
 	do
 	{
@@ -253,57 +251,46 @@ void SudokuGame::set(const vector< vector<unsigned> > data)
 
 void SudokuGame::write(const char * const fileName)
 {
-	herr_t err;
 	hid_t file;
-	hid_t dataset, dataspace, datatype;
-	hsize_t rank = 2;
+	hid_t dataset, dataspace;
+	const hid_t datatype = H5T_NATIVE_UINT;
+	const hsize_t rank = 2;
 	hsize_t dataspace_size[2];
 	unsigned data[N_VALUES][N_VALUES];
 	unsigned row, column;
 
 	for (row=0 ; row<N_VALUES ; ++row)
-	{
 		for(column=0 ; column<N_VALUES ; ++column)
-		{
 			data[row][column] = this->getCellValue(row,column);
-		}
-	}
 
-
-    file = H5Fcreate(fileName, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+    file = H5Fcreate(fileName, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT); if(file<0) throw "Error opening file to write.";
 	dataspace_size[0] = N_VALUES;
 	dataspace_size[1] = N_VALUES;
-    dataspace = H5Screate_simple(rank, dataspace_size, NULL);
-    dataset = H5Dcreate2(file, "sudoku game", H5T_NATIVE_INT, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
-    H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
+	dataspace = H5Screate_simple(rank, dataspace_size, NULL); if(dataspace<0) throw "Error opening dataspace to save file.";
+	dataset = H5Dcreate2(file, "sudoku game", datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to save file.";
+	H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
 
-    H5Dclose(dataset);
-    H5Sclose(dataspace);
-    H5Fclose(file);
+	H5Dclose(dataset);
+	H5Sclose(dataspace);
+	H5Fclose(file);
 	return;
 }
 
 void SudokuGame::read(const char * const fileName)
 {
-	herr_t err;
 	hid_t file;
-	hid_t dataset, dataspace, datatype;
-	hsize_t rank = 2;
-	hsize_t dataspace_size[2];
+	hid_t dataset;
+	const hid_t datatype = H5T_NATIVE_UINT;
 	unsigned data[N_VALUES][N_VALUES];
 	unsigned row, column;
 
-    file = H5Fopen(fileName, H5F_ACC_RDONLY, H5P_DEFAULT);
-    dataset = H5Dopen2(file, "sudoku game", H5P_DEFAULT);
-	err = H5Dread( dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, data );
+    file = H5Fopen(fileName, H5F_ACC_RDONLY, H5P_DEFAULT); if(file<0) throw "Error opening file to read.";
+	dataset = H5Dopen2(file, "sudoku game", H5P_DEFAULT); if(dataset<0) throw "Error opening dataset to read file.";
+	H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, data );
 
 	for (row=0 ; row<N_VALUES ; ++row)
-	{
 		for(column=0 ; column<N_VALUES ; ++column)
-		{
 			this->setCellValue(row,column,data[row][column]);
-		}
-	}
 
     H5Dclose(dataset);
     H5Fclose(file);
