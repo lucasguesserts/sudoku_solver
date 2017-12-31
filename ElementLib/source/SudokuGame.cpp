@@ -212,30 +212,21 @@ void SudokuGame::allocColumns(void)
 
 void SudokuGame::allocRectangles(void)
 {
-	// r: rectangle number of rows
-	// c: rectangle number of columns
-	// s: game size
-	unsigned defaultSize = 3;
-
-	// resize rows and columns
-	this->rectangle.resize(defaultSize);
-	for(unsigned c=0 ; c<defaultSize ; ++c)
+	// resize vector
+	this->rectangle.resize(Retangle::size);
+	for(unsigned retangleRow=0 ; retangleRow<Retangle::size ; ++retangleRow)
 	{
-		this->rectangle[c].resize(defaultSize);
+		this->rectangle[retangleRow].resize(Retangle::size);
 	}
-
 	// add Cells to each Rectangle
-	for(unsigned r=0 ; r<defaultSize ; ++r)
-	{
-		for(unsigned c=0 ; c<defaultSize ; ++c)
-		{
-			for(unsigned cr=0 ; cr<defaultSize ; ++cr) // cr: Cell row
-			{
-				for(unsigned cc=0 ; cc<defaultSize ; ++cc) // cc: Cell Column
+	for(unsigned retangleRow=0 ; retangleRow<Retangle::size ; ++retangleRow)
+		for(unsigned retangleColumn=0 ; retangleColumn<Retangle::size ; ++retangleColumn)
+			for(unsigned cellRowInRetangle=0 ; cellRowInRetangle<Retangle::size ; ++cellRowInRetangle)
+				for(unsigned cellColumnInRetangle=0 ; cellColumnInRetangle<Retangle::size ; ++cellColumnInRetangle)
 				{
-					this->rectangle[r][c].addCell( this->cell[cr + defaultSize * r][cc + defaultSize * c] );
+					unsigned cellGlobalRow = cellRowInRetangle + Retangle::size*retangleRow;
+					unsigned cellGlobalColumn = cellColumnInRetangle + Retangle::size*retangleColumn;
+					this->rectangle[retangleRow][retangleColumn].addCell( this->cell[cellGlobalRow][cellGlobalColumn] );
 				}
-			}
-		}
-	}
+	return;
 }

@@ -7,9 +7,7 @@
 class Rectangle: public Group
 {
 	public:
-
-	private:
-
+		static const unsigned size;
 };
 
 #endif
