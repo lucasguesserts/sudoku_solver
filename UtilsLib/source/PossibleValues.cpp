@@ -1,24 +1,21 @@
 #include <PossibleValues.h>
 
-bool operator== (PossibleValues left , PossibleValues right)
+PossibleValues::PossibleValues(void)
 {
-
-	if ( left.size() != right.size() )
-		return false;
-
-	PossibleValues::iterator itLeft		= left.begin();
-	PossibleValues::iterator itRight	= right.begin();
-	for( ; itLeft != left.end() ; ++itLeft , ++itRight )
-	{
-		if( *itLeft != *itRight )
-			return false;
-	}
-
-	return true;
+	unsigned firstValue = 1;
+	unsigned lastValue = 9;
+	for (unsigned value=firstValue ; value<=lastValue ; ++value)
+		this->insert(value);
+	return;
 }
 
-bool operator!= (PossibleValues left , PossibleValues right)
+PossibleValue::uniqueValue(void)
 {
-
-	return !(left==right);
+	if (this->size() == 1)
+		return *(this->cbegin());
+	else
+	{
+		throw "Not unique possible value accessed.";
+		return
+	}
 }
