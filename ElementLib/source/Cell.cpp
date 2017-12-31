@@ -1,27 +1,22 @@
 #include <Cell.h>
 
-// Constructors
-
 Cell::Cell( void )
-	: value(0), possibleValues(allPossibleValues)
+	: value(0)
 {
 }
 
 void Cell::setValue( const unsigned value )
 {
 	if(value == 0) return;
-	else
-	{
+	if( ! (this->isValueValid(value)) ) throw "Invalid value inserted";
+	else{
 		this->value = value;
 		this->possibleValues.clear();
-		foreach( Group * g , this->group )
-		{
-			foreach( Cell * c , g->getCells() )
-			{
+		foreach( Group * cellGroup , this->group )
+			foreach( Cell * c , cellGroups->getCells() )
 				c->erasePossibleValue( value );
-			}
-		}
 	}
+	return;
 }
 
 unsigned Cell::getValue( void ) const
@@ -29,22 +24,19 @@ unsigned Cell::getValue( void ) const
 	return this->value;
 }
 
-PossibleValues Cell::getPossibleValues(void) const
+unsigned Cell::getNumberOfPossibleValues(void) const
 {
-	return this->possibleValues;
+	return this->possibleValues.size();
 }
 
-unsigned Cell::getPossibleValue(unsigned pos) const
+unsigned Cell::getUniquePossibleValue(void) const
 {
-	// Return the possible value in position 'pos'
-	// in set. It will be useful to get the
-	// unique possible value (when the set
-	// has only one element.
-	unsigned size = this->possibleValues.size();
-	PossibleValues::iterator it = this->possibleValues.begin();
+	return this->possibleValues.uniqueValue();
+}
 
-	if (pos < size)	return *it;
-	else throw "Trying to get a possible value out of range!";
+GroupPtrVector Cell::getGroups(void) const
+{
+	return this->group;
 }
 
 void Cell::erasePossibleValue(const unsigned val)
@@ -52,29 +44,36 @@ void Cell::erasePossibleValue(const unsigned val)
 	this->possibleValues.erase( val );
 }
 
-bool Cell::havePossibleValue(unsigned val) const
-{
-	return static_cast<bool>( this->possibleValues.count(val) );
-}
-
-unsigned Cell::getNumberOfPossibleValues(void) const
-{
-	return this->possibleValues.size();
-}
-
-// Group functionalities
-
 void Cell::addToGroup(Group & g)
 {
 	this->group.push_back( &g );
 }
 
-Group Cell::getGroup(const unsigned i) const
+bool isValid(void) const
 {
-	return *(this->group[i]);
+	bool vality = true;
+	if(this->value == 0) vality = true;
+	else
+	{
+		foreach( Group * cellGroup , this->group )
+		{
+			foreach( Cell * cellInSameGroup , cellGroup->getCells() )
+			{
+				cellInSameGroupValue = cellInSameGroup->getValue();
+				if (cellInSameGroupValue == 0) continue;
+				if (this->value == cellInSameGroupValue) vality = false;
+			}
+		}
+	}
+	return vality;
 }
 
-GroupPtrVector Cell::getGroups(void) const
+bool Cell::isValueValid(const unsigned value) const
 {
-	return this->group;
+	bool vality;
+	if(value<PossibleValues::firstValue || value>PossibleValues::lastValue)
+		vality = false
+	else
+		vality = true;
+	return vality;
 }
