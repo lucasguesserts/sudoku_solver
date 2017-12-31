@@ -9,6 +9,8 @@ class PossibleValues:
 	public:
 		PossibleValues(void);
 		unsigned uniqueValue(void);
+		static const unsigned firstValue;
+		static const unsigned lastValue;
 };
 
 #endif

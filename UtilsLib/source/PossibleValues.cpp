@@ -1,10 +1,12 @@
 #include <PossibleValues.h>
 
+const unsigned PossibleValues::firstValue = 1;
+const unsigned PossibleValues::lastValue = 9;
+
+
 PossibleValues::PossibleValues(void)
 {
-	unsigned firstValue = 1;
-	unsigned lastValue = 9;
-	for (unsigned value=firstValue ; value<=lastValue ; ++value)
+	for (unsigned value=PossibleValues::firstValue ; value<=PossibleValues::lastValue ; ++value)
 		this->insert(value);
 }
 

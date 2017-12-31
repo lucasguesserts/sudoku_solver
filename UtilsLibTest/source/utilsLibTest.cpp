@@ -49,3 +49,9 @@ TestCase( UniquePossibleValue )
 		pv.erase(value);
 	check( pv.uniqueValue() == uniqueValue );
 }
+
+TestCase( FirstAndLastPossibleValues )
+{
+	checkEqual( PossibleValues::firstValue , 1 );
+	checkEqual( PossibleValues::lastValue , 9 );
+}
