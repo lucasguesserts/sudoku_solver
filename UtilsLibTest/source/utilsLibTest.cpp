@@ -1,13 +1,7 @@
 #define BOOST_TEST_MODULE TestModule
 
-// std
-//#include <iostream>
-//using std::cout;
-//using std::endl;
 #include <vector>
-using std::vector;
 
-// Utils
 #include <Test.h>
 #include <Foreach.h>
 #include <PossibleValues.h>
@@ -22,7 +16,7 @@ TestCase( CheckEqualAndCheckClose )
 }
 
 TestCase( ForeachTest ){
-	vector<double> values;
+	std::vector<double> values;
 	int nValues = 5;
 	double rawValues[] = { 2.71, 3.14, 0.0, -3.14, -2.71 };
 
@@ -37,108 +31,21 @@ TestCase( ForeachTest ){
 	}
 }
 
-TestCase( InsertTest )
+TestCase( PossibleValuesConstructor )
 {
-	PossibleValues pvInsert;
-
-	unsigned start	= 0;
-	unsigned end	= 20;
-
-	for(unsigned i=start ; i<(end+1) ; ++i)
-	{
-		pvInsert.insert(i);
-	}
-
-	checkEqual( pvInsert.size() , (end-start+1) );
+	std::set<unsigned> testSet;
+	std::vector<unsigned> setValues = {1,2,3,4,5,6,7,8,9};
+	foreach(unsigned value, setValues)
+		testSet.insert(value);
+	check(static_cast< std::set<unsigned> >(PossibleValues()) == testSet);
 }
 
-TestCase( PossibleValuesCopyConstructor )
-{
-	PossibleValues pv(allPossibleValues);
-
-	check( pv == allPossibleValues );
-}
-
-TestCase( PossibleValuesIsEqualOperator )
-{
-	unsigned insertValues[] = {1 , 5 , 34};
-	PossibleValues pv0(insertValues , insertValues+3);
-	PossibleValues pv1(insertValues , insertValues+3);
-
-	check( pv0 == pv1 );
-}
-
-TestCase( PossibleValuesIsDifferentOperator )
-{
-	unsigned insertValues[] = {1 , 5 , 34};
-	PossibleValues pv0(insertValues , insertValues+3);
-	PossibleValues pv1(insertValues , insertValues+3);
-	PossibleValues pv2(insertValues , insertValues+2);
-
-	checkEqual( pv0 != pv1 , false );
-	checkEqual( pv0 != pv2 , true );
-}
-
-TestCase( FirstAndLastValues )
-{
-	unsigned firstValue	= FIRST_VALUE;
-	unsigned lastValue	= N_VALUES;
-
-	checkEqual( firstPossibleValue , firstValue );
-	checkEqual( lastPossibleValue , lastValue );
-}
-
-TestCase( AllPossibleValues )
-{
-
-	checkEqual(firstPossibleValue , 1);
-	checkEqual(lastPossibleValue , 9);
-
-	PossibleValues pv;
-	for(unsigned i=firstPossibleValue ; i<(lastPossibleValue+1) ; ++i)
-	{
-		pv.insert(i);
-	}
-
-	check( allPossibleValues == pv );
-}
-
-TestCase( VoidSet )
+TestCase( UniquePossibleValue )
 {
 	PossibleValues pv;
-	checkEqual( pv.empty() , true );
-}
-
-TestCase( RemoveSetElement )
-{
-	PossibleValues pv;
-
-	for(unsigned i=1 ; i<10 ; ++i)
-	{
-		pv.insert(i);
-	}
-
-	unsigned toErase = 4;
-	pv.erase(toErase);
-
-	// do not works
-	//checkEqual( pv.find(toErase) , pv.end() );
-
-	check( pv.find(toErase)==pv.end() );
-	checkEqual( pv.count(toErase) , 0 );
-}
-
-TestCase( EraseSet )
-{
-	PossibleValues pv;
-
-	for(unsigned i=1 ; i<10 ; ++i)
-	{
-		pv.insert(i);
-	}
-
-	checkEqual( pv.count(1) , 1 );
-
-	pv.clear();
-	checkEqual( pv.size() , 0 );
+	std::vector<unsigned> valuesToBeErased = {1,2,3,4,6,7,8,9};
+	unsigned uniqueValue = 5;
+	foreach( unsigned value , valuesToBeErased )
+		pv.erase(value);
+	check( pv.uniqueValue() == uniqueValue );
 }

@@ -1,13 +1,14 @@
-#ifndef POSSIBLE_VALUES
-#define POSSIBLE_VALUES
+#ifndef POSSIBLE_VALUES_H
+#define POSSIBLE_VALUES_H
 
 #include <set>
 
 class PossibleValues:
 	public std::set<unsigned>
 {
-	PossibleValues(void);
-	unsigned uniqueValue(void);
-}
+	public:
+		PossibleValues(void);
+		unsigned uniqueValue(void);
+};
 
 #endif
