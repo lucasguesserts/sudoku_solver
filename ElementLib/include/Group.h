@@ -4,23 +4,17 @@
 #include <vector>
 
 #include <Cell.h>
-
-using std::vector;
-
-typedef vector< Cell *> CellPtrVector;
+#include <PossibleValues.h>
 
 class Group
 {
 	public:
 		void			addCell(Cell & cell);
-		Cell			getCell(const unsigned i);
-		unsigned		getCellValue(const unsigned i);
-		unsigned		getNumberOfCell(void);
-		CellPtrVector	getCells(void);
+		vector< Cell *>	getCells(void);
 		bool			isValid(void) const;
 
 	private:
-		CellPtrVector cells;
+		vector< Cell *>	cells;
 };
 
 #endif
