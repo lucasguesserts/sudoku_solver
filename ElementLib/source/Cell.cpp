@@ -12,7 +12,7 @@ void Cell::setValue( const unsigned value )
 	else{
 		this->value = value;
 		this->possibleValues.clear();
-		foreach( Group * cellGroup , this->group )
+		foreach( Group * cellGroups , this->group )
 			foreach( Cell * c , cellGroups->getCells() )
 				c->erasePossibleValue( value );
 	}
@@ -34,7 +34,7 @@ unsigned Cell::getUniquePossibleValue(void) const
 	return this->possibleValues.uniqueValue();
 }
 
-GroupPtrVector Cell::getGroups(void) const
+std::vector<Group *> Cell::getGroups(void) const
 {
 	return this->group;
 }
@@ -49,7 +49,7 @@ void Cell::addToGroup(Group & g)
 	this->group.push_back( &g );
 }
 
-bool isValid(void) const
+bool Cell::isValid(void) const
 {
 	bool vality = true;
 	if(this->value == 0) vality = true;
@@ -59,7 +59,7 @@ bool isValid(void) const
 		{
 			foreach( Cell * cellInSameGroup , cellGroup->getCells() )
 			{
-				cellInSameGroupValue = cellInSameGroup->getValue();
+				unsigned cellInSameGroupValue = cellInSameGroup->getValue();
 				if (cellInSameGroupValue == 0) continue;
 				if (this->value == cellInSameGroupValue) vality = false;
 			}
@@ -72,7 +72,7 @@ bool Cell::isValueValid(const unsigned value) const
 {
 	bool vality;
 	if(value<PossibleValues::firstValue || value>PossibleValues::lastValue)
-		vality = false
+		vality = false;
 	else
 		vality = true;
 	return vality;

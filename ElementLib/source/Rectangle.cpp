@@ -1,3 +1,3 @@
 #include <Rectangle.h>
 
-const unsigned Retangle::size = 3;
+const unsigned Rectangle::size = 3;

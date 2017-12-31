@@ -9,7 +9,7 @@ void Group::addCell(Cell & cell)
 	cell.addToGroup( *this );
 }
 
-CellPtrVector Group::getCells(void)
+std::vector< Cell *> Group::getCells(void)
 {
 	return this->cells;
 }

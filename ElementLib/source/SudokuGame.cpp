@@ -2,7 +2,7 @@
 
 const unsigned SudokuGame::size = 9;
 
-SudokuGame::SudokuGame(unsigned s)
+SudokuGame::SudokuGame(void)
 {
 	allocCells();
 	allocRows();
@@ -30,12 +30,12 @@ void SudokuGame::setCellValue(unsigned row , unsigned column , unsigned value)
 	this->cell[row][column].setValue(value);
 }
 
-GroupPtrVector SudokuGame::getCellGroups(unsigned row , unsigned column) const
+std::vector<Group *> SudokuGame::getCellGroups(unsigned row , unsigned column)
 {
 	return cell[row][column].getGroups();
 }
 
-bool SudokuGame::isValid(void)
+bool SudokuGame::isValid(void) const
 {
 	bool vality = true;
 	for( unsigned row=0 ; row<this->size ; ++row )
@@ -44,7 +44,7 @@ bool SudokuGame::isValid(void)
 	return vality;
 }
 
-bool SudokuGame::isSolved(void)
+bool SudokuGame::isSolved(void) const
 {
 	bool vality;
 	vality = this->isValid();
@@ -122,7 +122,7 @@ void SudokuGame::createFile(const char * const fileName, const char * datasetNam
 	return;
 }
 
-void SudokuGame::appendFile(const char * const fileName, const char * datasetName) const
+void SudokuGame::appendInFile(const char * const fileName, const char * datasetName) const
 {
 	hid_t file;
 	hid_t dataset, dataspace;
@@ -184,7 +184,7 @@ void SudokuGame::allocCells(void)
 	cell.resize( this->size );
 	for(unsigned row=0 ; row<this->size ; ++row)
 	{
-		cell[row].resize( ths->size );
+		cell[row].resize( this->size );
 	}
 }
 
@@ -213,20 +213,20 @@ void SudokuGame::allocColumns(void)
 void SudokuGame::allocRectangles(void)
 {
 	// resize vector
-	this->rectangle.resize(Retangle::size);
-	for(unsigned retangleRow=0 ; retangleRow<Retangle::size ; ++retangleRow)
+	this->rectangle.resize(Rectangle::size);
+	for(unsigned rectangleRow=0 ; rectangleRow<Rectangle::size ; ++rectangleRow)
 	{
-		this->rectangle[retangleRow].resize(Retangle::size);
+		this->rectangle[rectangleRow].resize(Rectangle::size);
 	}
 	// add Cells to each Rectangle
-	for(unsigned retangleRow=0 ; retangleRow<Retangle::size ; ++retangleRow)
-		for(unsigned retangleColumn=0 ; retangleColumn<Retangle::size ; ++retangleColumn)
-			for(unsigned cellRowInRetangle=0 ; cellRowInRetangle<Retangle::size ; ++cellRowInRetangle)
-				for(unsigned cellColumnInRetangle=0 ; cellColumnInRetangle<Retangle::size ; ++cellColumnInRetangle)
+	for(unsigned rectangleRow=0 ; rectangleRow<Rectangle::size ; ++rectangleRow)
+		for(unsigned rectangleColumn=0 ; rectangleColumn<Rectangle::size ; ++rectangleColumn)
+			for(unsigned cellRowInRectangle=0 ; cellRowInRectangle<Rectangle::size ; ++cellRowInRectangle)
+				for(unsigned cellColumnInRectangle=0 ; cellColumnInRectangle<Rectangle::size ; ++cellColumnInRectangle)
 				{
-					unsigned cellGlobalRow = cellRowInRetangle + Retangle::size*retangleRow;
-					unsigned cellGlobalColumn = cellColumnInRetangle + Retangle::size*retangleColumn;
-					this->rectangle[retangleRow][retangleColumn].addCell( this->cell[cellGlobalRow][cellGlobalColumn] );
+					unsigned cellGlobalRow = cellRowInRectangle + Rectangle::size*rectangleRow;
+					unsigned cellGlobalColumn = cellColumnInRectangle + Rectangle::size*rectangleColumn;
+					this->rectangle[rectangleRow][rectangleColumn].addCell( this->cell[cellGlobalRow][cellGlobalColumn] );
 				}
 	return;
 }

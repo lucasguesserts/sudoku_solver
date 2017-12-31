@@ -10,7 +10,7 @@ PossibleValues::PossibleValues(void)
 		this->insert(value);
 }
 
-unsigned PossibleValues::uniqueValue(void)
+unsigned PossibleValues::uniqueValue(void) const
 {
 	if (this->size() == 1)
 		return *(this->cbegin());

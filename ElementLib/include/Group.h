@@ -10,11 +10,11 @@ class Group
 {
 	public:
 		void			addCell(Cell & cell);
-		vector< Cell *>	getCells(void);
+		std::vector< Cell *>	getCells(void);
 		bool			isValid(void) const;
 
 	private:
-		vector< Cell *>	cells;
+		std::vector< Cell *>	cells;
 };
 
 #endif

@@ -8,7 +8,7 @@ class PossibleValues:
 {
 	public:
 		PossibleValues(void);
-		unsigned uniqueValue(void);
+		unsigned uniqueValue(void) const;
 		static const unsigned firstValue;
 		static const unsigned lastValue;
 };
