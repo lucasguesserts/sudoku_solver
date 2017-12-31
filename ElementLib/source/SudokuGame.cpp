@@ -1,63 +1,49 @@
 #include <SudokuGame.h>
 
+const unsigned SudokuGame::size = 9;
+
 SudokuGame::SudokuGame(unsigned s)
 {
-	allocCells(s);
-	allocRows(s);
-	allocColumns(s);
+	allocCells();
+	allocRows();
+	allocColumns();
 	allocRectangles();
 
-	buildCheck(s);
+	buildCheck();
 }
 
-Cell SudokuGame::getCell(unsigned r , unsigned c)
+unsigned SudokuGame::getCellValue(unsigned row , unsigned column) const
 {
-	return this->cell[r][c];
+	return this->cell[row][column].getValue();
 }
 
-void SudokuGame::setCellValue(unsigned r , unsigned c , unsigned value)
+unsigned SudokuGame::getCellNumberOfPossibleValues(unsigned row , unsigned column) const
 {
-	this->cell[r][c].setValue(value);
+	return this->cell[row][column].getNumberOfPossibleValues();
 }
 
-unsigned SudokuGame::getCellValue(unsigned r , unsigned c) const
+unsigned SudokuGame::getCellUniquePossibleValue(unsigned row , unsigned column) const
 {
-	return this->cell[r][c].getValue();
+	return cell[row][column].getUniquePossibleValue();
 }
 
-unsigned SudokuGame::getCellNumberOfPossibleValues(unsigned l , unsigned c) const
+void SudokuGame::setCellValue(unsigned row , unsigned column , unsigned value)
 {
-	return this->cell[l][c].getNumberOfPossibleValues();
+	this->cell[row][column].setValue(value);
 }
 
-unsigned SudokuGame::getCellUniquePossibleValue(unsigned l , unsigned c) const
+GroupPtrVector SudokuGame::getCellGroups(unsigned row , unsigned column) const
 {
-	if( this->getCellNumberOfPossibleValues(l,c) == 1)
-	{
-		// return the first and unique possible value
-		return cell[l][c].getPossibleValue(0);
-	}
-	else throw "Cell with more than one possible value";
+	return cell[row][column].getGroups();
 }
 
-GroupPtrVector SudokuGame::getCellGroups(unsigned r , unsigned c) const
+bool SudokuGame::isValid(void)
 {
-	return cell[r][c].getGroups();
-}
-
-Row SudokuGame::getRow(unsigned l)
-{
-	return this->row[l];
-}
-
-Column SudokuGame::getColumn(unsigned c)
-{
-	return this->column[c];
-}
-
-Rectangle SudokuGame::getRectangle(unsigned l , unsigned c)
-{
-	return this->rectangle[l][c];
+	bool vality = true;
+	for( unsigned row=0 ; row<this->size ; ++row )
+		for( unsigned column=0 ; column<this->size ; ++column )
+				vality = cell[row][column].isValid() && vality;
+	return vality;
 }
 
 void SudokuGame::allocCells(unsigned s)
@@ -120,23 +106,6 @@ void SudokuGame::allocRectangles(void)
 			}
 		}
 	}
-}
-
-//// ############### solvers ###############
-bool SudokuGame::isValid(void)
-{
-	bool vality = true;
-	for( unsigned row=0 ; row<N_VALUES ; ++row )
-	{
-		for( unsigned column=0 ; column<N_VALUES ; ++column )
-		{
-			foreach(Group * g , this->getCellGroups(row,column) )
-			{
-				vality = g->isValid() && vality;
-			}
-		}
-	}
-	return vality;
 }
 
 void SudokuGame::solverForOnePossibleValue(void)

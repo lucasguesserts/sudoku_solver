@@ -6,6 +6,7 @@
 #include <vector>
 #include <exception>
 
+#include <PossibleValues.h>
 #include <Cell.h>
 #include <Group.h>
 #include <Row.h>
@@ -14,51 +15,41 @@
 
 #include <hdf5.h>
 
-using std::vector;
-typedef vector< vector<Cell> >			CellMatrix;
-typedef vector<Row>						RowVector;
-typedef vector<Column>					ColumnVector;
-typedef vector< vector <Rectangle> >	RectangleMatrix;
-
 class SudokuGame{
 	public:
-		explicit SudokuGame(unsigned s = N_VALUES);
+		SudokuGame(void);
 
 		// Cell functionalities
-		Cell		getCell(unsigned r , unsigned c);
-		void		setCellValue(unsigned r , unsigned c , unsigned value);
-		unsigned	getCellValue(unsigned r , unsigned c) const;
-		unsigned	getCellNumberOfPossibleValues(unsigned r , unsigned c) const;
-		unsigned	getCellUniquePossibleValue(unsigned r , unsigned c) const;
-
-		// Group functionalities
-		GroupPtrVector	getCellGroups(unsigned r , unsigned c) const;
-		Row			getRow(unsigned r);
-		Column		getColumn(unsigned c);
-		Rectangle	getRectangle(unsigned r , unsigned c);
+		unsigned				getCellValue(unsigned row , unsigned column) const;
+		unsigned				getCellNumberOfPossibleValues(unsigned row , unsigned column) const;
+		unsigned				getCellUniquePossibleValue(unsigned row , unsigned column) const;
+		void					setCellValue(unsigned row , unsigned column , unsigned value);
+		std::vector<Group *>	getCellGroups(unsigned row , unsigned column);
 
 		// solvers
-		bool		isValid(void);
-		void		solverForOnePossibleValue(void);
+		bool					isValid(void) const;
+		bool					isSolved(void) const;
+		void					solverForOnePossibleValue(void);
 		
 		// IO
-		void		set(const unsigned * const dataArray);
-		void		set(const vector<unsigned> data);
-		void		set(const vector< vector<unsigned> > data);
-		void		write(const char * const fileName);
-		void		read(const char * const fileName);
+		void					set(const std::vector< std::vector<unsigned> > data);
+		void					createFile(const char * const fileName, const char * datasetName) const;
+		void					appendInFile(const char * const fileName, const char * datasetName) const;
+		void					readFromFile(const char * const fileName, const char * datasetName);
+
+		static const unsigned	size;
 
 	private:
-		CellMatrix		cell;
-		RowVector		row;
-		ColumnVector	column;
-		RectangleMatrix	rectangle;
+		std::vector< std::vector<Cell> >		cell;
+		std::vector<Row>						row;
+		std::vector<Column>						column;
+		std::vector <std::vector<Retangle> >	rectangle;
 
-		void allocCells(unsigned s);
-		void allocRows(unsigned s);
-		void allocColumns(unsigned s);
+		void allocCells(void);
+		void allocRows(void);
+		void allocColumns(void);
 		void allocRectangles(void);
-		void buildCheck(unsigned s);
+		void buildCheck(void);
 };
 
 bool operator==(SudokuGame lhs , SudokuGame rhs);
