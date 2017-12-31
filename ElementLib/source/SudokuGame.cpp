@@ -8,8 +8,6 @@ SudokuGame::SudokuGame(unsigned s)
 	allocRows();
 	allocColumns();
 	allocRectangles();
-
-	buildCheck();
 }
 
 unsigned SudokuGame::getCellValue(unsigned row , unsigned column) const
@@ -78,68 +76,6 @@ void SudokuGame::solverForOnePossibleValue(void)
 	}while( aCellWasSet==true );
 }
 
-void SudokuGame::allocCells(unsigned s)
-{
-	// s : game size
-	cell.resize( s );
-	for(unsigned r=0 ; r<s ; ++r)
-	{
-		cell[r].resize( s );
-	}
-}
-
-void SudokuGame::allocRows(unsigned s)
-{
-	this->row.resize( s );
-	for(unsigned r=0 ; r<s ; ++r)
-	{
-		for(unsigned c=0 ; c<s ; ++c){
-			this->row[r].addCell( this->cell[r][c] );
-		}
-	}
-}
-
-void SudokuGame::allocColumns(unsigned s)
-{
-	this->column.resize( s );
-	for(unsigned c=0 ; c<s ; ++c)
-	{
-		for(unsigned r=0 ; r<s ; ++r){
-			this->column[c].addCell( this->cell[r][c] );
-		}
-	}
-}
-
-void SudokuGame::allocRectangles(void)
-{
-	// r: rectangle number of rows
-	// c: rectangle number of columns
-	// s: game size
-	unsigned defaultSize = 3;
-
-	// resize rows and columns
-	this->rectangle.resize(defaultSize);
-	for(unsigned c=0 ; c<defaultSize ; ++c)
-	{
-		this->rectangle[c].resize(defaultSize);
-	}
-
-	// add Cells to each Rectangle
-	for(unsigned r=0 ; r<defaultSize ; ++r)
-	{
-		for(unsigned c=0 ; c<defaultSize ; ++c)
-		{
-			for(unsigned cr=0 ; cr<defaultSize ; ++cr) // cr: Cell row
-			{
-				for(unsigned cc=0 ; cc<defaultSize ; ++cc) // cc: Cell Column
-				{
-					this->rectangle[r][c].addCell( this->cell[cr + defaultSize * r][cc + defaultSize * c] );
-				}
-			}
-		}
-	}
-}
-
 void SudokuGame::set(const std::vector< std::vector<unsigned> > data)
 {
 	{// size verification
@@ -154,76 +90,6 @@ void SudokuGame::set(const std::vector< std::vector<unsigned> > data)
 		for (unsigned column=0 ; column<this->size ; ++column)
 		{
 			setCellValue(row , column , data[row][column] );
-		}
-	}
-	return;
-}
-
-void SudokuGame::buildCheck(unsigned s)
-{
-	// default size for a Rectangle
-	unsigned defaultSize = 3;
-
-	// Check CellMatrix row number
-	if ( this->cell.size() != s ) throw "CellMatrix row numbers wrong";
-
-	// Check CellMatrix column number
-	for( unsigned l=0 ; l<s ; ++l)
-	{
-		if ( this->cell[l].size() != s ) throw "CellMatrix column number wrong";
-	}
-
-	// Check RowVector size
-	if ( this->row.size() != s ) throw "RowVector size wrong";
-
-	// Check each RowVector size
-	for( unsigned l=0 ; l<s ; ++l)
-	{
-		if ( this->row[l].getNumberOfCell() != s ) throw "Number of cells in row vector wrong";
-	}
-
-	// Check ColumnVector size
-	if ( this->column.size() != s ) throw "ColumnVector size wrong";
-
-	// Check each ColumnVector size
-	for( unsigned c=0 ; c<s ; ++c)
-	{
-		if ( this->column[c].getNumberOfCell() != s ) throw "Number of cells in column vector wrong";
-	}
-
-	// Check RectangleMatrix row number
-	if ( this->rectangle.size() != defaultSize ) throw "Number of rows in RectangleMatrix wrong";
-
-	// Check each RectangleMatrix column number
-	for(unsigned l=0 ; l<defaultSize ; ++l)
-	{
-		if ( this->rectangle[l].size() != defaultSize ) throw "Number of columns in RectangleMatrix wrong";
-	}
-}
-
-void SudokuGame::set(const unsigned * const dataArray)
-{
-	for (unsigned r=0 ; r<N_VALUES ; ++r)
-	{
-		for (unsigned c=0 ; c<N_VALUES ; ++c)
-		{
-			unsigned entry = N_VALUES*r + c;
-			setCellValue(r,c,dataArray[entry]);
-		}
-	}
-	return;
-}
-
-void SudokuGame::set(const vector<unsigned> data)
-{
-	if (data.size() != N_VALUES*N_VALUES)
-		throw "Invalid vector size - set sudoku game values.";
-	for (unsigned r=0 ; r<N_VALUES ; ++r)
-	{
-		for (unsigned c=0 ; c<N_VALUES ; ++c)
-		{
-			unsigned entry = N_VALUES*r + c;
-			setCellValue(r,c,data[entry]);
 		}
 	}
 	return;
@@ -311,4 +177,65 @@ bool operator==(SudokuGame lhs , SudokuGame rhs)
 		for(c=0 ; c<SudokuGame::size ; ++c)
 			if(lhs.getCellValue(r,c) != rhs.getCellValue(r,c)) return false;
 	return true;
+}
+
+void SudokuGame::allocCells(void)
+{
+	cell.resize( this->size );
+	for(unsigned row=0 ; row<this->size ; ++row)
+	{
+		cell[row].resize( ths->size );
+	}
+}
+
+void SudokuGame::allocRows(void)
+{
+	this->row.resize( this->size );
+	for(unsigned r=0 ; r<this->size ; ++r)
+	{
+		for(unsigned c=0 ; c<this->size ; ++c){
+			this->row[r].addCell( this->cell[r][c] );
+		}
+	}
+}
+
+void SudokuGame::allocColumns(void)
+{
+	this->column.resize( this->size );
+	for(unsigned c=0 ; c<this->size ; ++c)
+	{
+		for(unsigned r=0 ; r<this->size ; ++r){
+			this->column[c].addCell( this->cell[r][c] );
+		}
+	}
+}
+
+void SudokuGame::allocRectangles(void)
+{
+	// r: rectangle number of rows
+	// c: rectangle number of columns
+	// s: game size
+	unsigned defaultSize = 3;
+
+	// resize rows and columns
+	this->rectangle.resize(defaultSize);
+	for(unsigned c=0 ; c<defaultSize ; ++c)
+	{
+		this->rectangle[c].resize(defaultSize);
+	}
+
+	// add Cells to each Rectangle
+	for(unsigned r=0 ; r<defaultSize ; ++r)
+	{
+		for(unsigned c=0 ; c<defaultSize ; ++c)
+		{
+			for(unsigned cr=0 ; cr<defaultSize ; ++cr) // cr: Cell row
+			{
+				for(unsigned cc=0 ; cc<defaultSize ; ++cc) // cc: Cell Column
+				{
+					this->rectangle[r][c].addCell( this->cell[cr + defaultSize * r][cc + defaultSize * c] );
+				}
+			}
+		}
+	}
 }
