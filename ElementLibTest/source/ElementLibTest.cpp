@@ -113,6 +113,31 @@ TestCase( group_addCell_and_getCells )
 		checkEqual(&cell[i] , cellsInGroup[i]);
 }
 
+TestCase( group_isValid_true )
+{
+	const unsigned size = PossibleValues::lastValue; 
+	std::vector<unsigned> values = {1,2,3,4,5,6,7,8,9};
+	std::vector<Cell> cell(size);
+	Group group;
+	for(unsigned i=0 ; i<size ; ++i)
+		group.addCell(cell[i]);
+	for(unsigned i=0 ; i<size ; ++i)
+		cell[i].setValue(values[i]);
+	check( group.isValid() );
+}
+
+TestCase( group_isValid_false )
+{
+	const unsigned value = 5;
+	Cell cell[2];
+	Group group;
+	group.addCell(cell[0]);
+	group.addCell(cell[1]);
+	cell[0].setValue(value);
+	cell[1].setValue(value);
+	checkEqual( group.isValid() , false );
+}
+
 //TestCase( GroupGetNumberOfCells )
 //{
 	//Cell c0, c1, c2;
