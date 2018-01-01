@@ -138,87 +138,189 @@ TestCase( group_isValid_false )
 	checkEqual( group.isValid() , false );
 }
 
-//TestCase( GroupGetNumberOfCells )
-//{
-	//Cell c0, c1, c2;
-	//Group g;
-	//g.addCell(c0);
-	//g.addCell(c1);
-	//g.addCell(c2);
-	//checkEqual( g.getNumberOfCell() , 3 );
-//}
-
-//TestCase( GroupGetCellValue )
-//{
-	//const unsigned value = 8;
-	//Group g;
-	//Cell c;
-	//g.addCell(c);
-	//c.setValue(value);
-	//checkEqual( g.getCellValue(0) , value );
-//}
-
 //// ############### SudokuGame ###############
 
-//TestCase( SudokuGameGetCellNumberOfPossibleValues )
-//{
-	//SudokuGame sg;
-	//const unsigned r=2 , c=3;
-	//const unsigned defaultSize = allPossibleValues.size();
-	//checkEqual( sg.getCellNumberOfPossibleValues(r,c) , defaultSize );
-//}
+TestCase( SudokuGame_getValue )
+{
+	unsigned row = 2;
+	unsigned column = 5;
+	unsigned defaultValue = 0;
+	SudokuGame sg;
+	checkEqual( sg.getCellValue(row,column), defaultValue );
+}
 
-//TestCase( SudouGameSetCellValue )
-//{
-	//SudokuGame sg;
-	//const unsigned r = 3; const unsigned rectangleRow = 1;
-	//const unsigned c = 4; const unsigned rectangleColumn = 1;
-	//const unsigned value = 2;
+TestCase( SudokuGame_getNumberOfPossibleValues )
+{
+	unsigned row = 2;
+	unsigned column = 5;
+	unsigned value = 8;
+	SudokuGame sg;
+	checkEqual( sg.getCellValue(row,column), 0 );
+	checkEqual( sg.getCellNumberOfPossibleValues(row,column) , PossibleValues::numberOfValues );
+	sg.setCellValue(row,column,value);
+	checkEqual( sg.getCellValue(row,column), value );
+	checkEqual( sg.getCellNumberOfPossibleValues(row,column) , 0 );
+}
 
-	//sg.setCellValue(r , c , value);
-	//checkEqual( sg.getCell(r,c).getValue() , value );
+TestCase( SudouGame_setCellValue )
+{
+	SudokuGame sg;
+	const unsigned r = 3;
+	const unsigned c = 4;
+	const unsigned value = 2;
+	sg.setCellValue(r,c,value);
+	checkEqual( sg.getCellValue(r,c) , value );
+	for( unsigned row=0 ; row<SudokuGame::size ; ++row)
+	{
+		if (row==r) continue;
+		checkEqual( sg.getCellNumberOfPossibleValues(row,c) , PossibleValues::numberOfValues-1);
+	}
+	for( unsigned column=0 ; column<SudokuGame::size ; ++column)
+	{
+		if (column==c) continue;
+		checkEqual( sg.getCellNumberOfPossibleValues(r,column) , PossibleValues::numberOfValues-1);
+	}
+	// rectangle 1x0
+	for(unsigned row=3 ; row<6 ; ++row)
+		for(unsigned column=3 ; column<6 ; ++column)
+		{
+			if (row==r && column==c) continue;
+			checkEqual( sg.getCellNumberOfPossibleValues(row,column) , PossibleValues::numberOfValues-1);
+		}
+}
 
-	//foreach( Cell * cell , sg.getRow(r).getCells() )
-	//{
-		//checkEqual( cell->havePossibleValue(value) , false);
-	//}
+TestCase( SudokuGame_getCellUniquePossibleValue )
+{
+	SudokuGame sg;
+	const unsigned r = 2;
+	unsigned c;
+	for(c=0 ; c<(SudokuGame::size-1) ; ++c)
+	{
+		sg.setCellValue(r , c , c+1);
+	}
+	c = 8;
+	checkEqual( sg.getCellUniquePossibleValue(r,c) , PossibleValues::lastValue );
+}
 
-	//foreach( Cell * cell , sg.getColumn(c).getCells() )
-	//{
-		//checkEqual( cell->havePossibleValue(value) , false);
-	//}
+TestCase( SudokuGame_set_using_matrix )
+{
+	std::vector< std::vector<unsigned> > game = {
+		{0,0,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+		};
+	SudokuGame sg;
+	sg.set(game);
+	checkEqual( sg.getCellValue(1,0) , 3 );
+	checkEqual( sg.getCellValue(2,2) , 8 );
+	checkEqual( sg.getCellValue(8,4) , 7 );
+	checkEqual( sg.getCellNumberOfPossibleValues(2,5) , 3 );
+	checkEqual( sg.getCellNumberOfPossibleValues(5,2) , 2 );
+}
 
-	//foreach( Cell * cell , sg.getRectangle(rectangleRow , rectangleColumn).getCells() )
-	//{
-		//checkEqual( cell->havePossibleValue(value) , false);
-	//}
-//}
+TestCase( SudokuGame_isValid )
+{
+	SudokuGame sg;
+	check( sg.isValid() );
+}
 
-//TestCase( SudokuGameGetCellUniquePossibleValue )
-//{
-	//SudokuGame sg;
-	//const unsigned r = 2;
-	//for(unsigned c=0 ; c<(N_VALUES-1) ; ++c)
-	//{
-		//sg.setCellValue(r , c , c+1);
-	//}
-	//checkEqual( sg.getCellUniquePossibleValue(r,8) , N_VALUES );
-//}
+TestCase( SudokuGame_isValid_true )
+{
+	std::vector< std::vector<unsigned> > game = {
+		{0,0,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+		};
+	SudokuGame sg;
+	sg.set(game);
+	check( sg.isValid() );
+}
 
-//TestCase( SudokuGameSetCellValue )
-//{
-	//const unsigned r = 3;
-	//const unsigned c = 2;
-	//const unsigned value = 1;
-	//SudokuGame sg;
-	//Row row = sg.getRow(r);
-	//Column column = sg.getColumn(c);
-	//sg.setCellValue(r,c,value);
-	//checkEqual(row.getCellValue(c) , value);
-	//checkEqual(column.getCellValue(r) , value);
-//}
+TestCase( SudokuGame_isValid_false )
+{
+	std::vector< std::vector<unsigned> > game = {
+		{1,1,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+	};
+	SudokuGame sg;
+	sg.set(game);
+	check( ! sg.isValid() );
+}
 
-//// Refactoring needed!!!!!!!!!!!!!!!!!!!!!!!
+TestCase( SudokuGame_isSolved_true )
+{
+	std::vector< std::vector<unsigned> > solved_game = {
+		{4,3,5,2,6,9,7,8,1},
+		{6,8,2,5,7,1,4,9,3},
+		{1,9,7,8,3,4,5,6,2},
+		{8,2,6,1,9,5,3,4,7},
+		{3,7,4,6,8,2,9,1,5},
+		{9,5,1,7,4,3,6,2,8},
+		{5,1,9,3,2,6,8,7,4},
+		{2,4,8,9,5,7,1,3,6},
+		{7,6,3,4,1,8,2,5,9}
+		};
+	SudokuGame sg;
+	sg.set(solved_game);
+	check( sg.isSolved() );
+}
+
+TestCase( SudokuGame_isSolved_false )
+{
+	std::vector< std::vector<unsigned> > solved_game = {
+		{0,3,5,2,6,9,7,8,1},
+		{6,8,2,5,7,1,4,9,3},
+		{1,9,7,8,3,4,5,6,2},
+		{8,2,6,1,9,5,3,4,7},
+		{3,7,4,6,8,2,9,1,5},
+		{9,5,1,7,4,3,6,2,8},
+		{5,1,9,3,2,6,8,7,4},
+		{2,4,8,9,5,7,1,3,6},
+		{7,6,3,4,1,8,2,5,9}
+		};
+	SudokuGame sg;
+	sg.set(solved_game);
+	check( ! sg.isSolved() );
+}
+
+TestCase( SudokuGame_solveForOnePossibleValue )
+{
+	std::vector< std::vector<unsigned> > game = {
+		{0,0,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+	};
+	SudokuGame sg;
+	sg.set(game);
+	sg.solveForOnePossibleValue();
+	check( sg.isSolved() );
+}
+
 //TestCase( WriteSudokuGame )
 //{
 	//SudokuGame sg1, sg2;
@@ -228,74 +330,6 @@ TestCase( group_isValid_false )
 	//checkEqual( sg2.getCell(2,3).getValue() , 5 );
 //}
 
-//TestCase( CreateGameFromArray )
-//{
-	//unsigned game[] = {
-		//0,0,4,0,6,0,0,5,8,
-		//3,0,0,8,9,0,0,1,7,
-		//1,0,8,0,0,0,0,0,2,
-		//0,2,5,0,1,8,0,0,6,
-		//0,0,0,6,0,0,9,0,0,
-		//7,6,0,0,4,0,0,2,1,
-		//6,0,0,0,3,4,0,0,9,
-		//0,0,7,0,8,9,1,0,3,
-		//9,0,2,0,7,0,0,0,0
-		//};
-	//SudokuGame sg;
-	//sg.set(game);
-	//sg.write("easy.sudokugame");
-	//checkEqual( sg.getCell(1,0).getValue() , 3 );
-	//checkEqual( sg.getCell(2,2).getValue() , 8 );
-	//checkEqual( sg.getCell(8,4).getValue() , 7 );
-	//checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
-	//checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
-//}
-
-//TestCase( CreateGameFromVector )
-//{
-	//vector<unsigned> game = {
-		//0,0,4,0,6,0,0,5,8,
-		//3,0,0,8,9,0,0,1,7,
-		//1,0,8,0,0,0,0,0,2,
-		//0,2,5,0,1,8,0,0,6,
-		//0,0,0,6,0,0,9,0,0,
-		//7,6,0,0,4,0,0,2,1,
-		//6,0,0,0,3,4,0,0,9,
-		//0,0,7,0,8,9,1,0,3,
-		//9,0,2,0,7,0,0,0,0
-		//};
-	//SudokuGame sg;
-	//sg.set(game);
-	//sg.write("easy.sudokugame");
-	//checkEqual( sg.getCell(1,0).getValue() , 3 );
-	//checkEqual( sg.getCell(2,2).getValue() , 8 );
-	//checkEqual( sg.getCell(8,4).getValue() , 7 );
-	//checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
-	//checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
-//}
-
-//TestCase( CreateGameFromMatrix )
-//{
-	//vector< vector<unsigned> > game = {
-		//{0,0,4,0,6,0,0,5,8},
-		//{3,0,0,8,9,0,0,1,7},
-		//{1,0,8,0,0,0,0,0,2},
-		//{0,2,5,0,1,8,0,0,6},
-		//{0,0,0,6,0,0,9,0,0},
-		//{7,6,0,0,4,0,0,2,1},
-		//{6,0,0,0,3,4,0,0,9},
-		//{0,0,7,0,8,9,1,0,3},
-		//{9,0,2,0,7,0,0,0,0}
-		//};
-	//SudokuGame sg;
-	//sg.set(game);
-	//sg.write("easy.sudokugame");
-	//checkEqual( sg.getCell(1,0).getValue() , 3 );
-	//checkEqual( sg.getCell(2,2).getValue() , 8 );
-	//checkEqual( sg.getCell(8,4).getValue() , 7 );
-	//checkEqual( sg.getCell(2,5).getNumberOfPossibleValues() , 3 );
-	//checkEqual( sg.getCell(5,2).getNumberOfPossibleValues() , 2 );
-//}
 
 //TestCase( SolveSudokuGameUsingOnePossibleValueStrategy )
 //{

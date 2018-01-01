@@ -54,7 +54,7 @@ bool SudokuGame::isSolved(void) const
 	return vality;
 }
 
-void SudokuGame::solverForOnePossibleValue(void)
+void SudokuGame::solveForOnePossibleValue(void)
 {
 	bool aCellWasSet;
 	unsigned uniquePossibleValue;

@@ -56,14 +56,13 @@ bool Cell::isValid(void) const
 	else
 	{
 		foreach( Group * cellGroup , this->group )
-		{
 			foreach( Cell * cellInSameGroup , cellGroup->getCells() )
 			{
+				if (cellInSameGroup == this) continue;
 				unsigned cellInSameGroupValue = cellInSameGroup->getValue();
 				if (cellInSameGroupValue == 0) continue;
 				if (this->value == cellInSameGroupValue) vality = false;
 			}
-		}
 	}
 	return vality;
 }

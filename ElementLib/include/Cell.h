@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <exception>
+#include <iostream>
 
 #include <Foreach.h>
 #include <PossibleValues.h>
