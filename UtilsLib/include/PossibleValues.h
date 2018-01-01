@@ -11,6 +11,7 @@ class PossibleValues:
 		unsigned uniqueValue(void) const;
 		static const unsigned firstValue;
 		static const unsigned lastValue;
+		static const unsigned numberOfValues;
 };
 
 #endif

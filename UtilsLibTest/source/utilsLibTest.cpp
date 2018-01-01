@@ -50,8 +50,9 @@ TestCase( UniquePossibleValue )
 	check( pv.uniqueValue() == uniqueValue );
 }
 
-TestCase( FirstAndLastPossibleValues )
+TestCase( PossibleValues_constants )
 {
 	checkEqual( PossibleValues::firstValue , 1 );
 	checkEqual( PossibleValues::lastValue , 9 );
+	checkEqual( PossibleValues::numberOfValues , 9 );
 }
