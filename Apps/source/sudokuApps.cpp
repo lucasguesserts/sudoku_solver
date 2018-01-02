@@ -15,7 +15,7 @@
 const char * problemDatasetName = "Problem";
 void createEmptySudokuGame(const char * fileName);
 
-int main(const int argc, const char * argv[])
+int main(const int argc, const char * const argv[])
 {
 	if(argc!=2)
 	{
@@ -35,7 +35,7 @@ void createEmptySudokuGame(const char * fileName)
 	strcpy(fileNameWithExtension , fileName);
 	strcat(fileNameWithExtension , extension);
 	sg.createFile(fileNameWithExtension,problemDatasetName);
-	std::cout << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
-	std::cout << "Use hdfview to edit the file." << std::endl;
+	std::cout << std::endl << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
+	std::cout << std::endl << "Use hdfview to edit the file." << std::endl;
 	std::cout << std::endl;
 }
