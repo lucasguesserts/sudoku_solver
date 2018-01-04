@@ -1,5 +1,6 @@
-project(Apps)
+project(AppLibTest)
 
+#INCLUDE DIRECTORIES
 include_directories(${CMAKE_SOURCE_DIR}/UtilsLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/ElementLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/AppLib/include)
