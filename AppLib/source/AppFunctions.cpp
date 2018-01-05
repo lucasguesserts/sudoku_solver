@@ -16,24 +16,14 @@ void createEmptySudokuGame(const char * fileName)
 
 bool checkIsValidSudokuGame(const char * fileName, const char * datasetName)
 {
-	bool isGameValid;
 	SudokuGame sg;
 	sg.readFromFile(fileName, datasetName);
-	isGameValid = sg.isValid();
-	if (isGameValid)
-		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is VALID." << std::endl << std::endl;
-	else
-		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is INVALID." << std::endl << std::endl;
-	return isGameValid;
+	return sg.isValid();
 }
 
-void checkisSolvedSudokuGame(const char * fileName, const char * datasetName)
+bool checkIsSolvedSudokuGame(const char * fileName, const char * datasetName)
 {
 	SudokuGame sg;
 	sg.readFromFile(fileName, datasetName);
-	if (sg.isSolved())
-		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is SOLVED." << std::endl << std::endl;
-	else
-		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is UNSOLVED." << std::endl << std::endl;
-	return;
+	return sg.isSolved();
 }

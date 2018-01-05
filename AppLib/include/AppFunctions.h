@@ -6,6 +6,6 @@
 
 void createEmptySudokuGame(const char * fileName);
 bool checkIsValidSudokuGame(const char * fileName, const char * datasetName);
-void checkIsSolvedSudokuGame(const char * fileName, const char * datasetName);
+bool checkIsSolvedSudokuGame(const char * fileName, const char * datasetName);
 
 #endif
