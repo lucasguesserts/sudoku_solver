@@ -12,14 +12,25 @@
 #include <Rectangle.h>
 #include <SudokuGame.h>
 
+#include <AppFunctions.h>
 
-// ############### Cell ###############
 
-TestCase( cell_void_constructor )
+TestCase( check_is_valid_sudoku_game )
 {
-	Cell c;
-	const unsigned defaultValue = 0;
-	const unsigned numberOfPossibleValues = 9;
-	checkEqual( c.getValue() , defaultValue );
-	checkEqual( c.getNumberOfPossibleValues() , numberOfPossibleValues );
+	const char * fileName = "create_read_test.sudokugame";
+	SudokuGame sg;
+	std::vector< std::vector<unsigned> > game = {
+		{0,0,4,0,6,0,0,5,8},
+		{3,0,0,8,9,0,0,1,7},
+		{1,0,8,0,0,0,0,0,2},
+		{0,2,5,0,1,8,0,0,6},
+		{0,0,0,6,0,0,9,0,0},
+		{7,6,0,0,4,0,0,2,1},
+		{6,0,0,0,3,4,0,0,9},
+		{0,0,7,0,8,9,1,0,3},
+		{9,0,2,0,7,0,0,0,0}
+	};
+	sg.set(game);
+	sg.createFile(fileName,"Problem");
+	checkIsValidSudokuGame(fileName,"Problem");
 }

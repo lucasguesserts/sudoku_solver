@@ -1,6 +1,4 @@
-#include <appFunctions.h>
-
-const char * problemDatasetName = "Problem";
+#include <AppFunctions.h>
 
 void createEmptySudokuGame(const char * fileName)
 {
@@ -9,20 +7,33 @@ void createEmptySudokuGame(const char * fileName)
 	char fileNameWithExtension[200];
 	strcpy(fileNameWithExtension , fileName);
 	strcat(fileNameWithExtension , extension);
-	sg.createFile(fileNameWithExtension,problemDatasetName);
+	sg.createFile(fileNameWithExtension,AppDefinition::problemDatasetName);
 	std::cout << std::endl << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
 	std::cout << std::endl << "Use hdfview to edit the file." << std::endl;
 	std::cout << std::endl;
 	return;
 }
 
-void checkSudokuGame(const char * fileName, const char * datasetName)
+bool checkIsValidSudokuGame(const char * fileName, const char * datasetName)
 {
+	bool isGameValid;
 	SudokuGame sg;
 	sg.readFromFile(fileName, datasetName);
-	if (sg.isValid())
+	isGameValid = sg.isValid();
+	if (isGameValid)
 		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is VALID." << std::endl << std::endl;
 	else
 		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is INVALID." << std::endl << std::endl;
+	return isGameValid;
+}
+
+void checkisSolvedSudokuGame(const char * fileName, const char * datasetName)
+{
+	SudokuGame sg;
+	sg.readFromFile(fileName, datasetName);
+	if (sg.isSolved())
+		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is SOLVED." << std::endl << std::endl;
+	else
+		std::cout << "File" << " '" << fileName << "/" << datasetName << "' " << "is UNSOLVED." << std::endl << std::endl;
 	return;
 }

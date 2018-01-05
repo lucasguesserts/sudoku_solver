@@ -12,7 +12,7 @@
 #include <Rectangle.h>
 #include <SudokuGame.h>
 
-#include <appFunctions.h>
+#include <AppFunctions.h>
 
 int main(const int argc, const char * const argv[])
 {
