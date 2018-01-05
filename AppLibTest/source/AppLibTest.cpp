@@ -42,8 +42,8 @@ TestCase( check_is_valid_sudoku_game )
 		{9,0,2,0,7,0,0,0,0}
 	};
 	sg.set(game);
-	sg.createFile(fileName,"Problem");
-	check( checkIsValidSudokuGame(fileName,"Problem") );
+	sg.createFile(fileName,AppDefinition::problemDatasetName);
+	check( checkIsValidSudokuGame(fileName,AppDefinition::problemDatasetName) );
 }
 
 TestCase( check_is_solved_sudoku_game )
@@ -63,8 +63,8 @@ TestCase( check_is_solved_sudoku_game )
 	};
 	sg.set(game);
 	sg.solveForOnePossibleValue();
-	sg.createFile(fileName,"Problem");
-	check( checkIsSolvedSudokuGame(fileName,"Problem") );
+	sg.createFile(fileName,AppDefinition::solutionDatasetName);
+	check( checkIsSolvedSudokuGame(fileName,AppDefinition::solutionDatasetName) );
 }
 
 TestCase( solve_sudoku_game )
