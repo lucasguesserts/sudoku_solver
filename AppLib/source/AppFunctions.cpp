@@ -8,9 +8,9 @@ void createEmptySudokuGame(const char * fileName)
 	strcpy(fileNameWithExtension , fileName);
 	strcat(fileNameWithExtension , extension);
 	sg.createFile(fileNameWithExtension,AppDefinition::problemDatasetName);
-	std::cout << std::endl << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
-	std::cout << std::endl << "Use hdfview to edit the file." << std::endl;
-	std::cout << std::endl;
+	//std::cout << std::endl << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
+	//std::cout << std::endl << "Use hdfview to edit the file." << std::endl;
+	//std::cout << std::endl;
 	return;
 }
 

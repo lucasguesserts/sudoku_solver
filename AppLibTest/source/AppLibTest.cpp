@@ -14,6 +14,18 @@
 
 #include <AppFunctions.h>
 
+TestCase( create_empty_sudoku_game )
+{
+	const char * fileName = "empty_sudoku_game_test";
+	const char * fileNameWithExtension = "empty_sudoku_game_test.sudokugame";
+	SudokuGame sg;
+	createEmptySudokuGame(fileName);
+	sg.readFromFile(fileNameWithExtension,AppDefinition::problemDatasetName);
+	for(unsigned row=0 ; row<SudokuGame::size ; ++row)
+		for(unsigned column=0 ; column<SudokuGame::size ; ++column)
+			checkEqual( sg.getCellValue(row,column) , 0 );
+}
+
 TestCase( check_is_valid_sudoku_game )
 {
 	const char * fileName = "is_game_valid_test.sudokugame";
