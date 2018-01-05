@@ -27,3 +27,12 @@ bool checkIsSolvedSudokuGame(const char * fileName, const char * datasetName)
 	sg.readFromFile(fileName, datasetName);
 	return sg.isSolved();
 }
+
+bool solveSudokuGame(const char * fileName, const char * datasetName)
+{
+	SudokuGame sg;
+	sg.readFromFile(fileName,datasetName);
+	sg.solveForOnePossibleValue();
+	sg.appendInFile(fileName,AppDefinition::solutionDatasetName);
+	return sg.isSolved();
+}

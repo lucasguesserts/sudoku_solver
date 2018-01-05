@@ -3,7 +3,8 @@
 
 struct AppDefinition
 {
-	static const char problemDatasetName[];
+	static const char * problemDatasetName;
+	static const char * solutionDatasetName;
 };
 
 #endif
