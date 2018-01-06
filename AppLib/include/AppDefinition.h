@@ -7,4 +7,6 @@ struct AppDefinition
 	static const char * solutionDatasetName;
 };
 
+enum class AppBehaviour { create_empty, check, solved, solve };
+
 #endif

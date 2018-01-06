@@ -1,6 +1,7 @@
 #define BOOST_TEST_MODULE TestModule
 
 #include <vector>
+#include <cstring>
 
 #include <Test.h>
 #include <PossibleValues.h>
@@ -99,4 +100,29 @@ TestCase( solve_sudoku_game )
 	check( solveSudokuGame(fileName,AppDefinition::problemDatasetName) );
 	sg_solved_read.readFromFile(fileName,AppDefinition::solutionDatasetName);
 	check( sg_solved == sg_solved_read );
+}
+
+TestCase( select_app_behaviour )
+{
+	char behaviour[200];
+
+	strcpy(behaviour,"create_empty");
+	check( AppBehaviour::create_empty == selectBehaviour(behaviour) );
+
+	strcpy(behaviour,"check");
+	check( AppBehaviour::check == selectBehaviour(behaviour) );
+
+	strcpy(behaviour,"solved");
+	check( AppBehaviour::solved == selectBehaviour(behaviour) );
+
+	strcpy(behaviour,"solve");
+	check( AppBehaviour::solve == selectBehaviour(behaviour) );
+}
+
+TestCase( if_test )
+{
+	if(0==0)
+		check(true);
+	else
+		check(false);
 }

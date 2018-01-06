@@ -36,3 +36,17 @@ bool solveSudokuGame(const char * fileName, const char * datasetName)
 	sg.appendInFile(fileName,AppDefinition::solutionDatasetName);
 	return sg.isSolved();
 }
+
+AppBehaviour selectBehaviour(const char * behaviourString)
+{
+	AppBehaviour selectedBehaviour;
+	if( strcmp(behaviourString,"create_empty")==0 )
+		selectedBehaviour = AppBehaviour::create_empty;
+	else if( strcmp(behaviourString,"check")==0 )
+			selectedBehaviour = AppBehaviour::check;
+	else if( strcmp(behaviourString,"solved")==0 )
+			selectedBehaviour = AppBehaviour::solved;
+	else if( strcmp(behaviourString,"solve")==0 )
+			selectedBehaviour = AppBehaviour::solve;
+	return selectedBehaviour;
+}
