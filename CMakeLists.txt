@@ -9,25 +9,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -ansi -pedantic")
 include_directories(SYSTEM $ENV{BOOST_INCLUDE})
 
 project(sudoku_solver)
-set(VERSION_MAJOR "0")
+set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/archives)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/apps) 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) 
 
 find_package(MPI REQUIRED)
 if(MPI_FOUND)
 	include_directories (SYSTEM ${MPI_INCLUDE_PATH})
 endif()
 
-find_package (HDF5 ${CGNS_VERSION} REQUIRED)
+find_package (HDF5 REQUIRED)
 if (HDF5_FOUND)
 	include_directories (SYSTEM ${HDF5_INCLUDE_DIR})
 endif ()
-
 
 macro (add_executable _target)
     _add_executable (${_target} ${ARGN})
@@ -51,7 +50,6 @@ message("C++ compiler	= ${CMAKE_CXX_COMPILER}")
 message("Compiler flags	= ${CMAKE_CXX_FLAGS}")
 message("\n")
 
-#ADD SUBDIRECTORIES
 add_subdirectory(UtilsLib)
 add_subdirectory(UtilsLibTest)
 add_subdirectory(ElementLib)
