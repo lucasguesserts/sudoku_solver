@@ -8,9 +8,6 @@ void createEmptySudokuGame(const char * fileName)
 	strcpy(fileNameWithExtension , fileName);
 	strcat(fileNameWithExtension , extension);
 	sg.createFile(fileNameWithExtension,AppDefinition::problemDatasetName);
-	//std::cout << std::endl << "Successfully created empty sudoku game '" << fileNameWithExtension << "'." << std::endl;
-	//std::cout << std::endl << "Use hdfview to edit the file." << std::endl;
-	//std::cout << std::endl;
 	return;
 }
 
@@ -49,4 +46,25 @@ AppBehaviour selectBehaviour(const char * behaviourString)
 	else if( strcmp(behaviourString,"solve")==0 )
 			selectedBehaviour = AppBehaviour::solve;
 	return selectedBehaviour;
+}
+
+bool checkNumberOfInputs(const int argc)
+{
+	return argc==3;
+}
+
+void errorInvalidNumberOfArguments(void)
+{
+	std::cerr << std::endl << "Invalid number of arguments. Use:" << std::endl;
+	std::cerr << std::endl << "\t$ program behaviour file_name" << std::endl;
+	std::cerr << std::endl << "\tbehaviour = create_empty, check, solved, solve." << std::endl << std::endl;
+	exit(EXIT_FAILURE);
+}
+
+void errorInvalidBehaviour(void)
+{
+	std::cerr << std::endl << "Invalid behaviour. Use:" << std::endl;
+	std::cerr << std::endl << "\t$ program behaviour file_name" << std::endl;
+	std::cerr << std::endl << "\tbehaviour = create_empty, check, solved, solve." << std::endl << std::endl;
+	exit(EXIT_FAILURE);
 }

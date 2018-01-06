@@ -121,3 +121,12 @@ TestCase( select_app_behaviour )
 	strcpy(behaviour,"something invalid");
 	check( AppBehaviour::error == selectBehaviour(behaviour) );
 }
+
+TestCase( verify_number_of_inputs )
+{
+	int argc;
+	argc = 2;
+	check( ! checkNumberOfInputs(argc) );
+	argc = 3;
+	check( checkNumberOfInputs(argc) );
+}

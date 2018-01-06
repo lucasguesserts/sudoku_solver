@@ -19,13 +19,7 @@ int main(const int argc, const char * const argv[])
 {
 	const char * fileName = argv[2];
 	const char * datasetName;
-	if(argc != 3)
-	{
-		std::cerr << std::endl << "Invalid number of arguments. Use:" << std::endl;
-		std::cerr << std::endl << "\t$ program behaviour file_name" << std::endl;
-		std::cerr << std::endl << "\tbehaviour = create_empty, check, solved, solve." << std::endl << std::endl;
-		exit(EXIT_FAILURE);
-	}
+	if ( ! checkNumberOfInputs(argc) ) errorInvalidNumberOfArguments();
 	AppBehaviour behaviour = selectBehaviour(argv[1]);
 	switch(behaviour)
 	{
@@ -59,10 +53,7 @@ int main(const int argc, const char * const argv[])
 				std::cout << "CANNOT be SOLVED." << std::endl << std::endl;
 			break;
 		default:
-			std::cerr << std::endl << "Invalid behaviour. Use:" << std::endl;
-			std::cerr << std::endl << "\t$ program behaviour file_name" << std::endl;
-			std::cerr << std::endl << "\tbehaviour = create_empty, check, solved, solve." << std::endl << std::endl;
-			exit(EXIT_FAILURE);
+			errorInvalidBehaviour();
 	}
 	exit(EXIT_SUCCESS);
 }
