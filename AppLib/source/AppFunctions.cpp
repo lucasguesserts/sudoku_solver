@@ -39,7 +39,7 @@ bool solveSudokuGame(const char * fileName, const char * datasetName)
 
 AppBehaviour selectBehaviour(const char * behaviourString)
 {
-	AppBehaviour selectedBehaviour;
+	AppBehaviour selectedBehaviour = AppBehaviour::error;
 	if( strcmp(behaviourString,"create_empty")==0 )
 		selectedBehaviour = AppBehaviour::create_empty;
 	else if( strcmp(behaviourString,"check")==0 )

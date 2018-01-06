@@ -117,12 +117,7 @@ TestCase( select_app_behaviour )
 
 	strcpy(behaviour,"solve");
 	check( AppBehaviour::solve == selectBehaviour(behaviour) );
-}
 
-TestCase( if_test )
-{
-	if(0==0)
-		check(true);
-	else
-		check(false);
+	strcpy(behaviour,"something invalid");
+	check( AppBehaviour::error == selectBehaviour(behaviour) );
 }
