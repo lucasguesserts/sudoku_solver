@@ -1,8 +1,6 @@
 #ifndef SUDOKU_GAME_H
 #define SUDOKU_GAME_H
 
-#include <Foreach.h>
-
 #include <vector>
 #include <exception>
 

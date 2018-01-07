@@ -3,7 +3,6 @@
 #include <vector>
 
 #include <Test.h>
-#include <Foreach.h>
 #include <PossibleValues.h>
 
 TestCase( CheckEqualAndCheckClose )
@@ -15,7 +14,7 @@ TestCase( CheckEqualAndCheckClose )
 	checkEqual( i , j );
 }
 
-TestCase( ForeachTest ){
+TestCase( cpp_11_foreach ){
 	std::vector<double> values;
 	int nValues = 5;
 	double rawValues[] = { 2.71, 3.14, 0.0, -3.14, -2.71 };
@@ -25,7 +24,7 @@ TestCase( ForeachTest ){
 	}
 
 	int counter = 0;
-	foreach( double v, values ){
+	for( double v: values ){
 		checkClose( rawValues[ counter ], v, 1.0e-12 );
 		++counter; 
 	}
@@ -35,7 +34,7 @@ TestCase( PossibleValuesConstructor )
 {
 	std::set<unsigned> testSet;
 	std::vector<unsigned> setValues = {1,2,3,4,5,6,7,8,9};
-	foreach(unsigned value, setValues)
+	for(unsigned value : setValues)
 		testSet.insert(value);
 	check(static_cast< std::set<unsigned> >(PossibleValues()) == testSet);
 }
@@ -45,7 +44,7 @@ TestCase( UniquePossibleValue )
 	PossibleValues pv;
 	std::vector<unsigned> valuesToBeErased = {1,2,3,4,6,7,8,9};
 	unsigned uniqueValue = 5;
-	foreach( unsigned value , valuesToBeErased )
+	for( unsigned value : valuesToBeErased )
 		pv.erase(value);
 	check( pv.uniqueValue() == uniqueValue );
 }

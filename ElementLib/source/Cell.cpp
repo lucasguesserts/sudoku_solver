@@ -12,8 +12,8 @@ void Cell::setValue( const unsigned value )
 	else{
 		this->value = value;
 		this->possibleValues.clear();
-		foreach( Group * cellGroups , this->group )
-			foreach( Cell * c , cellGroups->getCells() )
+		for( Group * cellGroups : this->group )
+			for( Cell * c : cellGroups->getCells() )
 				c->erasePossibleValue( value );
 	}
 	return;
@@ -55,8 +55,8 @@ bool Cell::isValid(void) const
 	if(this->value == 0) vality = true;
 	else
 	{
-		foreach( Group * cellGroup , this->group )
-			foreach( Cell * cellInSameGroup , cellGroup->getCells() )
+		for( Group * cellGroup : this->group )
+			for( Cell * cellInSameGroup : cellGroup->getCells() )
 			{
 				if (cellInSameGroup == this) continue;
 				unsigned cellInSameGroupValue = cellInSameGroup->getValue();

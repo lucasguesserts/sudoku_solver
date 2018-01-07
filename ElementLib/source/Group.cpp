@@ -2,10 +2,7 @@
 
 void Group::addCell(Cell & cell)
 {
-	// Add Cell to Group
 	this->cells.push_back( &cell );
-
-	// Add the Group to Cell Group list
 	cell.addToGroup( *this );
 }
 
@@ -21,7 +18,7 @@ bool Group::isValid(void) const
 	for(number=PossibleValues::firstValue ; number<=PossibleValues::lastValue ; ++number)
 	{
 		count = 0;
-		foreach( Cell * cell , cells ) if(cell->getValue() == number) count++;
+		for( Cell * cell : cells ) if(cell->getValue() == number) count++;
 		if(count>1) vality = false;
 	}
 	return vality;

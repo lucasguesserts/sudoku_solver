@@ -45,7 +45,7 @@ TestCase( erase_possible_value )
 {
 	Cell cell;
 	std::vector<unsigned> valuesToBeErased = {1,2,3,4,5,6,7,8,9};
-	foreach( unsigned value , valuesToBeErased )
+	for( unsigned value : valuesToBeErased )
 		cell.erasePossibleValue(value);
 	checkEqual( cell.getNumberOfPossibleValues() , 0 );
 }
@@ -55,7 +55,7 @@ TestCase( cell_unique_possible_value )
 	Cell cell;
 	std::vector<unsigned> valuesToBeErased = {1,2,3,4,6,7,8,9};
 	unsigned uniqueValue = 5;
-	foreach( unsigned value , valuesToBeErased )
+	for( unsigned value : valuesToBeErased )
 		cell.erasePossibleValue(value);
 	checkEqual( cell.getNumberOfPossibleValues() , 1 );
 	checkEqual( cell.getUniquePossibleValue() , uniqueValue );
