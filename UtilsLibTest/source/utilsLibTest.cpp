@@ -1,15 +1,14 @@
-#define CATCH_CONFIG_MAIN
-#include <catch.hpp>
+#include <Test.h>
 
-TEST_CASE( "catch test" )
+TestCase( "catch test", "[basic]" )
 {
 	int a,b;
 	a = 3;
 	b = 3;
-	CHECK( a==b );
+	check( a==b );
 	a = 4;
 	b = 5;
-	CHECK( a==b);
+	check( a==b);
 }
 //#define BOOST_TEST_MODULE TestModule
 
