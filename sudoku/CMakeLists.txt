@@ -1,4 +1,4 @@
-project(Apps)
+project(sudoku)
 
 include_directories(${CMAKE_SOURCE_DIR}/UtilsLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/ElementLib/include)
@@ -14,6 +14,5 @@ target_link_libraries(${PROJECT_NAME} AppLib)
 
 install(
 	TARGETS ${PROJECT_NAME}
-	RUNTIME DESTINATION	apps
-	ARCHIVE DESTINATION archives
+	RUNTIME DESTINATION	bin
 )

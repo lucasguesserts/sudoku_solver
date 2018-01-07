@@ -11,9 +11,3 @@ add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_sources} ${${PROJECT_NAME}_
 
 target_link_libraries(${PROJECT_NAME} UtilsLib)
 target_link_libraries(${PROJECT_NAME} ElementLib)
-
-install(
-	TARGETS ${PROJECT_NAME}
-	LIBRARY DESTINATION libs
-	ARCHIVE DESTINATION archives
-)

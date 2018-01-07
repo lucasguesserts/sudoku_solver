@@ -1,6 +1,5 @@
 project(AppLibTest)
 
-#INCLUDE DIRECTORIES
 include_directories(${CMAKE_SOURCE_DIR}/UtilsLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/ElementLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/AppLib/include)
@@ -12,11 +11,3 @@ add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_sources})
 target_link_libraries(${PROJECT_NAME} UtilsLib)
 target_link_libraries(${PROJECT_NAME} ElementLib)
 target_link_libraries(${PROJECT_NAME} AppLib)
-
-install(
-	TARGETS ${PROJECT_NAME}
-	RUNTIME DESTINATION	bin
-	PUBLIC_HEADER DESTINATION include
-	LIBRARY DESTINATION lib
-	ARCHIVE DESTINATION lib
-)
