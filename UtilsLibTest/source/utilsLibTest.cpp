@@ -1,35 +1,32 @@
 #include <Test.h>
 
-class A
-{
-	public:
-	int data;
-};
-
-bool operator==(A lhs, A rhs)
-{
-	return lhs.data==rhs.data;
-}
-
 TestCase( "catch test", "[basic]" )
 {
 	int a,b;
-	a = 3;
-	b = 3;
-	check(a==b);
-	a = 4;
-	b = 5;
-	check(a==b);
+	section("true test")
+	{
+		a = 3;
+		b = 3;
+		check(a==b);
+		require(a==b);
+	}
+	section("false test")
+	{
+		a = 4;
+		b = 5;
+		checkFalse(a==b);
+		requireFalse(a==b);
+	}
 }
 
-TestCase("class without operator<<", "[basic]")
+TestCase("catch floating point test", "[basic]")
 {
-	A a,b;
-	a.data = 3;
-	b.data = 3;
-	check(a==b);
-	b.data = 4;
-	check(a==b);
+	double a,b;
+	a = 3.1415926535898;
+	b = 3.1415926535898;
+	require(a==b);
+	b = 3.141592;
+	require(a==Approx(b));
 }
 //#define BOOST_TEST_MODULE TestModule
 
