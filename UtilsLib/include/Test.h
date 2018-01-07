@@ -5,7 +5,7 @@
 #include <catch.hpp>
 
 #define TestCase TEST_CASE
-#define TestSection SECTION
+#define section SECTION
 
 #define check CHECK
 #define checkFalse CHECK_FALSE

@@ -1,14 +1,35 @@
 #include <Test.h>
 
+class A
+{
+	public:
+	int data;
+};
+
+bool operator==(A lhs, A rhs)
+{
+	return lhs.data==rhs.data;
+}
+
 TestCase( "catch test", "[basic]" )
 {
 	int a,b;
 	a = 3;
 	b = 3;
-	check( a==b );
+	check(a==b);
 	a = 4;
 	b = 5;
-	check( a==b);
+	check(a==b);
+}
+
+TestCase("class without operator<<", "[basic]")
+{
+	A a,b;
+	a.data = 3;
+	b.data = 3;
+	check(a==b);
+	b.data = 4;
+	check(a==b);
 }
 //#define BOOST_TEST_MODULE TestModule
 
