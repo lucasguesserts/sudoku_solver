@@ -1,5 +1,3 @@
-#define BOOST_TEST_MODULE TestModule
-
 #include <vector>
 #include <cstring>
 
@@ -15,7 +13,7 @@
 
 #include <AppFunctions.h>
 
-TestCase( create_empty_sudoku_game )
+TestCase( "create_empty_sudoku_game", "[app]" )
 {
 	const char * fileName = "empty_sudoku_game_test";
 	const char * fileNameWithExtension = "empty_sudoku_game_test.sudokugame";
@@ -24,10 +22,10 @@ TestCase( create_empty_sudoku_game )
 	sg.readFromFile(fileNameWithExtension,AppDefinition::problemDatasetName);
 	for(unsigned row=0 ; row<SudokuGame::size ; ++row)
 		for(unsigned column=0 ; column<SudokuGame::size ; ++column)
-			checkEqual( sg.getCellValue(row,column) , 0 );
+			check( sg.getCellValue(row,column) == 0 );
 }
 
-TestCase( check_is_valid_sudoku_game )
+TestCase( "check_is_valid_sudoku_game", "[app]" )
 {
 	const char * fileName = "is_game_valid_test.sudokugame";
 	SudokuGame sg;
@@ -47,7 +45,7 @@ TestCase( check_is_valid_sudoku_game )
 	check( checkIsValidSudokuGame(fileName,AppDefinition::problemDatasetName) );
 }
 
-TestCase( check_is_solved_sudoku_game )
+TestCase( "check_is_solved_sudoku_game", "[app]" )
 {
 	const char * fileName = "is_game_solved_test.sudokugame";
 	SudokuGame sg;
@@ -68,7 +66,7 @@ TestCase( check_is_solved_sudoku_game )
 	check( checkIsSolvedSudokuGame(fileName,AppDefinition::solutionDatasetName) );
 }
 
-TestCase( solve_sudoku_game )
+TestCase( "solve_sudoku_game", "[app]" )
 {
 	const char * fileName = "solve_sudoku_game_test.sudokugame";
 	SudokuGame sg_unsolved, sg_solved, sg_solved_read;
@@ -102,7 +100,7 @@ TestCase( solve_sudoku_game )
 	check( sg_solved == sg_solved_read );
 }
 
-TestCase( select_app_behaviour )
+TestCase( "select_app_behaviour", "[app]" )
 {
 	char behaviour[200];
 
@@ -122,7 +120,7 @@ TestCase( select_app_behaviour )
 	check( AppBehaviour::error == selectBehaviour(behaviour) );
 }
 
-TestCase( verify_number_of_inputs )
+TestCase( "verify_number_of_inputs", "[app]" )
 {
 	int argc;
 	argc = 2;
