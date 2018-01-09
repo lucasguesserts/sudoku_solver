@@ -209,6 +209,9 @@ TestCase( "SudokuGame_voidGame_isValid", "[sudoku game]" )
 
 TestCase( "SudokuGame_example", "[sudoku game]" ) 
 {
+	const char * fileName = "appendInFile_test.sudokugame";
+	const char * voidDatasetName = "void_game";
+	const char * datasetName = "problem";
 	std::vector< std::vector<unsigned> > game = {
 		{0,0,4,0,6,0,0,5,8},
 		{3,0,0,8,9,0,0,1,7},
@@ -222,6 +225,8 @@ TestCase( "SudokuGame_example", "[sudoku game]" )
 	};
 	SudokuGame sg;
 	sg.set(game);
+	sg.createFile(fileName,datasetName);
+	sg.appendInFile(fileName,voidDatasetName);
 	section( "set_using_matrix" )
 	{
 		check( sg.getCellValue(1,0) == 3 );
@@ -243,10 +248,34 @@ TestCase( "SudokuGame_example", "[sudoku game]" )
 		column = 1; sg.setCellValue(row,column,value);
 		checkFalse( sg.isValid() );
 	}
+	section( "isSolved_false" )
+	{
+		checkFalse( sg.isSolved() );
+	}
 	section( "solveForOnePossibleValue" )
 	{
 		sg.solveForOnePossibleValue();
 		check( sg.isSolved() );
+	}
+	section( "create_read_file" )
+	{
+		SudokuGame sg2;
+		sg2.readFromFile(fileName,datasetName);
+		check( sg2.getCellValue(1,0) == 3 );
+		check( sg2.getCellValue(2,2) == 8 );
+		check( sg2.getCellValue(8,4) == 7 );
+		check( sg2.getCellNumberOfPossibleValues(2,5) == 3 );
+		check( sg2.getCellNumberOfPossibleValues(5,2) == 2 );
+	}
+	section( "appendInFile" )
+	{
+		SudokuGame sg3;
+		sg3.readFromFile(fileName,voidDatasetName);
+		check( sg3.getCellValue(1,0) == 3 );
+		check( sg3.getCellValue(2,2) == 8 );
+		check( sg3.getCellValue(8,4) == 7 );
+		check( sg3.getCellNumberOfPossibleValues(2,5) == 3 );
+		check( sg3.getCellNumberOfPossibleValues(5,2) == 2 );
 	}
 }
 
@@ -265,69 +294,6 @@ TestCase( "SudokuGame_isSolved", "[sudoku game]" )
 		};
 	SudokuGame sg;
 	sg.set(solved_game);
-	section( "true" )
-	{
-		check( sg.isSolved() );
-	}
-	section( "false" )
-	{
-		unsigned row = 0, column=0, value=0;
-		sg.setCellValue(row,column,value);
-		check( sg.getCellValue(row,column) == 0 );
-		checkFalse( sg.isSolved() );
-	}
+	check( sg.isSolved() );
 }
 
-TestCase( "SudokuGame_create_read_file", "[sudoku game]" )
-{
-	const char * fileName = "create_read_test.sudokugame";
-	const char * datasetName = "problem";
-	std::vector< std::vector<unsigned> > game = {
-		{0,0,4,0,6,0,0,5,8},
-		{3,0,0,8,9,0,0,1,7},
-		{1,0,8,0,0,0,0,0,2},
-		{0,2,5,0,1,8,0,0,6},
-		{0,0,0,6,0,0,9,0,0},
-		{7,6,0,0,4,0,0,2,1},
-		{6,0,0,0,3,4,0,0,9},
-		{0,0,7,0,8,9,1,0,3},
-		{9,0,2,0,7,0,0,0,0}
-		};
-	SudokuGame sg[2];
-	sg[0].set(game);
-	sg[0].createFile(fileName,datasetName);
-	sg[1].readFromFile(fileName,datasetName);
-	check( sg[1].getCellValue(1,0) == 3 );
-	check( sg[1].getCellValue(2,2) == 8 );
-	check( sg[1].getCellValue(8,4) == 7 );
-	check( sg[1].getCellNumberOfPossibleValues(2,5) == 3 );
-	check( sg[1].getCellNumberOfPossibleValues(5,2) == 2 );
-}
-
-TestCase( "SudokuGame_appendInFile", "[sudoku game]" )
-{
-	const char * fileName = "appendInFile_test.sudokugame";
-	const char * voidDatasetName = "void_game";
-	const char * datasetName = "problem";
-	std::vector< std::vector<unsigned> > game = {
-		{0,0,4,0,6,0,0,5,8},
-		{3,0,0,8,9,0,0,1,7},
-		{1,0,8,0,0,0,0,0,2},
-		{0,2,5,0,1,8,0,0,6},
-		{0,0,0,6,0,0,9,0,0},
-		{7,6,0,0,4,0,0,2,1},
-		{6,0,0,0,3,4,0,0,9},
-		{0,0,7,0,8,9,1,0,3},
-		{9,0,2,0,7,0,0,0,0}
-		};
-	SudokuGame sg[3];
-	sg[0].createFile(fileName,voidDatasetName);
-	sg[1].set(game);
-	sg[1].appendInFile(fileName,datasetName);
-		sg[2].readFromFile(fileName,datasetName);
-	check( sg[2].getCellValue(1,0) == 3 );
-	check( sg[2].getCellValue(2,2) == 8 );
-	check( sg[2].getCellValue(8,4) == 7 );
-	check( sg[2].getCellNumberOfPossibleValues(2,5) == 3 );
-	check( sg[2].getCellNumberOfPossibleValues(5,2) == 2 );
-}
