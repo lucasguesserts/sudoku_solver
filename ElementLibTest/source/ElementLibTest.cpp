@@ -34,9 +34,8 @@ TestCase( "cell_setValue_and_getValue", "[cell]" )
 TestCase( "cell_setValue_zero", "[cell]" )
 {
 	Cell cell;
-	const unsigned numberOfPossibleValues = 9;
 	cell.setValue(0);
-	check( cell.getNumberOfPossibleValues() == numberOfPossibleValues );
+	check( cell.getNumberOfPossibleValues() == PossibleValues::numberOfValues );
 }
 
 TestCase( "erase_possible_value", "[cell]" )
@@ -79,7 +78,7 @@ TestCase( "cell_isValid_false", "[cell]" )
 	group.addCell(cell[1]);
 	cell[0].setValue(value);
 	cell[1].setValue(value);
-	check( cell[0].isValid() == false );
+	checkFalse( cell[0].isValid() );
 }
 
 TestCase( "cell_isValid_true", "[cell]" )
@@ -113,7 +112,7 @@ TestCase( "group_addCell_and_getCells", "[group]" )
 
 TestCase( "group_isValid_true", "[group]" )
 {
-	const unsigned size = PossibleValues::lastValue; 
+	const unsigned size = PossibleValues::numberOfValues; 
 	std::vector<unsigned> values = {1,2,3,4,5,6,7,8,9};
 	std::vector<Cell> cell(size);
 	Group group;
@@ -133,7 +132,7 @@ TestCase( "group_isValid_false", "[group]" )
 	group.addCell(cell[1]);
 	cell[0].setValue(value);
 	cell[1].setValue(value);
-	check( group.isValid() == false );
+	checkFalse( group.isValid() );
 }
 
 //// ############### SudokuGame ###############
@@ -180,11 +179,13 @@ TestCase( "SudouGame_setCellValue", "[sudoku game]" )
 	}
 	// rectangle 1x0
 	for(unsigned row=3 ; row<6 ; ++row)
+	{
 		for(unsigned column=3 ; column<6 ; ++column)
 		{
 			if (row==r && column==c) continue;
 			check( sg.getCellNumberOfPossibleValues(row,column) == PossibleValues::numberOfValues-1);
 		}
+	}
 }
 
 TestCase( "SudokuGame_getCellUniquePossibleValue", "[sudoku game]" )
@@ -200,56 +201,16 @@ TestCase( "SudokuGame_getCellUniquePossibleValue", "[sudoku game]" )
 	check( sg.getCellUniquePossibleValue(r,c) == PossibleValues::lastValue );
 }
 
-TestCase( "SudokuGame_set_using_matrix", "[sudoku game]" )
-{
-	std::vector< std::vector<unsigned> > game = {
-		{0,0,4,0,6,0,0,5,8},
-		{3,0,0,8,9,0,0,1,7},
-		{1,0,8,0,0,0,0,0,2},
-		{0,2,5,0,1,8,0,0,6},
-		{0,0,0,6,0,0,9,0,0},
-		{7,6,0,0,4,0,0,2,1},
-		{6,0,0,0,3,4,0,0,9},
-		{0,0,7,0,8,9,1,0,3},
-		{9,0,2,0,7,0,0,0,0}
-		};
-	SudokuGame sg;
-	sg.set(game);
-	check( sg.getCellValue(1,0) == 3 );
-	check( sg.getCellValue(2,2) == 8 );
-	check( sg.getCellValue(8,4) == 7 );
-	check( sg.getCellNumberOfPossibleValues(2,5) == 3 );
-	check( sg.getCellNumberOfPossibleValues(5,2) == 2 );
-}
-
-TestCase( "SudokuGame_isValid", "[sudoku game]" )
+TestCase( "SudokuGame_voidGame_isValid", "[sudoku game]" ) 
 {
 	SudokuGame sg;
 	check( sg.isValid() );
 }
 
-TestCase( "SudokuGame_isValid_true", "[sudoku game]" )
+TestCase( "SudokuGame_example", "[sudoku game]" ) 
 {
 	std::vector< std::vector<unsigned> > game = {
 		{0,0,4,0,6,0,0,5,8},
-		{3,0,0,8,9,0,0,1,7},
-		{1,0,8,0,0,0,0,0,2},
-		{0,2,5,0,1,8,0,0,6},
-		{0,0,0,6,0,0,9,0,0},
-		{7,6,0,0,4,0,0,2,1},
-		{6,0,0,0,3,4,0,0,9},
-		{0,0,7,0,8,9,1,0,3},
-		{9,0,2,0,7,0,0,0,0}
-		};
-	SudokuGame sg;
-	sg.set(game);
-	check( sg.isValid() );
-}
-
-TestCase( "SudokuGame_isValid_false", "[sudoku game]" )
-{
-	std::vector< std::vector<unsigned> > game = {
-		{1,1,4,0,6,0,0,5,8},
 		{3,0,0,8,9,0,0,1,7},
 		{1,0,8,0,0,0,0,0,2},
 		{0,2,5,0,1,8,0,0,6},
@@ -261,10 +222,35 @@ TestCase( "SudokuGame_isValid_false", "[sudoku game]" )
 	};
 	SudokuGame sg;
 	sg.set(game);
-	check( ! sg.isValid() );
+	section( "set_using_matrix" )
+	{
+		check( sg.getCellValue(1,0) == 3 );
+		check( sg.getCellValue(2,2) == 8 );
+		check( sg.getCellValue(8,4) == 7 );
+		check( sg.getCellNumberOfPossibleValues(2,5) == 3 );
+		check( sg.getCellNumberOfPossibleValues(5,2) == 2 );
+	}
+	section( "isValid_true" )
+	{
+		check( sg.isValid() );
+	}
+	section( "isValid_false" )
+	{
+		unsigned row = 0;
+		unsigned column;
+		unsigned value = 1;
+		column = 0; sg.setCellValue(row,column,value);
+		column = 1; sg.setCellValue(row,column,value);
+		checkFalse( sg.isValid() );
+	}
+	section( "solveForOnePossibleValue" )
+	{
+		sg.solveForOnePossibleValue();
+		check( sg.isSolved() );
+	}
 }
 
-TestCase( "SudokuGame_isSolved_true", "[sudoku game]" )
+TestCase( "SudokuGame_isSolved", "[sudoku game]" )
 {
 	std::vector< std::vector<unsigned> > solved_game = {
 		{4,3,5,2,6,9,7,8,1},
@@ -279,44 +265,17 @@ TestCase( "SudokuGame_isSolved_true", "[sudoku game]" )
 		};
 	SudokuGame sg;
 	sg.set(solved_game);
-	check( sg.isSolved() );
-}
-
-TestCase( "SudokuGame_isSolved_false", "[sudoku game]" )
-{
-	std::vector< std::vector<unsigned> > solved_game = {
-		{0,3,5,2,6,9,7,8,1},
-		{6,8,2,5,7,1,4,9,3},
-		{1,9,7,8,3,4,5,6,2},
-		{8,2,6,1,9,5,3,4,7},
-		{3,7,4,6,8,2,9,1,5},
-		{9,5,1,7,4,3,6,2,8},
-		{5,1,9,3,2,6,8,7,4},
-		{2,4,8,9,5,7,1,3,6},
-		{7,6,3,4,1,8,2,5,9}
-		};
-	SudokuGame sg;
-	sg.set(solved_game);
-	check( ! sg.isSolved() );
-}
-
-TestCase( "SudokuGame_solveForOnePossibleValue", "[sudoku game]" )
-{
-	std::vector< std::vector<unsigned> > game = {
-		{0,0,4,0,6,0,0,5,8},
-		{3,0,0,8,9,0,0,1,7},
-		{1,0,8,0,0,0,0,0,2},
-		{0,2,5,0,1,8,0,0,6},
-		{0,0,0,6,0,0,9,0,0},
-		{7,6,0,0,4,0,0,2,1},
-		{6,0,0,0,3,4,0,0,9},
-		{0,0,7,0,8,9,1,0,3},
-		{9,0,2,0,7,0,0,0,0}
-	};
-	SudokuGame sg;
-	sg.set(game);
-	sg.solveForOnePossibleValue();
-	check( sg.isSolved() );
+	section( "true" )
+	{
+		check( sg.isSolved() );
+	}
+	section( "false" )
+	{
+		unsigned row = 0, column=0, value=0;
+		sg.setCellValue(row,column,value);
+		check( sg.getCellValue(row,column) == 0 );
+		checkFalse( sg.isSolved() );
+	}
 }
 
 TestCase( "SudokuGame_create_read_file", "[sudoku game]" )
