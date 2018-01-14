@@ -58,6 +58,30 @@ TestCase( "cell_unique_possible_value", "[cell]" )
 	check( cell.getUniquePossibleValue() == uniqueValue );
 }
 
+TestCase( "cell has possible value", "[cell]" )
+{
+	Cell cell;
+	std::vector<unsigned> allValues = {1,2,3,4,5,6,7,8,9};
+	section( "all possible values")
+	{
+		for(unsigned value : allValues)
+			check( cell.hasPossibleValue(value) );
+	}
+	section( "erase value and chek" )
+	{
+		const unsigned value = 3;
+		cell.erasePossibleValue(value);
+		checkFalse( cell.hasPossibleValue(value) );
+	}
+	section( "set cell value" )
+	{
+		const unsigned value = 5;
+		cell.setValue(value);
+		for(unsigned value : allValues)
+			checkFalse( cell.hasPossibleValue(value) );
+	}
+}
+
 TestCase( "cell_addToGroup_and_getGroups", "[cell]" )
 {
 	Cell cell;

@@ -19,6 +19,7 @@ public:
 		unsigned				getNumberOfPossibleValues(void) const;
 		unsigned				getUniquePossibleValue(void) const;
 		void					erasePossibleValue(const unsigned);
+		bool					hasPossibleValue(const unsigned);
 
 		std::vector<Group *>	getGroups(void) const;
 		void					addToGroup(Group & g);

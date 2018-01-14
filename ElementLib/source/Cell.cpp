@@ -44,6 +44,14 @@ void Cell::erasePossibleValue(const unsigned val)
 	this->possibleValues.erase( val );
 }
 
+bool Cell::hasPossibleValue(const unsigned value)
+{
+	bool has = false;
+	if(this->possibleValues.count(value) > 0)
+		has = true;
+	return has;
+}
+
 void Cell::addToGroup(Group & g)
 {
 	this->group.push_back( &g );
