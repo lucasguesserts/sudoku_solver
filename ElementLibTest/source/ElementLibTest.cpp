@@ -231,6 +231,35 @@ TestCase( "SudokuGame_voidGame_isValid", "[sudoku game]" )
 	check( sg.isValid() );
 }
 
+TestCase( "change game stage", "[sudoku game]" ) 
+{
+	std::vector< std::vector<unsigned> > game = {
+		{1,0,0,0,0,0,0,0,0},
+		{0,0,0,1,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0},
+		{3,0,0,0,0,0,0,0,1},
+		{0,5,0,0,0,0,0,0,0},
+		{0,2,0,4,0,0,7,0,0},
+		{0,0,0,0,0,0,0,1,0},
+		{6,0,0,0,0,0,0,0,0},
+		{9,0,0,0,0,0,0,0,0}
+	};
+	SudokuGame sg;
+	sg.set(game);
+	section("one possible value")
+	{
+		unsigned row = 5 , column = 0 , value = 8;
+		check( sg.solveForOnePossibleValue() );
+		check( sg.getCellValue(row,column) == value );
+	}
+	section("one possible value in group")
+	{
+		unsigned row = 2 , column = 6 , value = 1;
+		check( sg.solveForOnePossibleValueInGroups() );
+		check( sg.getCellValue(row,column) == value );
+	}
+}
+
 TestCase( "SudokuGame_example", "[sudoku game]" ) 
 {
 	const char * fileName = "example_01_test.sudokugame";
@@ -283,7 +312,7 @@ TestCase( "SudokuGame_example", "[sudoku game]" )
 	}
 	section( "solveForOnePossibleValueInGroups" )
 	{
-		sg.solveForOnePossibleValueInGroups();
+		sg.solve();
 		check( sg.isSolved() );
 	}
 	section( "create_read_file" )
@@ -350,8 +379,7 @@ TestCase( "solve for one possible value in groups", "[sudoku game]" )
 	}
 	section( "solve using one possible value in groups strategy" )
 	{
-		sg.solveForOnePossibleValue();
-		sg.solveForOnePossibleValueInGroups();
+		sg.solve();
 		check( sg.isSolved() );
 	}
 }

@@ -55,8 +55,9 @@ bool SudokuGame::isSolved(void) const
 	return vality;
 }
 
-void SudokuGame::solveForOnePossibleValue(void)
+bool SudokuGame::solveForOnePossibleValue(void)
 {
+	bool gameStateChanged = false;
 	bool aCellWasSet;
 	unsigned uniquePossibleValue;
 	do
@@ -70,19 +71,21 @@ void SudokuGame::solveForOnePossibleValue(void)
 				{
 					uniquePossibleValue = this->getCellUniquePossibleValue(row,column);
 					this->setCellValue(row,column,uniquePossibleValue);
+					gameStateChanged = true;
 					aCellWasSet = true;
 				}
 			}
 		}
 	}while( aCellWasSet==true );
+	return gameStateChanged;
 }
 
-void SudokuGame::solveForOnePossibleValueInGroups(void)
+bool SudokuGame::solveForOnePossibleValueInGroups(void)
 {
+	bool gameStateChanged = false;
 	bool aCellWasSet;
 	do
 	{
-		this->solveForOnePossibleValue();
 		aCellWasSet = false;
 		for(Group * g : this->allGroups)
 		{
@@ -101,13 +104,28 @@ void SudokuGame::solveForOnePossibleValueInGroups(void)
 				if(count==1)
 				{
 					cellWithTheOnePosibleValue->setValue(value);
+					gameStateChanged = true;
 					aCellWasSet = true;
 				}
 			}
 		}
 	}while(aCellWasSet);
+	return gameStateChanged;
+}
+
+void SudokuGame::solve(void)
+{
+	bool gameStateChanged;
+	do
+	{
+		gameStateChanged = false;
+		gameStateChanged = this->solveForOnePossibleValue();
+		gameStateChanged = this->solveForOnePossibleValueInGroups();
+	}while(gameStateChanged);
 	return;
 }
+
+
 
 void SudokuGame::set(const std::vector< std::vector<unsigned> > data)
 {
