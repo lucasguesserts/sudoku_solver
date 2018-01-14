@@ -28,6 +28,7 @@ class SudokuGame{
 		bool					isValid(void) const;
 		bool					isSolved(void) const;
 		void					solveForOnePossibleValue(void);
+		void					solveForOnePossibleValueInGroups(void);
 		
 		// IO
 		void					set(const std::vector< std::vector<unsigned> > data);

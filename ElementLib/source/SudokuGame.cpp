@@ -76,6 +76,37 @@ void SudokuGame::solveForOnePossibleValue(void)
 	}while( aCellWasSet==true );
 }
 
+void SudokuGame::solveForOnePossibleValueInGroups(void)
+{
+	bool aCellWasSet = false;
+	do
+	{
+		for(Group g : this->row)
+		{
+			unsigned count = 0;
+			for(unsigned value=PossibleValues::firstValue ; value<PossibleValues::lastValue ; ++value)
+			{
+				Cell * cellWithTheOnePosibleValue;
+				for(Cell * cell : g.getCells() )
+				{
+					if(false)
+					//if(cell->hasPossibleValue(value))
+					{
+						count++;
+						cellWithTheOnePosibleValue = cell;
+					}
+				}
+				if(count==1)
+				{
+					cellWithTheOnePosibleValue->setValue(value);
+					aCellWasSet = true;
+				}
+			}
+		}
+	}while(aCellWasSet==true);
+	return;
+}
+
 void SudokuGame::set(const std::vector< std::vector<unsigned> > data)
 {
 	{// size verification

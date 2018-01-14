@@ -209,9 +209,9 @@ TestCase( "SudokuGame_voidGame_isValid", "[sudoku game]" )
 
 TestCase( "SudokuGame_example", "[sudoku game]" ) 
 {
-	const char * fileName = "appendInFile_test.sudokugame";
+	const char * fileName = "example_01_test.sudokugame";
 	const char * voidDatasetName = "void_game";
-	const char * datasetName = "problem";
+	const char * datasetName = "Problem";
 	std::vector< std::vector<unsigned> > game = {
 		{0,0,4,0,6,0,0,5,8},
 		{3,0,0,8,9,0,0,1,7},
@@ -297,3 +297,31 @@ TestCase( "SudokuGame_isSolved", "[sudoku game]" )
 	check( sg.isSolved() );
 }
 
+TestCase( "solve for one possible value in groups", "[sudoku game]" ) 
+{
+	const char * fileName = "one_possible_value_in_groups_example.sudokugame";
+	const char * datasetName = "Problem";
+	std::vector< std::vector<unsigned> > game = {
+		{0,8,7,0,0,0,0,0,0},
+		{0,0,2,0,0,7,0,0,8},
+		{0,0,0,0,5,8,0,7,3},
+		{0,3,1,9,0,4,0,0,0},
+		{0,0,4,0,7,0,2,0,0},
+		{0,0,0,5,0,6,8,1,0},
+		{9,1,0,7,4,0,0,0,0},
+		{2,0,0,3,0,0,7,0,0},
+		{0,0,0,0,0,0,4,5,0}
+	};
+	SudokuGame sg;
+	sg.set(game);
+	section( "error to solve usin one possible value strategy" )
+	{
+		sg.solveForOnePossibleValue();
+		checkFalse( sg.isSolved() );
+	}
+	section( "solve using one possible value in groups strategy" )
+	{
+		sg.solveForOnePossibleValueInGroups();
+		check( sg.isSolved() );
+	}
+}
