@@ -43,11 +43,13 @@ class SudokuGame{
 		std::vector<Row>						row;
 		std::vector<Column>						column;
 		std::vector <std::vector<Rectangle> >	rectangle;
+		std::vector<Group *>					allGroups;
 
 		void allocCells(void);
 		void allocRows(void);
 		void allocColumns(void);
 		void allocRectangles(void);
+		void setAllGroups(void);
 		void buildCheck(void);
 };
 

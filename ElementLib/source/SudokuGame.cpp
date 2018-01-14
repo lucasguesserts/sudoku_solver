@@ -8,6 +8,7 @@ SudokuGame::SudokuGame(void)
 	allocRows();
 	allocColumns();
 	allocRectangles();
+	setAllGroups();
 }
 
 unsigned SudokuGame::getCellValue(unsigned row , unsigned column) const
@@ -78,9 +79,10 @@ void SudokuGame::solveForOnePossibleValue(void)
 
 void SudokuGame::solveForOnePossibleValueInGroups(void)
 {
-	bool aCellWasSet = false;
+	bool aCellWasSet;
 	do
 	{
+		aCellWasSet = false;
 		for(Group g : this->row)
 		{
 			unsigned count = 0;
@@ -89,8 +91,7 @@ void SudokuGame::solveForOnePossibleValueInGroups(void)
 				Cell * cellWithTheOnePosibleValue;
 				for(Cell * cell : g.getCells() )
 				{
-					if(false)
-					//if(cell->hasPossibleValue(value))
+					if(cell->hasPossibleValue(value))
 					{
 						count++;
 						cellWithTheOnePosibleValue = cell;
@@ -259,5 +260,19 @@ void SudokuGame::allocRectangles(void)
 					unsigned cellGlobalColumn = cellColumnInRectangle + Rectangle::size*rectangleColumn;
 					this->rectangle[rectangleRow][rectangleColumn].addCell( this->cell[cellGlobalRow][cellGlobalColumn] );
 				}
+	return;
+}
+
+void SudokuGame::setAllGroups(void)
+{
+	unsigned numberOfGroups = 3 * this->size;
+	//this->allGroups.resize(numberOfGroups);
+	for(Group& row : this->row)
+		this->allGroups.push_back(&row);
+	for(Group& column : this->column)
+		this->allGroups.push_back(&column);
+	for(std::vector<Rectangle> rectangles : this->rectangle)
+		for(Rectangle& rectangle : rectangles)
+			this->allGroups.push_back(&rectangle);
 	return;
 }
