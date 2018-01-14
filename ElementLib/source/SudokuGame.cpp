@@ -82,14 +82,15 @@ void SudokuGame::solveForOnePossibleValueInGroups(void)
 	bool aCellWasSet;
 	do
 	{
+		this->solveForOnePossibleValue();
 		aCellWasSet = false;
-		for(Group g : this->row)
+		for(Group * g : this->allGroups)
 		{
-			unsigned count = 0;
 			for(unsigned value=PossibleValues::firstValue ; value<PossibleValues::lastValue ; ++value)
 			{
+				unsigned count = 0;
 				Cell * cellWithTheOnePosibleValue;
-				for(Cell * cell : g.getCells() )
+				for(Cell * cell : g->getCells() )
 				{
 					if(cell->hasPossibleValue(value))
 					{
@@ -104,7 +105,7 @@ void SudokuGame::solveForOnePossibleValueInGroups(void)
 				}
 			}
 		}
-	}while(aCellWasSet==true);
+	}while(aCellWasSet);
 	return;
 }
 
@@ -265,13 +266,11 @@ void SudokuGame::allocRectangles(void)
 
 void SudokuGame::setAllGroups(void)
 {
-	unsigned numberOfGroups = 3 * this->size;
-	//this->allGroups.resize(numberOfGroups);
 	for(Group& row : this->row)
 		this->allGroups.push_back(&row);
 	for(Group& column : this->column)
 		this->allGroups.push_back(&column);
-	for(std::vector<Rectangle> rectangles : this->rectangle)
+	for(std::vector<Rectangle>& rectangles : this->rectangle)
 		for(Rectangle& rectangle : rectangles)
 			this->allGroups.push_back(&rectangle);
 	return;

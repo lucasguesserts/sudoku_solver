@@ -281,6 +281,11 @@ TestCase( "SudokuGame_example", "[sudoku game]" )
 		sg.solveForOnePossibleValue();
 		check( sg.isSolved() );
 	}
+	section( "solveForOnePossibleValueInGroups" )
+	{
+		sg.solveForOnePossibleValueInGroups();
+		check( sg.isSolved() );
+	}
 	section( "create_read_file" )
 	{
 		SudokuGame sg2;
@@ -345,6 +350,7 @@ TestCase( "solve for one possible value in groups", "[sudoku game]" )
 	}
 	section( "solve using one possible value in groups strategy" )
 	{
+		sg.solveForOnePossibleValue();
 		sg.solveForOnePossibleValueInGroups();
 		check( sg.isSolved() );
 	}
