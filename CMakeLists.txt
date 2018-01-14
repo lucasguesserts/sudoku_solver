@@ -4,7 +4,7 @@ set(CMAKE_C_COMPILER "/usr/bin/mpicc")
 set(CMAKE_CXX_COMPILER "/usr/bin/mpicxx")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -ansi -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -ansi -pedantic")
 
 include_directories(SYSTEM $ENV{BOOST_INCLUDE})
 
