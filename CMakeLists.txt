@@ -42,6 +42,8 @@ macro (add_library _target)
     target_link_libraries (${_target} ${HDF5_LIBRARIES})
 endmacro ()
 
+enable_testing()
+
 message("\n")
 message("---- Project ${PROJECT_NAME} ----")
 message("Version		= ${VERSION}")
