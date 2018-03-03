@@ -1,12 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-set(CMAKE_C_COMPILER "/usr/bin/mpicc")
-set(CMAKE_CXX_COMPILER "/usr/bin/mpicxx")
+set(CMAKE_C_COMPILER "$ENV{GCC}")
+set(CMAKE_CXX_COMPILER "$ENV{GXX}")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -ansi -pedantic")
-
-include_directories(SYSTEM $ENV{BOOST_INCLUDE})
 
 project(sudoku_solver)
 set(VERSION_MAJOR "1")
@@ -18,11 +16,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) 
 
-find_package(MPI REQUIRED)
-if(MPI_FOUND)
-	include_directories (SYSTEM ${MPI_INCLUDE_PATH})
-endif()
-
 find_package (HDF5 REQUIRED)
 if (HDF5_FOUND)
 	include_directories (SYSTEM ${HDF5_INCLUDE_DIR})
@@ -30,15 +23,11 @@ endif ()
 
 macro (add_executable _target)
     _add_executable (${_target} ${ARGN})
-	target_link_libraries (${_target} ${MPI_C_LIBRARIES})
-	target_link_libraries (${_target} ${MPI_CXX_LIBRARIES})
     target_link_libraries (${_target} ${HDF5_LIBRARIES})
 endmacro ()
 
 macro (add_library _target)
     _add_library (${_target} ${ARGN})
-	target_link_libraries (${_target} ${MPI_C_LIBRARIES})
-	target_link_libraries (${_target} ${MPI_CXX_LIBRARIES})
     target_link_libraries (${_target} ${HDF5_LIBRARIES})
 endmacro ()
 
