@@ -1,5 +1,8 @@
 # Sudoku Solver
 
+Master: [![Build Status](https://travis-ci.org/lucasguesserts/sudoku_solver.svg?branch=master)](https://travis-ci.org/lucasguesserts/sudoku_solver)
+Develop: [![Build Status](https://travis-ci.org/lucasguesserts/sudoku_solver.svg?branch=develop)](https://travis-ci.org/lucasguesserts/sudoku_solver)
+
 C++ library to support solving sudoku games. It defines methods, algoritms and computacional structures for development and also applications for non-developers.
 
 To know more about the sudoku game, see [wikipedia](en.wikipedia.org/wiki/Sudoku).
